@@ -30,5 +30,5 @@
 ## Contributors
 
 <a href="https://github.com/Jeao13"><img src="https://avatars.githubusercontent.com/u/136776317?v=4" title="Jeao" width="80" height="80"></a>
-<a href="https://github.com/arvinmalaluan"><img src="https://avatars.githubusercontent.com/u/113675340?v=4" title="Arvin" width="80" height="80"></a>
+<a href="https://github.com/amalaluan"><img src="https://avatars.githubusercontent.com/u/75754666?v=4" title="Arvin" width="80" height="80"></a>
 <br />
