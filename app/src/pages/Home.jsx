@@ -24,8 +24,6 @@ const Home = () => {
     setSelectedBuilding(null);
   };
 
-  console.log(selectedData);
-
   return (
     <div>
       <Navigation />

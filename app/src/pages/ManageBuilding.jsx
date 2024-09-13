@@ -14,6 +14,7 @@ const ManageBuilding = () => {
     path: true,
   });
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [selectedData, setSelectedData] = useState(null);
 
   const handleSwitchChange = (name) => {
     setShow((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -33,6 +34,7 @@ const ManageBuilding = () => {
             <MapContent
               values={show}
               setSelectedBuilding={setSelectedBuilding}
+              setSelectedData={setSelectedData}
             />
           </div>
 
@@ -42,6 +44,7 @@ const ManageBuilding = () => {
                 <BuildingDetails
                   handleGoBack={handleGoBack}
                   selectedBuilding={selectedBuilding}
+                  selectedData={selectedData}
                 />
               </>
             ) : (
