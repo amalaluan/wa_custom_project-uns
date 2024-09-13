@@ -14,6 +14,7 @@ const Home = () => {
     path: true,
   });
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [selectedData, setSelectedData] = useState(null);
 
   const handleSwitchChange = (name) => {
     setShow((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -23,89 +24,83 @@ const Home = () => {
     setSelectedBuilding(null);
   };
 
+  console.log(selectedData);
+
   return (
     <div>
       <Navigation />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container px-4 py-8 mx-auto">
         <div className="grid grid-cols-3 gap-4">
           <div className="h-[600px] col-span-2">
             <MapContent
               values={show}
               setSelectedBuilding={setSelectedBuilding}
+              setSelectedData={setSelectedData}
             />
           </div>
 
           <div className="col-span-1 px-8 max-h-[600px] overflow-y-scroll no-scrollbar">
             {selectedBuilding ? (
-              <>
-                <Button
-                  variant="ghost"
-                  className="flex gap-2 items-center text-xs font-normal px-0"
-                  onClick={handleGoBack}
-                >
-                  <ArrowLeftIcon className="h-4 w-4" />
-                  <span>Go back</span>
-                </Button>
+              !selectedData ? (
+                <p>Please wait while loading ...</p>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 px-0 text-xs font-normal"
+                    onClick={handleGoBack}
+                  >
+                    <ArrowLeftIcon className="w-4 h-4" />
+                    <span>Go back</span>
+                  </Button>
 
-                <p className="text-base font-semibold mb-2 mt-4">
-                  Building images
-                </p>
-                <hr className="mb-4" />
-                <CarouselInit />
+                  <div className="mt-4">
+                    <h3 className="mb-2 font-semibold">{selectedData.name}</h3>
 
-                <p className="text-base font-semibold mb-2 mt-8">
-                  About the building
-                </p>
-                <hr className="mb-4" />
-                <p className="text-sm text-justify ">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Earum at, veniam esse beatae reiciendis omnis fugit fugiat
-                  officia provident quaerat a ab repellendus rerum perferendis
-                  odit. Suscipit repellat ratione vel saepe, architecto officia
-                  veritatis sit eius dolore impedit beatae quod est quo.
-                  Dignissimos asperiores cum vitae reprehenderit dolore dolores
-                  consequuntur!
-                </p>
+                    {selectedData.services_title.map((item, index) => {
+                      const temp_services = selectedData.services[index];
+                      const services = temp_services?.split
+                        ? temp_services.split("_")
+                        : temp_services;
 
-                <p className="text-base font-semibold mb-2 mt-8">
-                  Services offered
-                </p>
-                <hr className="mb-4" />
-                <ul>
-                  <li className="font-medium text-sm">Library Services</li>
-                  <p className="mb-1 text-sm">
-                    Extensive collection of academic books, journals, and
-                    digital resources.
-                  </p>
+                      return (
+                        <div className="pt-2 mb-2 border-t" key={index}>
+                          <p className="py-2 font-medium">{item}</p>
 
-                  <li className="font-medium text-sm">Sports Facilities</li>
-                  <p className="mb-1 text-sm">
-                    Indoor gymnasium and outdoor sports fields.
-                  </p>
+                          <p className="font-medium">Services</p>
+                          <ul className="mb-2">
+                            {services.map((service, si) => {
+                              return (
+                                <li className="text-sm" key={si}>
+                                  - {service}
+                                </li>
+                              );
+                            })}
+                          </ul>
 
-                  <li className="font-medium text-sm">
-                    Counseling and Support
-                  </li>
-                  <p className="mb-1 text-sm">
-                    Academic counseling and career guidance services.
-                  </p>
-                </ul>
-
-                <p className="text-base font-semibold mb-2 mt-8">
-                  Distance from gates
-                </p>
-                <hr className="mb-4" />
-                <ul>
-                  <li className="font-medium text-sm">From Gate 1</li>
-                  <p className="text-sm">Distance: 1 (km)</p>
-                  <p className="mb-1 text-sm">Walking time: 15 mins</p>
-                </ul>
-              </>
+                          <p className="">
+                            <span className="font-medium">Head/Director:</span>{" "}
+                            {selectedData.head[index] || "No data found"}
+                          </p>
+                          <p className="">
+                            <span className="font-medium">Contact Number:</span>{" "}
+                            {selectedData.contact[index] || "No data found"}
+                          </p>
+                          <p className="pb-4 ">
+                            <span className="font-medium">Email:</span>{" "}
+                            {selectedData.email[index] || "No data found"}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )
             ) : (
               <>
                 <div className="text-sm">
-                  <p className="text-base font-semibold mb-2">Preferences</p>
+                  <p className="mb-2 text-base font-semibold">Preferences</p>
                   <hr className="mb-4" />
                   <div className="flex flex-col gap-2">
                     <ToggleButton
@@ -130,7 +125,7 @@ const Home = () => {
                 </div>
 
                 <div className="mt-12">
-                  <p className="text-base font-semibold mb-2">Recent Changes</p>
+                  <p className="mb-2 text-base font-semibold">Recent Changes</p>
                   <hr className="mb-4" />
                   <p className="text-sm">No changes was made for this week</p>
                 </div>

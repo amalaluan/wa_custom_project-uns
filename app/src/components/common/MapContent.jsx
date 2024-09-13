@@ -7,8 +7,12 @@ import boundaryJson from "@/assets/json/boundary.json";
 import buildingJson from "@/assets/json/buildings.json";
 import pathJson from "@/assets/json/path.json";
 
+import { getDatabase, ref, get } from "firebase/database";
+
 // Import your custom icon image
 import buildingIconUrl from "@/assets/location_fill.svg";
+import { app, db } from "@/utils/firebase.config";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 // Define custom icon
 const buildingIcon = new L.Icon({
@@ -18,15 +22,33 @@ const buildingIcon = new L.Icon({
   popupAnchor: [0, -8], // Adjust popup to appear above the center
 });
 
-const MapContent = ({ values, setSelectedBuilding }) => {
+const MapContent = ({ values, setSelectedBuilding, setSelectedData }) => {
   const convertCoords = (coords) => {
     return [coords[1], coords[0]];
   };
 
   const handleBuildingClick = (feature, layer) => {
     if (feature.properties) {
-      layer.on("click", () => {
+      layer.on("click", async () => {
+        // Make the click handler async
         setSelectedBuilding(convertCoords(feature.geometry.coordinates));
+        const data_id = String(feature.properties.id);
+
+        try {
+          const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
+
+          // Await the getDoc call to fetch the document
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            // Log the document data if it exists
+            setSelectedData({ ...docSnap.data() });
+          } else {
+            console.log("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching document: ", error);
+        }
       });
     }
   };
@@ -35,6 +57,27 @@ const MapContent = ({ values, setSelectedBuilding }) => {
   const pointToLayer = (feature, latlng) => {
     return L.marker(latlng, { icon: buildingIcon });
   };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const db = getDatabase(app);
+  //     const dbref = ref(db, "/a_modif_boundary");
+
+  //     try {
+  //       const snapshot = await get(dbref);
+  //       if (snapshot.exists()) {
+  //         setMap(snapshot.val());
+  //         console.log(boundaryJson);
+  //       } else {
+  //         console.log("nothing was found");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data: ", error);
+  //     }
+  //   };
+
+  //   fetchData(); // Call the function
+  // }, []);
 
   return (
     <MapContainer
