@@ -1,39 +1,1216 @@
 {
-"type": "FeatureCollection",
-"name": "path",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "id": 1 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982991901545773, 12.398160168513551 ], [ 121.983063546887465, 12.397883389155494 ], [ 121.983192732996883, 12.397369959494243 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 2 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983192732996883, 12.397369959494243 ], [ 121.982974110350256, 12.397307843171752 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 3 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983192732996883, 12.397369959494243 ], [ 121.98330601927745, 12.39694290947816 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 4 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98330601927745, 12.39694290947816 ], [ 121.982950260606998, 12.396726472498303 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 5 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982950260606998, 12.396726472498301 ], [ 121.982606426808189, 12.396524593897713 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 6 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982606426808189, 12.396524593897713 ], [ 121.982460844000286, 12.396448404096756 ], [ 121.982405194599352, 12.39653527017378 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 7 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982606426808189, 12.396524593897713 ], [ 121.982774368750398, 12.396203334840751 ], [ 121.983024791054731, 12.395781135780149 ], [ 121.983228507611855, 12.395413288225107 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 8 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983228507611855, 12.395413288225106 ], [ 121.983062147842858, 12.395314813513975 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 9 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983228507611855, 12.395413288225106 ], [ 121.983337818935155, 12.39522790838986 ], [ 121.983171681737105, 12.395137130928877 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 10 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982950260606998, 12.396726472498301 ], [ 121.983270244662535, 12.396179070545445 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 11 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983270244662535, 12.396179070545445 ], [ 121.983198695432748, 12.396134424236179 ], [ 121.983478929916203, 12.395583138743786 ], [ 121.983228507611855, 12.395413288225106 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 12 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983270244662535, 12.396179070545445 ], [ 121.984254046572531, 12.39663523891933 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 13 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984254046572531, 12.39663523891933 ], [ 121.98420634708593, 12.396718707939646 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 14 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98330601927745, 12.39694290947816 ], [ 121.98346004886946, 12.397020554987687 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 15 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98346004886946, 12.397020554987687 ], [ 121.983543522970905, 12.397061318870918 ], [ 121.98361507220072, 12.396929321511633 ], [ 121.984014555400506, 12.397090435926469 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 16 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984014555400506, 12.397090435926469 ], [ 121.984247090397389, 12.397193316163369 ], [ 121.984461738086793, 12.396735207626545 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 17 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984254046572531, 12.39663523891933 ], [ 121.984461738086793, 12.396735207626545 ], [ 121.984767809792132, 12.396884675330861 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 18 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984461738086793, 12.396735207626545 ], [ 121.984710172912557, 12.396245069423403 ], [ 121.984982457481564, 12.395635549738641 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 19 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983478929916203, 12.395583138743786 ], [ 121.983764133096159, 12.395113380467654 ], [ 121.984121879245237, 12.395286142907286 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 20 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984121879245237, 12.395286142907286 ], [ 121.984644586118549, 12.395528786589855 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 21 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984644586118549, 12.395528786589855 ], [ 121.984982457481564, 12.395635549738641 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 22 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984982457481564, 12.395635549738641 ], [ 121.985083818890459, 12.395449199486864 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 23 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985083818890459, 12.395449199486864 ], [ 121.984604836546438, 12.395165791556945 ], [ 121.983994680614444, 12.394998852495128 ], [ 121.983861519547844, 12.395000793647627 ], [ 121.983764133096159, 12.395113380467654 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 24 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984982457481564, 12.395635549738641 ], [ 121.985278591793843, 12.395752018578357 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 25 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985278591793843, 12.395752018578357 ], [ 121.986047746014307, 12.396029602436544 ], [ 121.986079545671998, 12.395917016012213 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 26 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985083818890459, 12.395449199486864 ], [ 121.985181205342158, 12.395480257871407 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 27 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985181205342158, 12.395480257871405 ], [ 121.985326291280373, 12.395169673859435 ], [ 121.985519076705145, 12.395169673859435 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 28 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985181205342158, 12.395480257871405 ], [ 121.985749624223445, 12.39553461003546 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 29 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985749624223445, 12.395534610035458 ], [ 121.985660187686193, 12.395291966358311 ], [ 121.985594600892199, 12.39518520306882 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 30 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.985749624223445, 12.395534610035458 ], [ 121.986244506396318, 12.395635549738641 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 31 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984644586118549, 12.395528786589855 ], [ 121.984666448383251, 12.395470552126636 ] ] ] } },
-{ "type": "Feature", "properties": { "id": 32 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984121879245237, 12.395286142907286 ], [ 121.984130822898877, 12.395263819677144 ] ] ] } }
-]
+  "type": "FeatureCollection",
+  "name": "paths",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "dist_km": 0.032,
+        "eta_walk": 0.384,
+        "eta_bike": 0.08
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982991901545773, 12.398160168513551],
+            [121.983063546887465, 12.397883389155494]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "dist_km": 0.009,
+        "eta_walk": 0.108,
+        "eta_bike": 0.023
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983063546887465, 12.397883389155494],
+            [121.982983898027555, 12.397865119579102]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "dist_km": 0.014,
+        "eta_walk": 0.168,
+        "eta_bike": 0.035
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983063546887465, 12.397883389155494],
+            [121.983187529318883, 12.397912810826364]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "dist_km": 0.015,
+        "eta_walk": 0.18,
+        "eta_bike": 0.038
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983187529318883, 12.397912810826364],
+            [121.983230125660398, 12.397781913552345]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "dist_km": 0.059,
+        "eta_walk": 0.708,
+        "eta_bike": 0.148
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983063546887465, 12.397883389155494],
+            [121.983192732996883, 12.397369959494245]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "dist_km": 0.025,
+        "eta_walk": 0.3,
+        "eta_bike": 0.063
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983192732996883, 12.397369959494245],
+            [121.982974110350256, 12.397307843171752]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "dist_km": 0.031,
+        "eta_walk": 0.372,
+        "eta_bike": 0.078
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983192732996883, 12.397369959494245],
+            [121.983265314830874, 12.39709635121533]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "dist_km": 0.049,
+        "eta_walk": 0.588,
+        "eta_bike": 0.123
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983265314830874, 12.39709635121533],
+            [121.983689335000989, 12.397232956051539]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9,
+        "dist_km": 0.018,
+        "eta_walk": 0.216,
+        "eta_bike": 0.045
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983265314830874, 12.39709635121533],
+            [121.983306019277464, 12.39694290947816]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 10,
+        "dist_km": 0.027,
+        "eta_walk": 0.324,
+        "eta_bike": 0.068
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983306019277464, 12.39694290947816],
+            [121.983091655774857, 12.39681249471869]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 11,
+        "dist_km": 0.009,
+        "eta_walk": 0.108,
+        "eta_bike": 0.023
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983091655774857, 12.39681249471869],
+            [121.983051428812885, 12.396885925020202]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 12,
+        "dist_km": 0.018,
+        "eta_walk": 0.216,
+        "eta_bike": 0.045
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983091655774857, 12.39681249471869],
+            [121.982950260606998, 12.396726472498301]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 13,
+        "dist_km": 0.07,
+        "eta_walk": 0.84,
+        "eta_bike": 0.175
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982950260606998, 12.396726472498301],
+            [121.983270244662535, 12.396179070545445]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 14,
+        "dist_km": 0.009,
+        "eta_walk": 0.108,
+        "eta_bike": 0.023
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983270244662535, 12.396179070545445],
+            [121.983198695432748, 12.396134424236179]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 15,
+        "dist_km": 0.068,
+        "eta_walk": 0.816,
+        "eta_bike": 0.17
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983198695432748, 12.396134424236179],
+            [121.983478929916203, 12.395583138743786]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 16,
+        "dist_km": 0.033,
+        "eta_walk": 0.396,
+        "eta_bike": 0.083
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983478929916203, 12.395583138743786],
+            [121.983228507611855, 12.395413288225106]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 17,
+        "dist_km": 0.021,
+        "eta_walk": 0.252,
+        "eta_bike": 0.053
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983228507611855, 12.395413288225106],
+            [121.983062147842858, 12.395314813513975]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 18,
+        "dist_km": 0.03,
+        "eta_walk": 0.36,
+        "eta_bike": 0.075
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982950260606998, 12.396726472498301],
+            [121.982710257761823, 12.396585557227533]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 19,
+        "dist_km": 0.003,
+        "eta_walk": 0.036,
+        "eta_bike": 0.008
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982710257761823, 12.396585557227533],
+            [121.982698190858628, 12.396607893977526]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 20,
+        "dist_km": 0.013,
+        "eta_walk": 0.156,
+        "eta_bike": 0.033
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982710257761823, 12.396585557227533],
+            [121.982606426808189, 12.396524593897713]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 21,
+        "dist_km": 0.04,
+        "eta_walk": 0.48,
+        "eta_bike": 0.1
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982606426808189, 12.396524593897713],
+            [121.982774368750398, 12.396203334840749]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 22,
+        "dist_km": 0.003,
+        "eta_walk": 0.036,
+        "eta_bike": 0.008
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982774368750398, 12.396203334840749],
+            [121.982794519628229, 12.396215517090473]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 23,
+        "dist_km": 0.1,
+        "eta_walk": 1.2,
+        "eta_bike": 0.25
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982774368750398, 12.396203334840749],
+            [121.983228507611855, 12.395413288225106]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 24,
+        "dist_km": 0.018,
+        "eta_walk": 0.216,
+        "eta_bike": 0.045
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982606426808189, 12.396524593897713],
+            [121.982460844000286, 12.396448404096757]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 25,
+        "dist_km": 0.011,
+        "eta_walk": 0.132,
+        "eta_bike": 0.027
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982460844000286, 12.396448404096757],
+            [121.982405194599352, 12.39653527017378]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 26,
+        "dist_km": 0.009,
+        "eta_walk": 0.108,
+        "eta_bike": 0.023
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.982460844000286, 12.396448404096757],
+            [121.982388106840432, 12.396408219866387]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 27,
+        "dist_km": 0.024,
+        "eta_walk": 0.288,
+        "eta_bike": 0.06
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983228507611855, 12.395413288225106],
+            [121.983337818935155, 12.39522790838986]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 28,
+        "dist_km": 0.021,
+        "eta_walk": 0.252,
+        "eta_bike": 0.053
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983337818935155, 12.39522790838986],
+            [121.983171681737105, 12.395137130928877]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 29,
+        "dist_km": 0.003,
+        "eta_walk": 0.036,
+        "eta_bike": 0.008
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983337818935155, 12.39522790838986],
+            [121.983358953620154, 12.395239297068139]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 30,
+        "dist_km": 0.023,
+        "eta_walk": 0.276,
+        "eta_bike": 0.057
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983358953620154, 12.395239297068139],
+            [121.983477651962133, 12.395062482448431]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 31,
+        "dist_km": 0.061,
+        "eta_walk": 0.732,
+        "eta_bike": 0.153
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983478929916203, 12.395583138743786],
+            [121.983764133096159, 12.395113380467656]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 32,
+        "dist_km": 0.043,
+        "eta_walk": 0.516,
+        "eta_bike": 0.107
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983764133096159, 12.395113380467656],
+            [121.984121879245237, 12.395286142907286]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 33,
+        "dist_km": 0.003,
+        "eta_walk": 0.036,
+        "eta_bike": 0.008
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984121879245237, 12.395286142907286],
+            [121.984130822898877, 12.395263819677144]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 34,
+        "dist_km": 0.063,
+        "eta_walk": 0.756,
+        "eta_bike": 0.158
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984121879245237, 12.395286142907286],
+            [121.984644586118563, 12.395528786589857]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 35,
+        "dist_km": 0.007,
+        "eta_walk": 0.084,
+        "eta_bike": 0.018
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984644586118563, 12.395528786589857],
+            [121.984666448383251, 12.395470552126636]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 36,
+        "dist_km": 0.039,
+        "eta_walk": 0.468,
+        "eta_bike": 0.098
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984644586118563, 12.395528786589857],
+            [121.984982457481564, 12.395635549738641]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 37,
+        "dist_km": 0.016,
+        "eta_walk": 0.192,
+        "eta_bike": 0.04
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983764133096159, 12.395113380467656],
+            [121.983861519547858, 12.395000793647629]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 38,
+        "dist_km": 0.014,
+        "eta_walk": 0.168,
+        "eta_bike": 0.035
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983861519547858, 12.395000793647629],
+            [121.983994680614444, 12.394998852495128]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 39,
+        "dist_km": 0.069,
+        "eta_walk": 0.828,
+        "eta_bike": 0.173
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983994680614444, 12.394998852495128],
+            [121.984604836546453, 12.395165791556945]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 40,
+        "dist_km": 0.061,
+        "eta_walk": 0.732,
+        "eta_bike": 0.153
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984604836546453, 12.395165791556945],
+            [121.985083818890459, 12.395449199486864]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 41,
+        "dist_km": 0.019,
+        "eta_walk": 0.228,
+        "eta_bike": 0.048
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983306019277464, 12.39694290947816],
+            [121.98346004886946, 12.397020554987687]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 42,
+        "dist_km": 0.005,
+        "eta_walk": 0.06,
+        "eta_bike": 0.013
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.98346004886946, 12.397020554987687],
+            [121.983481547969063, 12.396977249020612]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 43,
+        "dist_km": 0.01,
+        "eta_walk": 0.12,
+        "eta_bike": 0.025
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.98346004886946, 12.397020554987687],
+            [121.983543522970905, 12.397061318870918]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 44,
+        "dist_km": 0.017,
+        "eta_walk": 0.204,
+        "eta_bike": 0.043
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983543522970905, 12.397061318870918],
+            [121.98361507220072, 12.396929321511633]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 45,
+        "dist_km": 0.055,
+        "eta_walk": 0.66,
+        "eta_bike": 0.138
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.98361507220072, 12.396929321511633],
+            [121.984079947382, 12.397119367242578]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 46,
+        "dist_km": 0.015,
+        "eta_walk": 0.18,
+        "eta_bike": 0.038
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984079947382, 12.397119367242578],
+            [121.98414023286027, 12.396993484395116]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 47,
+        "dist_km": 0.02,
+        "eta_walk": 0.24,
+        "eta_bike": 0.05
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984079947382, 12.397119367242578],
+            [121.984247090397389, 12.397193316163369]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 48,
+        "dist_km": 0.056,
+        "eta_walk": 0.672,
+        "eta_bike": 0.14
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984247090397389, 12.397193316163369],
+            [121.984461738086793, 12.396735207626545]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 49,
+        "dist_km": 0.118,
+        "eta_walk": 1.416,
+        "eta_bike": 0.295
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.983270244662535, 12.396179070545445],
+            [121.984254046572531, 12.39663523891933]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 50,
+        "dist_km": 0.011,
+        "eta_walk": 0.132,
+        "eta_bike": 0.027
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984254046572531, 12.39663523891933],
+            [121.98420634708593, 12.396718707939646]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 51,
+        "dist_km": 0.025,
+        "eta_walk": 0.3,
+        "eta_bike": 0.063
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984254046572531, 12.39663523891933],
+            [121.984461738086793, 12.396735207626545]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 52,
+        "dist_km": 0.037,
+        "eta_walk": 0.444,
+        "eta_bike": 0.093
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984461738086793, 12.396735207626545],
+            [121.984767809792132, 12.396884675330863]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 53,
+        "dist_km": 0.01,
+        "eta_walk": 0.12,
+        "eta_bike": 0.025
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984767809792132, 12.396884675330863],
+            [121.984723335218632, 12.396967101911045]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 54,
+        "dist_km": 0.061,
+        "eta_walk": 0.732,
+        "eta_bike": 0.153
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984461738086793, 12.396735207626545],
+            [121.984710172912557, 12.396245069423403]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 55,
+        "dist_km": 0.074,
+        "eta_walk": 0.888,
+        "eta_bike": 0.185
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984710172912557, 12.396245069423403],
+            [121.984982457481564, 12.395635549738641]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 56,
+        "dist_km": 0.023,
+        "eta_walk": 0.276,
+        "eta_bike": 0.057
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984982457481564, 12.395635549738641],
+            [121.985083818890459, 12.395449199486864]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 57,
+        "dist_km": 0.035,
+        "eta_walk": 0.42,
+        "eta_bike": 0.088
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.984982457481564, 12.395635549738641],
+            [121.985278591793858, 12.395752018578357]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 58,
+        "dist_km": 0.003,
+        "eta_walk": 0.036,
+        "eta_bike": 0.008
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985278591793858, 12.395752018578357],
+            [121.985288515945498, 12.39572306328418]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 59,
+        "dist_km": 0.089,
+        "eta_walk": 1.068,
+        "eta_bike": 0.222
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985278591793858, 12.395752018578357],
+            [121.986047746014307, 12.396029602436542]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 60,
+        "dist_km": 0.013,
+        "eta_walk": 0.156,
+        "eta_bike": 0.033
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.986047746014307, 12.396029602436542],
+            [121.986079545671998, 12.395917016012213]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 61,
+        "dist_km": 0.011,
+        "eta_walk": 0.132,
+        "eta_bike": 0.027
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985083818890459, 12.395449199486864],
+            [121.985181205342158, 12.395480257871403]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 62,
+        "dist_km": 0.062,
+        "eta_walk": 0.744,
+        "eta_bike": 0.155
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985181205342158, 12.395480257871403],
+            [121.985749624223459, 12.395534610035458]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 63,
+        "dist_km": 0.055,
+        "eta_walk": 0.66,
+        "eta_bike": 0.138
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985749624223459, 12.395534610035458],
+            [121.986244506396318, 12.395635549738641]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 64,
+        "dist_km": 0.038,
+        "eta_walk": 0.456,
+        "eta_bike": 0.095
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985181205342158, 12.395480257871403],
+            [121.985326291280373, 12.395169673859437]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 65,
+        "dist_km": 0.021,
+        "eta_walk": 0.252,
+        "eta_bike": 0.053
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985326291280373, 12.395169673859437],
+            [121.985519076705145, 12.395169673859437]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 66,
+        "dist_km": 0.029,
+        "eta_walk": 0.348,
+        "eta_bike": 0.073
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985749624223459, 12.395534610035458],
+            [121.985660187686193, 12.395291966358311]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 67,
+        "dist_km": 0.014,
+        "eta_walk": 0.168,
+        "eta_bike": 0.035
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [121.985660187686193, 12.395291966358311],
+            [121.985594600892199, 12.39518520306882]
+          ]
+        ]
+      }
+    }
+  ]
 }

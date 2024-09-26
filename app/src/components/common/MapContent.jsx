@@ -6,13 +6,7 @@ import "leaflet/dist/leaflet.css";
 import boundaryJson from "@/assets/json/boundary.json";
 import buildingJson from "@/assets/json/buildings.json";
 import pathJson from "@/assets/json/path.json";
-
-import { getDatabase, ref, get } from "firebase/database";
-
-// Import your custom icon image
 import buildingIconUrl from "@/assets/location_fill.svg";
-import { app, db } from "@/utils/firebase.config";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 // Define custom icon
 const buildingIcon = new L.Icon({
@@ -22,62 +16,11 @@ const buildingIcon = new L.Icon({
   popupAnchor: [0, -8], // Adjust popup to appear above the center
 });
 
-const MapContent = ({ values, setSelectedBuilding, setSelectedData }) => {
-  const convertCoords = (coords) => {
-    return [coords[1], coords[0]];
-  };
-
-  const handleBuildingClick = (feature, layer) => {
-    if (feature.properties) {
-      layer.on("click", async () => {
-        // Make the click handler async
-        setSelectedBuilding(convertCoords(feature.geometry.coordinates));
-        const data_id = String(feature.properties.id);
-
-        try {
-          const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
-
-          // Await the getDoc call to fetch the document
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            // Log the document data if it exists
-            setSelectedData({ ...docSnap.data() });
-          } else {
-            console.log("No such document!");
-          }
-        } catch (error) {
-          console.error("Error fetching document: ", error);
-        }
-      });
-    }
-  };
-
+const MapContent = ({ state, handleBuildingClick }) => {
   // Function to convert points to custom markers
   const pointToLayer = (feature, latlng) => {
     return L.marker(latlng, { icon: buildingIcon });
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const db = getDatabase(app);
-  //     const dbref = ref(db, "/a_modif_boundary");
-
-  //     try {
-  //       const snapshot = await get(dbref);
-  //       if (snapshot.exists()) {
-  //         setMap(snapshot.val());
-  //         console.log(boundaryJson);
-  //       } else {
-  //         console.log("nothing was found");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data: ", error);
-  //     }
-  //   };
-
-  //   fetchData(); // Call the function
-  // }, []);
 
   return (
     <MapContainer
@@ -90,17 +33,39 @@ const MapContent = ({ values, setSelectedBuilding, setSelectedData }) => {
         subdomains={["mt0", "mt1", "mt2", "mt3"]}
         attribution='&copy; <a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">Google</a>'
       />
-      {values.path && pathJson && (
+      {state.selectedData == null && state.show.path && pathJson && (
         <GeoJSON data={pathJson} style={{ color: "magenta" }} />
       )}
-      {values.boundary && boundaryJson && (
+      {state.show.boundary && boundaryJson && (
         <GeoJSON data={boundaryJson} style={{ color: "red", fill: false }} />
       )}
-      {values.building && buildingJson && (
+      {state.show.building && buildingJson && (
         <GeoJSON
           data={buildingJson}
           onEachFeature={handleBuildingClick}
           pointToLayer={pointToLayer}
+        />
+      )}
+
+      {state.routeFG1 && (
+        <GeoJSON
+          key={JSON.stringify(state.routeFG1)}
+          data={state.routeFG1}
+          style={{ color: "#FF9933" }}
+        />
+      )}
+      {state.routeFG2 && (
+        <GeoJSON
+          key={JSON.stringify(state.routeFG2)}
+          data={state.routeFG2}
+          style={{ color: "#50BFE6" }}
+        />
+      )}
+      {state.routeFG3 && (
+        <GeoJSON
+          key={JSON.stringify(state.routeFG3)}
+          data={state.routeFG3}
+          style={{ color: "#66FF66" }}
         />
       )}
     </MapContainer>

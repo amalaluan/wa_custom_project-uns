@@ -10,7 +10,7 @@ const ToggleButton = ({ name, id, defaultValue, handleChange }) => {
         checked={defaultValue}
         onClick={() => handleChange(id)}
       />
-      <Label htmlFor="airplane-mode" className="font-normal text-sm">
+      <Label htmlFor="airplane-mode" className="text-sm font-normal">
         {name}
       </Label>
     </div>

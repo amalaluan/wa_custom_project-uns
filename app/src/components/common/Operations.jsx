@@ -14,11 +14,9 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import MapContent from "./MapContent";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import TAIWT from "./TextAreaInstanceWithText";
 
-const Operations = ({ setSelectedBuilding }) => {
+const Operations = ({ state }) => {
   const show = {
     building: true,
     boundary: true,
@@ -55,10 +53,7 @@ const Operations = ({ setSelectedBuilding }) => {
                 Step 1: Set the location.
               </p>
               <div className="w-full h-[250px] mb-4">
-                <MapContent
-                  values={show}
-                  setSelectedBuilding={setSelectedBuilding}
-                />
+                {/* <MapContent values={show} /> */}
               </div>
 
               <p className="mb-2 text-sm font-semibold">

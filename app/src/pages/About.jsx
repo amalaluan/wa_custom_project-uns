@@ -7,70 +7,81 @@ const About = () => {
     <div>
       <Navigation />
 
-      <main>
-        <div className="container py-6 mx-auto font-sans">
-          <h1 className="mb-4 text-4xl font-bold">About RSU Nav</h1>
+      <main className="mx-auto px-4 max-w-[1140px]">
+        <div className="font-sans">
+          <section className="grid grid-cols-2 mt-8 mb-4">
+            <div>
+              <p className="mb-8 text-8xl">about us</p>
 
-          <section className="mb-8">
-            <h2 className="mb-2 text-2xl font-semibold">Welcome to RSU Nav</h2>
-            <p className="text-lg">
-              RSU Nav is your essential guide to navigating the campus of
-              Riverside State University (RSU). Designed with convenience and
-              efficiency in mind, RSU Nav aims to help students, faculty, and
-              visitors easily find their way around our beautiful campus.
-              Whether you're a new student trying to locate your lecture hall or
-              a visitor looking for the nearest parking spot, RSU Nav is here to
-              assist you.
-            </p>
-          </section>
+              <p className="mb-1 text-sm font-medium">
+                GUIDED BY 7 CORE VALUES
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  stewardship
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  competence
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  resilience
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  integrity
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  balance
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  excellence
+                </span>
+                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                  service
+                </span>
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 font-semibold">ROMBLON STATE UNIVERSITY</p>
+              <p className="mb-8 text-sm text-justify">
+                The Romblon State University commits to provide higher education
+                through quality instruction, research, and community extension
+                services that meet or exceed the requirements and expectations
+                of the University's stakeholders. It will comply with
+                international standards, applicable statutory and regulatory
+                requirements and continually improve the Quality Management
+                System's effectiveness through periodic monitoring and
+                evaluation toward sustained remarkable outcomes.
+              </p>
 
-          <section className="mb-8">
-            <h2 className="mb-2 text-2xl font-semibold">
-              Riverside State University (RSU)
-            </h2>
-            <p className="text-lg">
-              Founded in 1965, Riverside State University has grown into a
-              prestigious institution known for its academic excellence, diverse
-              community, and state-of-the-art facilities. With over 15,000
-              students and a wide range of undergraduate and postgraduate
-              programs, RSU is committed to providing an enriching educational
-              experience that prepares students for success in their chosen
-              fields.
-            </p>
-          </section>
+              <p className="mb-2 font-semibold">PROJECT SCHOOLGO</p>
+              <p className="mb-8 text-sm text-justify">
+                SchoolGo is your essential guide to navigating the campus of
+                Romblon State University (RSU). Designed with convenience and
+                efficiency in mind, SchoolGo aims to help students, faculty, and
+                visitors easily find their way around our beautiful campus.
+                Whether you're a new student trying to locate your lecture hall
+                or a visitor looking for the nearest parking spot, SchoolGo is
+                here to assist you.
+              </p>
 
-          <section className="mb-8">
-            <h2 className="mb-2 text-2xl font-semibold">Our Mission</h2>
-            <ul className="pl-5 text-lg list-disc">
-              <li className="mb-2">
-                Foster a learning environment that promotes intellectual growth
-                and critical thinking.
-              </li>
-              <li className="mb-2">
-                Support the personal and professional development of our
-                students.
-              </li>
-              <li className="mb-2">
-                Engage with the community through research, service, and
-                partnerships.
-              </li>
-              <li className="mb-2">
-                Embrace diversity and inclusivity in all aspects of university
-                life.
-              </li>
-            </ul>
-          </section>
+              <p className="mb-2 font-semibold">MISSION</p>
+              <p className="mb-8 text-sm text-justify">
+                RSU shall nurture an academic environment that provides advanced
+                education, higher technological and professional instruction,
+                and technical expertise in agriculture and fishery, forestry,
+                engineering and technology, education, arts and sciences, and
+                other relevant fields of study and collaborate with other
+                institutions and communities through responsive, relevant, and
+                research-based extension services.
+              </p>
 
-          <section>
-            <h2 className="mb-2 text-2xl font-semibold">Our Campus</h2>
-            <p className="text-lg">
-              The RSU campus is a vibrant and dynamic place, offering a wide
-              array of facilities and services to support our students'
-              educational journey. From modern classrooms and laboratories to
-              comfortable dormitories and recreational areas, we ensure that our
-              students have everything they need to thrive academically and
-              personally.
-            </p>
+              <p className="mb-2 font-semibold">VISION</p>
+              <p className="mb-8 text-sm text-justify">
+                A research-based academic institution committed to excellence
+                and service nurturing globally competitive workforce towards
+                sustainable development.
+              </p>
+            </div>
           </section>
         </div>
       </main>

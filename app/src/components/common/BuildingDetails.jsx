@@ -3,8 +3,8 @@ import { Button } from "../ui/button";
 import { ArrowLeftIcon, TrashIcon } from "@radix-ui/react-icons";
 import CarouselInit from "./Carousel";
 
-const BuildingDetails = ({ handleGoBack, selectedData }) => {
-  return !selectedData ? (
+const BuildingDetails = ({ state, handleGoBack }) => {
+  return !state.selectedData ? (
     <p>Please wait while loading ...</p>
   ) : (
     <>
@@ -18,10 +18,25 @@ const BuildingDetails = ({ handleGoBack, selectedData }) => {
       </Button>
 
       <div className="mt-4">
-        <h3 className="mb-2 font-semibold">{selectedData.name}</h3>
+        <h3 className="mb-4 font-semibold">{state.selectedData.name}</h3>
 
-        {selectedData.services_title.map((item, index) => {
-          const temp_services = selectedData.services[index];
+        {state.distances.map((item, index) => {
+          return (
+            <div key={index} className="py-4 border-t">
+              <p className="font-semibold ">
+                Travel Information from Gate {index + 1}
+              </p>
+              <p className="text-sm">
+                Distance: {item.distance.toFixed(2) * 1000} meter/s.
+              </p>
+              <p className="text-sm">Walk: {item.walk} min/s.</p>
+              <p className="text-sm">Bike: {item.bike} min/s.</p>
+            </div>
+          );
+        })}
+
+        {state.selectedData.services_title.map((item, index) => {
+          const temp_services = state.selectedData.services[index];
           const services = temp_services?.split
             ? temp_services.split("_")
             : temp_services;
@@ -43,15 +58,15 @@ const BuildingDetails = ({ handleGoBack, selectedData }) => {
 
               <p className="">
                 <span className="font-medium">Head/Director:</span>{" "}
-                {selectedData.head[index] || "No data found"}
+                {state.selectedData.head[index] || "No data found"}
               </p>
               <p className="">
                 <span className="font-medium">Contact Number:</span>{" "}
-                {selectedData.contact[index] || "No data found"}
+                {state.selectedData.contact[index] || "No data found"}
               </p>
               <p className="pb-4 ">
                 <span className="font-medium">Email:</span>{" "}
-                {selectedData.email[index] || "No data found"}
+                {state.selectedData.email[index] || "No data found"}
               </p>
             </div>
           );

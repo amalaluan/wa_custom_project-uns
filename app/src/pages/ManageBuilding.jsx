@@ -5,54 +5,37 @@ import Navigation from "@/components/common/Navigation";
 import Operations from "@/components/common/Operations";
 import Preferences from "@/components/common/Preferences";
 import RecentChanges from "@/components/common/RecentChanges";
+import useMapHook from "@/hooks/useMapHook";
 import React, { useState } from "react";
 
 const ManageBuilding = () => {
-  const [show, setShow] = useState({
-    building: true,
-    boundary: true,
-    path: true,
-  });
-  const [selectedBuilding, setSelectedBuilding] = useState(null);
-  const [selectedData, setSelectedData] = useState(null);
-
-  const handleSwitchChange = (name) => {
-    setShow((prev) => ({ ...prev, [name]: !prev[name] }));
-  };
-
-  const handleGoBack = () => {
-    setSelectedBuilding(null);
-  };
+  const { state, handleSwitchChange, handleBuildingClick, handleGoBack } =
+    useMapHook();
 
   return (
     <div>
       <Navigation />
 
-      <main className="container px-4 py-8 mx-auto">
+      <main className="max-w-[1140px] px-4 py-8 mx-auto">
         <div className="grid grid-cols-3 gap-4">
-          <div className="h-[600px] col-span-2">
+          <div className="h-[600px] col-span-2 sticky top-6">
             <MapContent
-              values={show}
-              setSelectedBuilding={setSelectedBuilding}
-              setSelectedData={setSelectedData}
+              state={state}
+              handleBuildingClick={handleBuildingClick}
             />
           </div>
 
-          <div className="col-span-1 px-8 max-h-[600px] overflow-y-scroll no-scrollbar">
-            {selectedBuilding ? (
+          <div className="col-span-1 px-8">
+            {state.selectedBuilding ? (
               <>
-                <BuildingDetails
-                  handleGoBack={handleGoBack}
-                  selectedBuilding={selectedBuilding}
-                  selectedData={selectedData}
-                />
+                <BuildingDetails handleGoBack={handleGoBack} state={state} />
               </>
             ) : (
               <>
                 <Operations />
 
                 <Preferences
-                  show={show}
+                  show={state.show}
                   handleSwitchChange={handleSwitchChange}
                 />
 
