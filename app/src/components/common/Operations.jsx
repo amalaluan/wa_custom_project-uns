@@ -15,6 +15,9 @@ import {
 } from "../ui/alert-dialog";
 import MapContent from "./MapContent";
 import TAIWT from "./TextAreaInstanceWithText";
+import MapContentPicker from "./MapContentPicker";
+import { Input } from "../ui/input";
+import { Label } from "@radix-ui/react-label";
 
 const Operations = ({ state }) => {
   const show = {
@@ -52,27 +55,45 @@ const Operations = ({ state }) => {
               <p className="mb-2 text-sm font-semibold">
                 Step 1: Set the location.
               </p>
-              <div className="w-full h-[250px] mb-4">
-                {/* <MapContent values={show} /> */}
+              <div className="w-full mb-4">
+                <ModalInstance>
+                  <AlertDialogTrigger asChild>
+                    <Button size="sm" className="text-xs">
+                      Set Location
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="w-[700px] max-w-full">
+                    <div className="relative h-full overflow-y-scroll no-scrollbar">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="mb-1">
+                          Set the location of the building
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="mb-4 text-xs">
+                          Click the location where you want to add a building
+                          coordinate then click "Save Location" button.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <div className="h-[400px]">
+                        <MapContentPicker />
+                      </div>
+                    </div>
+                    <AlertDialogFooter className="">
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </ModalInstance>
               </div>
 
               <p className="mb-2 text-sm font-semibold">
                 Step 2: Fill out the following.
               </p>
-              <div className="flex flex-col w-full gap-2 pb-4">
-                <TAIWT
-                  ps={`Short description of the building`}
-                  label="About the building (Optional)"
-                />
-
-                <TAIWT
-                  ps={`Separate every services by "_" (e.g. "Registrar office_Dean's Office")`}
-                  label="Services Offered"
-                />
-
-                <p className="mt-4 mb-2 text-sm font-semibold">
-                  Step 3: Add images (Optional).
-                </p>
+              <div>
+                <div>
+                  <Label htmlFor="" className="text-xs font-semibold">
+                    Service
+                  </Label>
+                  <Input placeholder="Hello arvin" />
+                </div>
               </div>
             </div>
             <AlertDialogFooter className="sticky bottom-0 w-full pt-2 bg-white">

@@ -38,6 +38,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const Home = () => {
   const { state, handleSwitchChange, handleBuildingClick, handleGoBack } =
@@ -80,11 +83,127 @@ const Home = () => {
                         </Button>
                       </DrawerTrigger>
                       <DrawerContent>
-                        <div className="px-8 pb-8">
-                          <h3 className="mt-4 text-4xl font-semibold text-center">
-                            {state.selectedData.name}
-                            {console.log(state.selectedData)}
-                          </h3>
+                        <h3 className="pb-8 mt-4 text-4xl font-semibold text-center">
+                          {state.selectedData.name}
+                        </h3>
+                        <hr />
+                        <div className="px-8 pt-4 pb-8 h-[70dvh] overflow-y-scroll">
+                          <div className="w-1/3 m-auto">
+                            <div className="mb-4">
+                              <Label htmlFor="email">Building Name</Label>
+                              <Input
+                                placeholder="Building Name"
+                                id="building_name"
+                                type="text"
+                                value="SchoolGo"
+                                disabled={false}
+                                autoComplete="off"
+                              />
+                            </div>
+
+                            {state?.selectedData?.services_title?.map(
+                              (item, index) => {
+                                const services_off =
+                                  state?.selectedData?.services[index].replace(
+                                    /_/g,
+                                    "\n"
+                                  );
+
+                                return (
+                                  <>
+                                    <p className="mt-8 mb-2 font-medium text-center">
+                                      {item}
+                                    </p>
+                                    <hr />
+
+                                    <div className="mt-4 mb-2">
+                                      <Label htmlFor="email">
+                                        Service Title
+                                      </Label>
+                                      <Input
+                                        className="mt-1"
+                                        placeholder="Building Name"
+                                        id="building_name"
+                                        type="text"
+                                        value={
+                                          state?.selectedData?.services_title[
+                                            index
+                                          ]
+                                        }
+                                        disabled={false}
+                                        autoComplete="off"
+                                      />
+                                    </div>
+
+                                    <div className="mb-2">
+                                      <Label htmlFor="email">
+                                        Offered Services
+                                      </Label>
+                                      <Textarea
+                                        className="mt-1 resize-none"
+                                        placeholder="Building Name"
+                                        id="building_name"
+                                        type="text"
+                                        value={services_off}
+                                        rows="5"
+                                        disabled={false}
+                                        autoComplete="off"
+                                      />
+                                      <p className="mt-1 text-xs text-muted-foreground">
+                                        <strong>Note: </strong>Press enter to
+                                        for separating each services.
+                                      </p>
+                                    </div>
+
+                                    <div className="mb-2">
+                                      <Label htmlFor="email">Head</Label>
+                                      <Input
+                                        className="mt-1"
+                                        placeholder="Building Name"
+                                        id="building_name"
+                                        type="text"
+                                        value={state?.selectedData?.head[index]}
+                                        disabled={false}
+                                        autoComplete="off"
+                                      />
+                                    </div>
+
+                                    <div className="mb-2">
+                                      <Label htmlFor="email">Email</Label>
+                                      <Input
+                                        className="mt-1"
+                                        placeholder="Building Name"
+                                        id="building_name"
+                                        type="text"
+                                        value={
+                                          state?.selectedData?.email[index]
+                                        }
+                                        disabled={false}
+                                        autoComplete="off"
+                                      />
+                                    </div>
+
+                                    <div className="mb-2">
+                                      <Label htmlFor="email">
+                                        Contact Number
+                                      </Label>
+                                      <Input
+                                        className="mt-1"
+                                        placeholder="Building Name"
+                                        id="building_name"
+                                        type="text"
+                                        value={
+                                          state?.selectedData?.contact[index]
+                                        }
+                                        disabled={false}
+                                        autoComplete="off"
+                                      />
+                                    </div>
+                                  </>
+                                );
+                              }
+                            )}
+                          </div>
                         </div>
                       </DrawerContent>
                     </Drawer>
