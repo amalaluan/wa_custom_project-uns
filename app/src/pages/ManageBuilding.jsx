@@ -9,8 +9,13 @@ import useMapHook from "@/hooks/useMapHook";
 import React, { useState } from "react";
 
 const ManageBuilding = () => {
-  const { state, handleSwitchChange, handleBuildingClick, handleGoBack } =
-    useMapHook();
+  const {
+    state,
+    handleSwitchChange,
+    handleBuildingClick,
+    handleGoBack,
+    buildingJson,
+  } = useMapHook();
 
   return (
     <div>
@@ -22,6 +27,7 @@ const ManageBuilding = () => {
             <MapContent
               state={state}
               handleBuildingClick={handleBuildingClick}
+              buildingJson={buildingJson}
             />
           </div>
 
@@ -32,7 +38,7 @@ const ManageBuilding = () => {
               </>
             ) : (
               <>
-                <Operations />
+                <Operations len_id={buildingJson?.features?.length} />
 
                 <Preferences
                   show={state.show}

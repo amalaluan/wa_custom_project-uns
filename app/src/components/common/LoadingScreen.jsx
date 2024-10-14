@@ -9,7 +9,7 @@ const LoadingScreen = () => {
   if (!authLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center w-screen h-screen bg-black bg-opacity-75">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center w-screen h-screen bg-black bg-opacity-75">
       <ReloadIcon className="w-6 h-6 text-white animate-spin" />
     </div>
   );

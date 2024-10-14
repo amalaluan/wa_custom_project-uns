@@ -5,14 +5,17 @@ import {
   GeoJSON,
   useMapEvent,
   Popup,
+  Marker,
 } from "react-leaflet";
 import L from "leaflet";
+import html2canvas from "html2canvas"; // Import html2canvas
 import "leaflet/dist/leaflet.css";
 
 import boundaryJson from "@/assets/json/boundary.json";
 import buildingJson from "@/assets/json/buildings.json";
 import buildingIconUrl from "@/assets/location_fill.svg";
 import { Button } from "../ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 // Define custom icon
 const buildingIcon = new L.Icon({
@@ -23,28 +26,76 @@ const buildingIcon = new L.Icon({
 });
 
 // Component to handle map clicks and show popup
-const LocationMarker = () => {
+const LocationMarker = ({ saveCoords }) => {
   const [position, setPosition] = useState(null);
+  const [tempPosition, setTempPosition] = useState(null);
+  const [mapClickEnabled, setMapClickEnabled] = useState(true);
+  const { setAuthLoading } = useAuth();
 
   useMapEvent("click", (e) => {
-    setPosition(e.latlng); // Set the clicked latlng
+    if (mapClickEnabled) {
+      setTempPosition(e.latlng);
+    }
   });
 
-  return position === null ? null : (
-    <Popup position={position}>
+  const handleConfirmPosition = () => {
+    setAuthLoading(true);
+
+    setPosition(tempPosition);
+    setTempPosition(null);
+    setMapClickEnabled(false);
+
+    // Capture the map after saving the coordinates
+    setTimeout(() => setMapClickEnabled(true), 500);
+    saveCoords(tempPosition);
+  };
+
+  const handleCancelSelect = () => {
+    setTempPosition(null);
+    setMapClickEnabled(false);
+    setTimeout(() => setMapClickEnabled(true), 500);
+  };
+
+  return tempPosition === null ? null : (
+    <Popup position={tempPosition}>
       <div className="mb-2">
         <span>Use this location?</span>
       </div>
       <div className="flex gap-2">
-        <Button>Yes, use this.</Button>
-        <Button variant="secondary">No</Button>
+        <Button onClick={handleConfirmPosition}>Yes, use this.</Button>
+        <Button variant="secondary" onClick={handleCancelSelect}>
+          No
+        </Button>
       </div>
     </Popup>
   );
 };
 
-const MapContentPicker = () => {
-  // Function to convert points to custom markers
+const MapContentPicker = ({ dispatch, defCoords }) => {
+  const { setAuthLoading } = useAuth();
+
+  const saveCoords = (coords) => {
+    const mapElement = document.getElementById("leaftlet-to-capture"); // Map container
+
+    // Introduce a delay to ensure the map fully renders before capturing
+    setTimeout(() => {
+      html2canvas(mapElement).then((canvas) => {
+        const imageUrl = canvas.toDataURL(); // Generate the snapshot as a base64 image URL
+
+        // Dispatch coordinates and image URL to your state
+        dispatch({
+          type: "update_coords",
+          value: {
+            coordinates: [coords.lng, coords.lat],
+            temporary_url: imageUrl, // Pass the captured image
+          },
+        });
+
+        setAuthLoading(false);
+      });
+    }, 1500); // Adjust the delay to 1000ms to ensure the UI is fully updated
+  };
+
   const pointToLayer = (feature, latlng) => {
     return L.marker(latlng, { icon: buildingIcon });
   };
@@ -64,7 +115,18 @@ const MapContentPicker = () => {
       <GeoJSON data={boundaryJson} style={{ color: "red", fill: false }} />
       <GeoJSON data={buildingJson} pointToLayer={pointToLayer} />
 
-      <LocationMarker />
+      {defCoords && (
+        <Marker position={[defCoords[1], defCoords[0]]}>
+          <Popup>
+            Selected location: <br />
+            Latitude: {defCoords[1]}
+            <br />
+            Longitude: {defCoords[0]}
+          </Popup>
+        </Marker>
+      )}
+
+      <LocationMarker saveCoords={saveCoords} />
     </MapContainer>
   );
 };

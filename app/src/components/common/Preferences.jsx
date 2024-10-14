@@ -3,7 +3,7 @@ import ToggleButton from "./ToggleButton";
 
 const Preferences = ({ show, handleSwitchChange }) => {
   return (
-    <div className="mt-12">
+    <div>
       <p className="mb-2 text-base font-semibold">Preferences</p>
       <hr className="mb-4" />
       <div className="flex flex-col gap-2">

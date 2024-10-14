@@ -1,8 +1,10 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { db } from "@/utils/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import * as turf from "@turf/turf";
 import path from "@/assets/json/path.json";
+import { getDatabase, ref, get, child } from "firebase/database";
+import { useAuth } from "@/context/AuthContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -101,6 +103,7 @@ class MinPriorityQueue {
 }
 
 const useMapHook = () => {
+  const { setAuthLoading } = useAuth();
   const [state, dispatch] = useReducer(reducer, {
     routeFG1: null,
     routeFG2: null,
@@ -118,6 +121,8 @@ const useMapHook = () => {
     selectedData: null,
     show: { building: true, boundary: true, path: true },
   });
+
+  const [buildingJson, setBuildingJson] = useState(null);
 
   const handleSwitchChange = (name) => {
     dispatch({ type: "change-visibility", target: "show", name: name });
@@ -286,7 +291,7 @@ const useMapHook = () => {
             // Log the document data if it exists
             dispatch({
               type: "select-building",
-              data: { ...docSnap.data() },
+              data: { ...docSnap.data(), id: docSnap.id },
               building: convertCoords(feature.geometry.coordinates),
             });
           } else {
@@ -305,12 +310,39 @@ const useMapHook = () => {
     }
   };
 
+  useEffect(() => {
+    setAuthLoading(true);
+
+    const fetchData = async () => {
+      const dbRef = ref(getDatabase());
+
+      try {
+        // Reference the path where data is stored
+        const snapshot = await get(child(dbRef, `json_files/building`));
+
+        if (snapshot.exists()) {
+          setBuildingJson({ ...snapshot.val() });
+        } else {
+          console.log("No data available");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+
+    // Call the async function
+    fetchData();
+  }, []);
+
   return {
     state,
     dispatch,
     handleBuildingClick,
     handleSwitchChange,
     handleGoBack,
+    buildingJson,
   };
 };
 

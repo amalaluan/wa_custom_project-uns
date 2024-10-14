@@ -4,7 +4,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import boundaryJson from "@/assets/json/boundary.json";
-import buildingJson from "@/assets/json/buildings.json";
 import pathJson from "@/assets/json/path.json";
 import buildingIconUrl from "@/assets/location_fill.svg";
 
@@ -16,7 +15,7 @@ const buildingIcon = new L.Icon({
   popupAnchor: [0, -8], // Adjust popup to appear above the center
 });
 
-const MapContent = ({ state, handleBuildingClick }) => {
+const MapContent = ({ state, handleBuildingClick, buildingJson }) => {
   // Function to convert points to custom markers
   const pointToLayer = (feature, latlng) => {
     return L.marker(latlng, { icon: buildingIcon });

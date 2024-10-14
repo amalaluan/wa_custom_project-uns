@@ -6,7 +6,7 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 export const uploadFile = async (currentUser, file, path, setAuthLoading) => {
   try {
@@ -72,5 +72,15 @@ export const changePassword = async (
   } else {
     console.log("No user is signed in.");
     setAuthLoading(false);
+  }
+};
+
+export const deleteDocument = async (path, id) => {
+  try {
+    const docRef = doc(db, path, id);
+    await deleteDoc(docRef);
+    console.log("Document deleted successfully");
+  } catch (error) {
+    console.error("Error deleting document: ", error);
   }
 };
