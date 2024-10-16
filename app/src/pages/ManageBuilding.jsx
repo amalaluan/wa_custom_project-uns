@@ -15,6 +15,8 @@ const ManageBuilding = () => {
     handleBuildingClick,
     handleGoBack,
     buildingJson,
+    setBuildingJson,
+    triggerDetailsUpdate,
   } = useMapHook();
 
   return (
@@ -34,11 +36,19 @@ const ManageBuilding = () => {
           <div className="col-span-1 px-8">
             {state.selectedBuilding ? (
               <>
-                <BuildingDetails handleGoBack={handleGoBack} state={state} />
+                <BuildingDetails
+                  handleGoBack={handleGoBack}
+                  state={state}
+                  setBuildingJson={setBuildingJson}
+                  udf={triggerDetailsUpdate}
+                />
               </>
             ) : (
               <>
-                <Operations len_id={buildingJson?.features?.length} />
+                <Operations
+                  len_id={buildingJson?.features?.length}
+                  setBuildingJson={setBuildingJson}
+                />
 
                 <Preferences
                   show={state.show}

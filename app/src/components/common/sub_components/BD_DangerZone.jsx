@@ -10,21 +10,50 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import useProfileHook from "@/hooks/useProfileHook";
+import useToastHook from "@/hooks/useToastHook";
 import { deleteData } from "@/utils/f.realtime.helper";
 import { deleteDocument } from "@/utils/firebase.helper";
+import { getDatabase, push, ref } from "firebase/database";
 import React, { useState } from "react";
 
-const BD_DangerZone = ({ id }) => {
+const BD_DangerZone = ({ id, name }) => {
+  const { showToast } = useToastHook();
   const [isOpen, setIsOpen] = useState(false);
+  const { state: stateProfile } = useProfileHook();
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const rd_id = (parseInt(id) - 1).toString();
     try {
-      console.log("hello");
-      deleteDocument("buildings_data", id);
-      deleteData(`json_files/building/features/${rd_id}`);
+      await deleteDocument("buildings_data", id);
+      await deleteData(`json_files/building/features/${rd_id}`);
+
+      const histodb = getDatabase();
+      const h_dbref = ref(histodb, "history");
+      const hrecord = {
+        user: stateProfile?.name ?? stateProfile?.email,
+        message: `User: <b><u>${
+          stateProfile?.name ?? stateProfile?.email
+        }</b></u> has deleted the <b><u>${name} </b></u>building record.`,
+        targetOfChange: `Deletion of ${name} building record.`,
+        time: new Date().valueOf(),
+      };
+      await push(h_dbref, hrecord);
+
+      showToast(
+        "success",
+        "Successfully deleted.",
+        `Message: Building's record was removed successfully.`,
+        3000
+      );
+      setIsOpen(false);
     } catch (e) {
-      console.log("hi");
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Error deleting the record. Please try again.`,
+        3000
+      );
     }
   };
 

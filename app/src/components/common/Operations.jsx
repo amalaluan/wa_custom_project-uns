@@ -1,7 +1,6 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Button } from "../ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-import ModalInstance from "./ModalInstance";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +19,9 @@ import { Textarea } from "../ui/textarea";
 import { getDatabase, ref, push, set } from "firebase/database";
 import { db } from "@/utils/firebase.config";
 import { doc, setDoc } from "firebase/firestore";
+import useToastHook from "@/hooks/useToastHook";
+import useMapHook from "@/hooks/useMapHook";
+import useProfileHook from "@/hooks/useProfileHook";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -85,6 +87,10 @@ function reducer(state, action) {
 }
 
 const Operations = ({ len_id }) => {
+  const { showToast } = useToastHook();
+  const [isOpen, setIsOpen] = useState(false);
+  const { state: stateProfile } = useProfileHook();
+
   const [state, dispatch] = useReducer(reducer, {
     details: {
       services_title: [""],
@@ -140,7 +146,21 @@ const Operations = ({ len_id }) => {
     });
   };
 
+  const throwUserError = (message) => {
+    showToast(
+      "destructive",
+      "Attempt Unsuccessful",
+      `Message: ${message}`,
+      3000
+    );
+  };
+
   const handleSubmit = async () => {
+    if (!state.building_coords.geometry.coordinates)
+      return throwUserError("Building location not defined.");
+    if (!state.building_coords.properties.name)
+      return throwUserError("Building name not defined.");
+
     try {
       let inc_id = (parseInt(len_id) + 1).toString();
       let rd_payload = { ...state.building_coords };
@@ -155,8 +175,6 @@ const Operations = ({ len_id }) => {
         item.replace(/;\n/g, ";_")
       );
 
-      console.log(fd_payload);
-
       const rd_db = getDatabase();
 
       // Reference to the location in the database where you want to save the data
@@ -170,8 +188,29 @@ const Operations = ({ len_id }) => {
 
       // Save data to Firestore with custom ID
       await setDoc(doc(db, "buildings_data", inc_id), { ...fd_payload });
+
+      const h_dbref = ref(rd_db, "history");
+      const hrecord = {
+        user: stateProfile?.name ?? stateProfile?.email,
+        message: `User: <b><u>${
+          stateProfile?.name ?? stateProfile?.email
+        }</b></u> has created the <b><u>${
+          fd_payload?.name
+        } </b></u>building record.`,
+        targetOfChange: `Creation of ${fd_payload?.name} building record.`,
+        time: new Date().valueOf(),
+      };
+      await push(h_dbref, hrecord);
+
+      showToast(
+        "success",
+        "Updated Successfully",
+        `Changes were saved successfully.`,
+        3000
+      );
+      setIsOpen(false);
     } catch (error) {
-      console.error("Error saving data:", error);
+      throwUserError("Error occured. Please try again.");
     }
   };
 
@@ -189,7 +228,7 @@ const Operations = ({ len_id }) => {
       <p className="mb-2 text-base font-semibold">Operations</p>
       <hr className="mb-4" />
       <div className="flex gap-2">
-        <ModalInstance>
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
@@ -228,7 +267,7 @@ const Operations = ({ len_id }) => {
                 </>
               )}
               <div className="w-full mb-4">
-                <ModalInstance>
+                <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button size="sm" className="text-xs">
                       {state?.building_coords?.geometry?.coordinates
@@ -260,7 +299,7 @@ const Operations = ({ len_id }) => {
                       <AlertDialogCancel>Close and save</AlertDialogCancel>
                     </AlertDialogFooter>
                   </AlertDialogContent>
-                </ModalInstance>
+                </AlertDialog>
               </div>
 
               <p className="mb-2 text-sm font-semibold">
@@ -411,7 +450,7 @@ const Operations = ({ len_id }) => {
               <Button onClick={handleSubmit}>Create Record</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
-        </ModalInstance>
+        </AlertDialog>
       </div>
     </div>
   );

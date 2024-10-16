@@ -3,7 +3,7 @@ import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import React, { useState } from "react";
 import BD_H_Content from "./BD_H_Content";
 
-const BD_Header = ({ handleGoBack, selectedData }) => {
+const BD_Header = ({ handleGoBack, selectedData, setBuildingJson, udf }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -15,7 +15,12 @@ const BD_Header = ({ handleGoBack, selectedData }) => {
             Edit
           </Button>
         </DrawerTrigger>
-        <BD_H_Content initstate={selectedData} isOpen={setIsOpen} />
+        <BD_H_Content
+          initstate={selectedData}
+          isOpen={setIsOpen}
+          setBuildingJson={setBuildingJson}
+          udf={udf}
+        />
       </Drawer>
     </div>
   );

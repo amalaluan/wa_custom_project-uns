@@ -3,7 +3,7 @@ import { db } from "@/utils/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import * as turf from "@turf/turf";
 import path from "@/assets/json/path.json";
-import { getDatabase, ref, get, child } from "firebase/database";
+import { getDatabase, ref, get, child, onValue } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
 
 const reducer = (state, action) => {
@@ -33,6 +33,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedBuilding: action.building,
+        selectedData: action.data,
+      };
+    }
+
+    case "update-building": {
+      return {
+        ...state,
         selectedData: action.data,
       };
     }
@@ -123,6 +130,7 @@ const useMapHook = () => {
   });
 
   const [buildingJson, setBuildingJson] = useState(null);
+  const [gLayer, setGLayer] = useState(null);
 
   const handleSwitchChange = (name) => {
     dispatch({ type: "change-visibility", target: "show", name: name });
@@ -275,8 +283,8 @@ const useMapHook = () => {
   };
 
   const handleBuildingClick = (feature, layer) => {
+    layer.bindPopup(feature.properties.name);
     if (feature.properties) {
-      layer.bindPopup(feature.properties.name);
       layer.on("click", async () => {
         // Make the click handler async
         const data_id = String(feature.properties.id);
@@ -313,28 +321,55 @@ const useMapHook = () => {
   useEffect(() => {
     setAuthLoading(true);
 
-    const fetchData = async () => {
-      const dbRef = ref(getDatabase());
+    const dbRef = ref(getDatabase(), "json_files/building"); // Reference to the database path
 
-      try {
-        // Reference the path where data is stored
-        const snapshot = await get(child(dbRef, `json_files/building`));
-
+    // Listen for real-time updates
+    const unsubscribe = onValue(
+      dbRef,
+      (snapshot) => {
         if (snapshot.exists()) {
-          setBuildingJson({ ...snapshot.val() });
+          setBuildingJson(snapshot.val()); // Update the state with new data
+          dispatch({ type: "go-back" });
         } else {
           console.log("No data available");
         }
-      } catch (error) {
+        setAuthLoading(false); // Stop loading once the data is fetched
+      },
+      (error) => {
         console.error("Error fetching data:", error);
-      } finally {
         setAuthLoading(false);
       }
-    };
+    );
 
-    // Call the async function
-    fetchData();
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
   }, []);
+
+  const triggerDetailsUpdate = async (id, coords) => {
+    const data_id = id;
+
+    try {
+      const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
+
+      // Await the getDoc call to fetch the document
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // Log the document data if it exists
+        dispatch({
+          type: "update-building",
+          data: { ...docSnap.data(), id: docSnap.id },
+        });
+      } else {
+        dispatch({
+          type: "update-building",
+          data: null,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching document: ", error);
+    }
+  };
 
   return {
     state,
@@ -343,6 +378,8 @@ const useMapHook = () => {
     handleSwitchChange,
     handleGoBack,
     buildingJson,
+    setBuildingJson,
+    triggerDetailsUpdate,
   };
 };
 

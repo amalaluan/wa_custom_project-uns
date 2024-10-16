@@ -12,6 +12,9 @@ import { db } from "@/utils/firebase.config";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useReducer } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import useToastHook from "@/hooks/useToastHook";
+import { getDatabase, push, ref } from "firebase/database";
+import useProfileHook from "@/hooks/useProfileHook";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -88,8 +91,10 @@ function reducer(state, action) {
   }
 }
 
-const BD_H_Content = ({ initstate, isOpen }) => {
+const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const [state, dispatch] = useReducer(reducer, {});
+  const { showToast } = useToastHook();
+  const { state: stateProfile } = useProfileHook();
 
   useEffect(() => {
     dispatch({ type: "reset", payload: { ...initstate } });
@@ -144,16 +149,42 @@ const BD_H_Content = ({ initstate, isOpen }) => {
     try {
       let path_id = initstate.id;
       let fd_payload = { ...state };
-
       fd_payload.services = fd_payload.services.map((item) =>
         item.replace(/;\n/g, ";_")
       );
-
       // Save data to Firestore with custom ID
       await updateDoc(doc(db, "buildings_data", path_id), { ...fd_payload });
+      await udf(path_id);
+
+      const histodb = getDatabase();
+      const h_dbref = ref(histodb, "history");
+      const hrecord = {
+        user: stateProfile?.name ?? stateProfile?.email,
+        message: `User: <b><u>${
+          stateProfile?.name ?? stateProfile?.email
+        }</b></u> has updated the <b><u>${
+          initstate?.name
+        } </b></u>building record.`,
+        targetOfChange: "Updation of ${initstate?.name} building record.",
+        time: new Date().valueOf(),
+      };
+      await push(h_dbref, hrecord);
+
       isOpen(false);
+
+      showToast(
+        "success",
+        "Updated Successfully",
+        `Changes were saved successfully.`,
+        3000
+      );
     } catch (error) {
-      console.error("Error saving data:", error);
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Please try again.`,
+        3000
+      );
     }
   };
 

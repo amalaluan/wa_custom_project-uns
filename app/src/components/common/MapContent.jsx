@@ -40,6 +40,7 @@ const MapContent = ({ state, handleBuildingClick, buildingJson }) => {
       )}
       {state.show.building && buildingJson && (
         <GeoJSON
+          key={JSON.stringify(buildingJson)}
           data={buildingJson}
           onEachFeature={handleBuildingClick}
           pointToLayer={pointToLayer}
