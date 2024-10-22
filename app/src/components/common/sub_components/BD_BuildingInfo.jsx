@@ -1,7 +1,7 @@
 import React from "react";
 
-const BD_BuildingInfo = ({ selectedData }) => (
-  <h3 className="mt-4 font-semibold uppercase">{selectedData?.name}</h3>
+const BD_BuildingInfo = ({ name, d_classes }) => (
+  <h3 className={`font-semibold uppercase ${d_classes}`}>{name}</h3>
 );
 
 export default BD_BuildingInfo;

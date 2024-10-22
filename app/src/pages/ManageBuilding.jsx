@@ -5,6 +5,7 @@ import Navigation from "@/components/common/Navigation";
 import Operations from "@/components/common/Operations";
 import Preferences from "@/components/common/Preferences";
 import RecentChanges from "@/components/common/RecentChanges";
+import ToggleButton from "@/components/common/ToggleButton";
 import useMapHook from "@/hooks/useMapHook";
 import React, { useState } from "react";
 
@@ -18,6 +19,11 @@ const ManageBuilding = () => {
     setBuildingJson,
     triggerDetailsUpdate,
   } = useMapHook();
+
+  const [travelMode, setTravelMode] = useState(false);
+  const handleTravelModeChange = () => {
+    setTravelMode((prev) => !prev);
+  };
 
   return (
     <div>
@@ -54,6 +60,25 @@ const ManageBuilding = () => {
                   show={state.show}
                   handleSwitchChange={handleSwitchChange}
                 />
+
+                <div className="mt-12">
+                  <p className="mb-2 text-base font-semibold">Travel Mode</p>
+                  <hr className="mb-4" />
+                  <div className="flex flex-col gap-2">
+                    <ToggleButton
+                      name="Travel by walking"
+                      id="walk"
+                      defaultValue={travelMode}
+                      handleChange={handleTravelModeChange}
+                    />
+                    <ToggleButton
+                      name="Travel by driving"
+                      id="vehicle"
+                      defaultValue={!travelMode}
+                      handleChange={handleTravelModeChange}
+                    />
+                  </div>
+                </div>
 
                 <RecentChanges />
               </>

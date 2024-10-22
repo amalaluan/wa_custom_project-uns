@@ -34,8 +34,6 @@ const RecentChanges = () => {
     return () => unsubscribe();
   }, []);
 
-  console.log(changes);
-
   return (
     <div className="mt-12">
       <p className="mb-2 text-base font-semibold">Recent Changes</p>

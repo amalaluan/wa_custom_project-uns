@@ -26,7 +26,7 @@ const BD_DangerZone = ({ id, name }) => {
     const rd_id = (parseInt(id) - 1).toString();
     try {
       await deleteDocument("buildings_data", id);
-      await deleteData(`json_files/building/features/${rd_id}`);
+      await deleteData(`json_files/building/features/${rd_id}/properties`);
 
       const histodb = getDatabase();
       const h_dbref = ref(histodb, "history");

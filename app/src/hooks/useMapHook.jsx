@@ -323,12 +323,24 @@ const useMapHook = () => {
 
     const dbRef = ref(getDatabase(), "json_files/building"); // Reference to the database path
 
-    // Listen for real-time updates
     const unsubscribe = onValue(
       dbRef,
       (snapshot) => {
         if (snapshot.exists()) {
-          setBuildingJson(snapshot.val()); // Update the state with new data
+          const geoJsonData = snapshot.val();
+
+          // Filter out features with status "deleted"
+          const filteredFeatures = geoJsonData.features.filter(
+            (feature) => feature?.properties?.status !== "deleted"
+          );
+
+          // Create a new GeoJSON object with filtered features
+          const filteredGeoJson = {
+            ...geoJsonData,
+            features: filteredFeatures,
+          };
+
+          setBuildingJson(filteredGeoJson); // Update the state with new filtered data
           dispatch({ type: "go-back" });
         } else {
           console.log("No data available");
