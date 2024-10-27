@@ -116,6 +116,8 @@ const useProfileHook = () => {
     },
   ];
 
+  console.log(state);
+
   useEffect(() => {
     setAuthLoading(true);
 
@@ -123,7 +125,10 @@ const useProfileHook = () => {
       delete userData.status;
       dispatch({
         type: "init-values",
-        payload: { ...userData, profileUrl: currentUser.photoURL },
+        payload: {
+          ...userData,
+          profileUrl: currentUser.photoURL || state.profileUrl,
+        },
       });
 
       setAuthLoading(false);

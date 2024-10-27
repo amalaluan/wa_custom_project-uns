@@ -1,9 +1,12 @@
+import { useAuth } from "@/context/AuthContext";
 import useAuthHook from "@/hooks/useAuthHook";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const { handleLogout } = useAuthHook();
+  const { userData } = useAuth();
+
   return (
     <nav className="bg-[#00413d] text-white py-4">
       <div className="mx-auto max-w-[1140px]">
@@ -15,6 +18,16 @@ const Navigation = () => {
               </h4>
             </div>
             <div className="flex space-x-4">
+              {userData?.role == "superadmin" ? (
+                <Link
+                  to="/manage-admins"
+                  className="text-sm hover:text-gray-400"
+                >
+                  Manage Admins
+                </Link>
+              ) : (
+                ""
+              )}
               <Link to="/home" className="text-sm hover:text-gray-400">
                 Home
               </Link>

@@ -11,6 +11,8 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/common/PrivateRoute";
 import PublicRoute from "./components/common/PublicRoute";
 import LoadingScreen from "./components/common/LoadingScreen";
+import Pending from "./pages/Pending";
+import ManageAdmin from "./pages/ManageAdmin";
 
 function App() {
   return (
@@ -70,6 +72,14 @@ function App() {
           element={
             <PrivateRoute>
               <NotFound />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/manage-admins"
+          element={
+            <PrivateRoute>
+              <ManageAdmin />
             </PrivateRoute>
           }
         />

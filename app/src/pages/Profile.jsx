@@ -30,7 +30,7 @@ const Profile = () => {
               {state.name || "Loading ..."}
             </p>
             <p className="mb-4 text-sm text-gray-600">
-              {`${state.username}` || "Loading ..."}
+              {`${state.username}` || "Not set"}
             </p>
 
             <div className="relative">
