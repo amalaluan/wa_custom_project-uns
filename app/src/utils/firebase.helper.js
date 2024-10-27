@@ -78,9 +78,11 @@ export const changePassword = async (
 export const deleteDocument = async (path, id) => {
   try {
     const docRef = doc(db, path, id);
-    await deleteDoc(docRef);
-    console.log("Document deleted successfully");
+    await updateDoc(docRef, {
+      status: "deleted",
+    });
+    console.log("Document marked as deleted successfully");
   } catch (error) {
-    console.error("Error deleting document: ", error);
+    console.error("Error marking document as deleted: ", error);
   }
 };

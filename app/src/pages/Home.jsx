@@ -54,12 +54,9 @@ const Home = () => {
     buildingJson,
     setBuildingJson,
     triggerDetailsUpdate,
+    travelMode,
+    handleTravelModeChange,
   } = useMapHook();
-
-  const [travelMode, setTravelMode] = useState(false);
-  const handleTravelModeChange = () => {
-    setTravelMode((prev) => !prev);
-  };
 
   return (
     <div>
@@ -83,6 +80,8 @@ const Home = () => {
                   setBuildingJson={setBuildingJson}
                   state={state}
                   udf={triggerDetailsUpdate}
+                  travelMode={travelMode}
+                  handleTravelModeChange={handleTravelModeChange}
                 />
               </>
             ) : (
@@ -91,25 +90,6 @@ const Home = () => {
                   show={state?.show}
                   handleSwitchChange={handleSwitchChange}
                 />
-
-                <div className="mt-12">
-                  <p className="mb-2 text-base font-semibold">Travel Mode</p>
-                  <hr className="mb-4" />
-                  <div className="flex flex-col gap-2">
-                    <ToggleButton
-                      name="Travel by walking"
-                      id="walk"
-                      defaultValue={travelMode}
-                      handleChange={handleTravelModeChange}
-                    />
-                    <ToggleButton
-                      name="Travel by driving"
-                      id="vehicle"
-                      defaultValue={!travelMode}
-                      handleChange={handleTravelModeChange}
-                    />
-                  </div>
-                </div>
 
                 <RecentChanges />
               </>

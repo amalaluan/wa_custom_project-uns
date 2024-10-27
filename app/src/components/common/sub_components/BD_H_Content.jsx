@@ -13,7 +13,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useReducer } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import useToastHook from "@/hooks/useToastHook";
-import { getDatabase, push, ref } from "firebase/database";
+import { getDatabase, push, ref, set, update } from "firebase/database";
 import useProfileHook from "@/hooks/useProfileHook";
 
 function reducer(state, action) {
@@ -147,16 +147,50 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
   const handleSubmit = async () => {
     try {
+      const histodb = getDatabase();
+
       let path_id = initstate.id;
       let fd_payload = { ...state };
       fd_payload.services = fd_payload.services.map((item) =>
         item.replace(/;\n/g, ";_")
       );
+
+      let b_details = [];
+      fd_payload?.services_title?.map((item, index) => {
+        const services = fd_payload?.services[index] || "No record";
+        const head = fd_payload?.head[index] || "No record";
+        const cinfo = fd_payload?.contact[index] || "No record";
+        const email = fd_payload?.email[index] || "No record";
+
+        let newitem =
+          (item || "No service provided") +
+          "\n" +
+          services +
+          "\n\nHead/Director: " +
+          head +
+          "\n\nContact Number: " +
+          cinfo +
+          "\n\nEmail Address: " +
+          email;
+
+        // Replace actual newline characters with literal \n
+        newitem = newitem.replace(/\n/g, "\\n").replace(/_/g, "\\n");
+        b_details.push(newitem);
+      });
+
+      const newpayload = b_details.join("\\n\\n\\n");
+      const d_dbref = ref(histodb, `buildings/info/${path_id - 1}`);
+      const drecord = {
+        id: fd_payload?.id,
+        name: fd_payload?.name,
+        service: newpayload,
+      };
+      await update(d_dbref, drecord);
+
       // Save data to Firestore with custom ID
       await updateDoc(doc(db, "buildings_data", path_id), { ...fd_payload });
       await udf(path_id);
 
-      const histodb = getDatabase();
       const h_dbref = ref(histodb, "history");
       const hrecord = {
         user: stateProfile?.name ?? stateProfile?.email,
@@ -179,6 +213,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         3000
       );
     } catch (error) {
+      console.log(error);
       showToast(
         "destructive",
         "Attempt Unsuccessful",

@@ -14,7 +14,7 @@ import useProfileHook from "@/hooks/useProfileHook";
 import useToastHook from "@/hooks/useToastHook";
 import { deleteData } from "@/utils/f.realtime.helper";
 import { deleteDocument } from "@/utils/firebase.helper";
-import { getDatabase, push, ref } from "firebase/database";
+import { getDatabase, push, ref, update } from "firebase/database";
 import React, { useState } from "react";
 
 const BD_DangerZone = ({ id, name }) => {
@@ -25,7 +25,7 @@ const BD_DangerZone = ({ id, name }) => {
   const handleDelete = async () => {
     const rd_id = (parseInt(id) - 1).toString();
     try {
-      await deleteDocument("buildings_data", id);
+      await deleteDocument(`buildings_data`, id);
       await deleteData(`json_files/building/features/${rd_id}/properties`);
 
       const histodb = getDatabase();
@@ -39,6 +39,9 @@ const BD_DangerZone = ({ id, name }) => {
         time: new Date().valueOf(),
       };
       await push(h_dbref, hrecord);
+
+      const d_dbref = ref(histodb, `buildings/info/${rd_id}`);
+      await update(d_dbref, { name: "deleted_building" });
 
       showToast(
         "success",

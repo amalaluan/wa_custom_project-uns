@@ -1,134 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
 import { db } from "@/utils/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import * as turf from "@turf/turf";
 import path from "@/assets/json/path.json";
-import { getDatabase, ref, get, child, onValue } from "firebase/database";
-import { useAuth } from "@/context/AuthContext";
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "change-visibility": {
-      return {
-        ...state,
-        [action.target]: {
-          ...state[action.target],
-          [action.name]: !state[action.target][action.name],
-        },
-      };
-    }
-
-    case "go-back": {
-      return {
-        ...state,
-        selectedBuilding: null,
-        selectedData: null,
-        routeFG1: null,
-        routeFG2: null,
-        routeFG3: null,
-      };
-    }
-
-    case "select-building": {
-      return {
-        ...state,
-        selectedBuilding: action.building,
-        selectedData: action.data,
-      };
-    }
-
-    case "update-building": {
-      return {
-        ...state,
-        selectedData: action.data,
-      };
-    }
-
-    case "calculated-path-update": {
-      return {
-        ...state,
-        routeFG1: {
-          type: "Feature",
-          geometry: {
-            type: "MultiLineString",
-            coordinates: [action.data[0].paths],
-          },
-        },
-        routeFG2: {
-          type: "Feature",
-          geometry: {
-            type: "MultiLineString",
-            coordinates: [action.data[1].paths],
-          },
-        },
-        routeFG3: {
-          type: "Feature",
-          geometry: {
-            type: "MultiLineString",
-            coordinates: [action.data[2].paths],
-          },
-        },
-        distances: [
-          {
-            bike: action.data[0].bike,
-            distance: action.data[0].distance,
-            walk: action.data[0].walk,
-          },
-          {
-            bike: action.data[1].bike,
-            distance: action.data[1].distance,
-            walk: action.data[1].walk,
-          },
-          {
-            bike: action.data[2].bike,
-            distance: action.data[2].distance,
-            walk: action.data[2].walk,
-          },
-        ],
-      };
-    }
-  }
-};
-
-class MinPriorityQueue {
-  constructor() {
-    this.queue = [];
-  }
-
-  insert(element, priority) {
-    this.queue.push({ element, priority });
-    this.queue.sort((a, b) => a.priority - b.priority);
-  }
-
-  remove() {
-    return this.queue.shift();
-  }
-
-  isEmpty() {
-    return this.queue.length === 0;
-  }
-}
 
 const useMapHook = () => {
-  const { setAuthLoading } = useAuth();
-  const [state, dispatch] = useReducer(reducer, {
-    routeFG1: null,
-    routeFG2: null,
-    routeFG3: null,
-    distances: null,
-    data: null,
-    path: null,
-    gate_one: [12.3981503, 121.9829883],
-    gate_two: [12.39640848, 121.98238727],
-    gate_three: [12.3980493, 121.9877596],
-    startLoc: null,
-    endLoc: null,
-    details: null,
-    selectedBuilding: null,
-    selectedData: null,
-    show: { building: true, boundary: true, path: true },
-  });
-
   const [buildingJson, setBuildingJson] = useState(null);
   const [temporaryHolder, setTemporaryHolder] = useState(null);
   const [travelMode, setTravelMode] = useState(false);
@@ -141,17 +16,11 @@ const useMapHook = () => {
     setTravelMode((prev) => !prev);
   };
 
-  const handleSwitchChange = (name) => {
-    dispatch({ type: "change-visibility", target: "show", name: name });
-  };
-
-  const handleGoBack = () => {
-    dispatch({ type: "go-back" });
-  };
-
-  const convertCoords = (coords) => {
-    return [coords[1], coords[0]];
-  };
+  useEffect(() => {
+    if (temporaryHolder) {
+      calculateRoute(temporaryHolder);
+    }
+  }, [travelMode, temporaryHolder]);
 
   const createGraph = (pathData, isWalk) => {
     const graph = {};
@@ -201,29 +70,6 @@ const useMapHook = () => {
     });
 
     return graph;
-  };
-
-  // Calculate distance between two coordinates
-  const calculateDistance = (coord1, coord2) => {
-    const [x1, y1] = coord1.split(",").map(Number);
-    const [x2, y2] = coord2.split(",").map(Number);
-    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
-  };
-
-  // Find the closest node to a given point
-  const findClosestNode = (graph, point) => {
-    let closestNode = null;
-    let minDistance = Infinity;
-
-    Object.keys(graph).forEach((node) => {
-      const distance = calculateDistance(node, point);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestNode = node;
-      }
-    });
-
-    return closestNode;
   };
 
   // Dijkstra's algorithm to find the shortest path
@@ -367,86 +213,10 @@ const useMapHook = () => {
     }
   };
 
-  useEffect(() => {
-    setAuthLoading(true);
-
-    const dbRef = ref(getDatabase(), "json_files/building"); // Reference to the database path
-
-    const unsubscribe = onValue(
-      dbRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const geoJsonData = snapshot.val();
-
-          // Filter out features with status "deleted"
-          const filteredFeatures = geoJsonData.features.filter(
-            (feature) => feature?.properties?.status !== "deleted"
-          );
-
-          // Create a new GeoJSON object with filtered features
-          const filteredGeoJson = {
-            ...geoJsonData,
-            features: filteredFeatures,
-          };
-
-          setBuildingJson(filteredGeoJson); // Update the state with new filtered data
-          dispatch({ type: "go-back" });
-        } else {
-          console.log("No data available");
-        }
-        setAuthLoading(false); // Stop loading once the data is fetched
-      },
-      (error) => {
-        console.error("Error fetching data:", error);
-        setAuthLoading(false);
-      }
-    );
-
-    // Cleanup listener on component unmount
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    if (temporaryHolder) {
-      calculateRoute(temporaryHolder);
-    }
-  }, [travelMode, temporaryHolder]);
-
-  const triggerDetailsUpdate = async (id, coords) => {
-    const data_id = id;
-
-    try {
-      const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
-
-      // Await the getDoc call to fetch the document
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Log the document data if it exists
-        dispatch({
-          type: "update-building",
-          data: { ...docSnap.data(), id: docSnap.id },
-        });
-      } else {
-        dispatch({
-          type: "update-building",
-          data: null,
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching document: ", error);
-    }
-  };
-
   return {
-    state,
-    dispatch,
     handleBuildingClick,
-    handleSwitchChange,
-    handleGoBack,
     buildingJson,
     setBuildingJson,
-    triggerDetailsUpdate,
     travelMode,
     handleTravelModeChange,
   };

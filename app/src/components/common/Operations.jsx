@@ -202,6 +202,38 @@ const Operations = ({ len_id }) => {
       };
       await push(h_dbref, hrecord);
 
+      let b_details = [];
+      fd_payload?.services_title?.map((item, index) => {
+        const services = fd_payload?.services[index] || "No record";
+        const head = fd_payload?.head[index] || "No record";
+        const cinfo = fd_payload?.contact[index] || "No record";
+        const email = fd_payload?.email[index] || "No record";
+
+        let newitem =
+          (item || "No service provided") +
+          "\n" +
+          services +
+          "\n\nHead/Director: " +
+          head +
+          "\n\nContact Number: " +
+          cinfo +
+          "\n\nEmail Address: " +
+          email;
+
+        // Replace actual newline characters with literal \n
+        newitem = newitem.replace(/\n/g, "\\n");
+
+        b_details.push(newitem);
+      });
+      const newpayload = b_details.join("\\n\\n\\n");
+      const d_dbref = ref(rd_db, `buildings/info/${len_id.toString()}`);
+      const drecord = {
+        name: rd_payload?.properties?.name,
+        photo: "https://www.testo.com/images/not-available.jpg",
+        service: newpayload,
+      };
+      await set(d_dbref, drecord);
+
       showToast(
         "success",
         "Updated Successfully",

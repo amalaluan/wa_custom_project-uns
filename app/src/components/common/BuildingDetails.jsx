@@ -16,8 +16,16 @@ import {
 import { storage } from "@/utils/firebase.config";
 import { handleSearchToPush } from "@/utils/f.realtime.helper";
 import { TrashIcon } from "@radix-ui/react-icons";
+import ToggleButton from "./ToggleButton";
 
-const BuildingDetails = ({ state, handleGoBack, setBuildingJson, udf }) => {
+const BuildingDetails = ({
+  state,
+  handleGoBack,
+  setBuildingJson,
+  udf,
+  travelMode,
+  handleTravelModeChange,
+}) => {
   const { pathname } = useLocation();
 
   const [images, setImages] = useState([]);
@@ -125,6 +133,26 @@ const BuildingDetails = ({ state, handleGoBack, setBuildingJson, udf }) => {
         setBuildingJson={setBuildingJson}
         udf={udf}
       />
+
+      <div className="mt-4 mb-12">
+        <p className="mb-2 text-base font-semibold">Travel Mode</p>
+        <hr className="mb-4" />
+        <div className="flex flex-col gap-2">
+          <ToggleButton
+            name="Travel by walking"
+            id="walk"
+            defaultValue={!travelMode}
+            handleChange={handleTravelModeChange}
+          />
+          <ToggleButton
+            name="Travel by driving"
+            id="vehicle"
+            defaultValue={travelMode}
+            handleChange={handleTravelModeChange}
+          />
+        </div>
+      </div>
+
       <BD_BuildingInfo d_classes={"mt-4"} name={state?.selectedData?.name} />
       <BD_TravelInformation distances={state?.distances} />
       <BD_ServicesAccordion selectedData={state?.selectedData} />
