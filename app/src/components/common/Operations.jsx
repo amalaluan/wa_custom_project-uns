@@ -247,6 +247,7 @@ const Operations = ({ len_id }) => {
       const newpayload = b_details.join("\\n\\n\\n");
       const d_dbref = ref(rd_db, `buildings/info/${len_id.toString()}`);
       const drecord = {
+        id: parseInt(len_id) + 1,
         name: rd_payload?.properties?.name,
         photo: "https://www.testo.com/images/not-available.jpg",
         service: newpayload,
