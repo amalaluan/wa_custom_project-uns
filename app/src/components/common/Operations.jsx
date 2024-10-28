@@ -80,6 +80,25 @@ function reducer(state, action) {
         },
       };
     }
+    case "reset": {
+      return {
+        details: {
+          services_title: [""],
+          services: [""],
+          head: [""],
+          email: [""],
+          contact: [""],
+        },
+        building_coords: {
+          type: "Feature",
+          properties: { id: "", name: "" },
+          geometry: {
+            type: "Point",
+            coordinates: null,
+          },
+        },
+      };
+    }
 
     default:
       return state;
@@ -233,6 +252,7 @@ const Operations = ({ len_id }) => {
         service: newpayload,
       };
       await set(d_dbref, drecord);
+      dispatch({ type: "reset" });
 
       showToast(
         "success",

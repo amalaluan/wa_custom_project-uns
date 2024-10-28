@@ -116,8 +116,6 @@ const useProfileHook = () => {
     },
   ];
 
-  console.log(state);
-
   useEffect(() => {
     setAuthLoading(true);
 
