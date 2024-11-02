@@ -13,7 +13,7 @@ const Signin = () => {
     <BaseLayout>
       <div className="flex flex-col justify-center h-screen px-8 m-auto text-center w-100 lg:w-1/3 md:w-2/4 lg:px-12 sm:px-0 sm:w-2/3">
         <img src={logo} className="h-[100px] mb-2 mx-auto w-[100px]" alt="" />
-        <p className="mb-1 text-3xl">Hola Admin!</p>
+        <p className="mb-1 text-3xl">Hello Admin!</p>
         <p className="text-sm text-gray-500">Sign in to continue</p>
 
         <form
@@ -34,12 +34,12 @@ const Signin = () => {
             );
           })}
 
-          <a
-            href=""
+          <Link
+            to="/reset"
             className="text-sm text-right text-[#3d9f7f] font-medium hover:underline"
           >
             Forgotten password?
-          </a>
+          </Link>
 
           <Button className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]">
             Sign in

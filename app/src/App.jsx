@@ -13,6 +13,7 @@ import PublicRoute from "./components/common/PublicRoute";
 import LoadingScreen from "./components/common/LoadingScreen";
 import Pending from "./pages/Pending";
 import ManageAdmin from "./pages/ManageAdmin";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
           element={
             <PublicRoute>
               <Signin />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/reset"
+          element={
+            <PublicRoute>
+              <ResetPassword />
             </PublicRoute>
           }
         />

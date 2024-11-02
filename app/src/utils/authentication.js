@@ -4,6 +4,8 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   deleteUser,
+  getAuth,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth, db } from "./firebase.config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -87,4 +89,22 @@ export const signOutUser = async () => {
   } catch (error) {
     console.log("Error signing out:", error.message);
   }
+};
+
+export const resetPassword = async (email) => {
+  const auth = getAuth();
+
+  return sendPasswordResetEmail(auth, email)
+    .then(() => {
+      return {
+        status: 1,
+        message: "Password reset email sent. Check your inbox.",
+      };
+    })
+    .catch((error) => {
+      return {
+        status: 0,
+        message: "Failed to send password reset email. Please try again.",
+      };
+    });
 };

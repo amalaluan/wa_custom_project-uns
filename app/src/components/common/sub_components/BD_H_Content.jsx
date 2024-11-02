@@ -163,14 +163,14 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         const email = fd_payload?.email[index] || "No record";
 
         let newitem =
-          (item || "No service provided") +
+          (`**${item}**` || "No service provided") +
           "\n" +
           services +
-          "\n\nHead/Director: " +
+          "\n\n**Head/Director:** " +
           head +
-          "\n\nContact Number: " +
+          "\n\n**Contact Number:** " +
           cinfo +
-          "\n\nEmail Address: " +
+          "\n\n**Email Address:** " +
           email;
 
         // Replace actual newline characters with literal \n

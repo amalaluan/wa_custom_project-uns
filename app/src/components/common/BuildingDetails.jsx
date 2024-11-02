@@ -154,7 +154,7 @@ const BuildingDetails = ({
       </div>
 
       <BD_BuildingInfo d_classes={"mt-4"} name={state?.selectedData?.name} />
-      <BD_TravelInformation distances={state?.distances} />
+      <BD_TravelInformation distances={state?.distances} mode={travelMode} />
       <BD_ServicesAccordion selectedData={state?.selectedData} />
 
       <div className="my-12">
@@ -174,11 +174,12 @@ const BuildingDetails = ({
             multiple
           />
         </div>
+        <hr className="my-4" />
 
         {isLoading && <p className="mt-2 text-sm">Fetching Records</p>}
 
         {!isLoading && previews.length == 0 && (
-          <p className="mt-2 text-sm">No images found</p>
+          <p className="text-sm">No images found</p>
         )}
         <div className="grid grid-cols-3 mt-2">
           {previews.map((preview, index) => (

@@ -21,6 +21,17 @@ const MapContent = ({ state, handleBuildingClick, buildingJson }) => {
     return L.marker(latlng, { icon: buildingIcon });
   };
 
+  // Utility function to offset coordinates
+  const offsetCoordinates = (coordinates, offset) =>
+    coordinates.map(([lng, lat]) => [lng + offset.lng, lat + offset.lat]);
+
+  // Define offsets for each path
+  const offsets = [
+    { lng: 0.0001, lat: 0.0001 }, // Adjust the offset values to fit your map scale
+    { lng: 0.00015, lat: 0.00015 },
+    { lng: 0.0002, lat: 0.0002 },
+  ];
+
   return (
     <MapContainer
       center={[12.396672, 121.986217]}
