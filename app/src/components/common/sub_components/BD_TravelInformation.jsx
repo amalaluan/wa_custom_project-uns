@@ -16,7 +16,11 @@ const BD_TravelInformation = ({ distances, mode }) => (
         {distances?.map((item, index) => (
           <div key={index} className="mb-2">
             <p className="text-sm font-semibold">From Gate {index + 1}</p>
-            <hr className={`my-2 border-t-2 border-t-[${colors[index]}]`} />
+            <hr
+              className={`my-2 border-t-2 ${
+                index ? "border-t-[#50BFE6]" : "border-t-[#66FF66]"
+              }`}
+            />
             <p className="text-xs">
               Distance: {Math.round(item.distance * 1000 * 10) / 10} meters.
             </p>

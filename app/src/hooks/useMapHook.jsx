@@ -79,11 +79,11 @@ const reducer = (state, action) => {
             distance: action.data[1].distance,
             walk: action.data[1].walk,
           },
-          {
-            bike: action.data[2].bike,
-            distance: action.data[2].distance,
-            walk: action.data[2].walk,
-          },
+          // {
+          //   bike: action.data[2].bike,
+          //   distance: action.data[2].distance,
+          //   walk: action.data[2].walk,
+          // },
         ],
       };
     }

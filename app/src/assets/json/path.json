@@ -39,7 +39,7 @@
     { "type": "Feature", "properties": { "id": 34, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.983372750589652, 12.395507255159503 ], [ 121.983221285466598, 12.395417350298434 ] ] ] } },
     { "type": "Feature", "properties": { "id": 35, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982948799210916, 12.396704582587835 ], [ 121.982726116834201, 12.396587259560752 ] ] ] } },
     { "type": "Feature", "properties": { "id": 36, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982726116834201, 12.396587259560752 ], [ 121.982545848364751, 12.396492282798548 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 37, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982545848364751, 12.396492282798548 ], [ 121.982745906110083, 12.396173898955373 ] ] ] } },
+    { "type": "Feature", "properties": { "id": 37, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982545848364751, 12.396492282798548 ], [ 121.982745906110083, 12.39617389895537 ], [ 121.982784717002886, 12.396193753573304 ] ] ] } },
     { "type": "Feature", "properties": { "id": 38, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982745906110083, 12.39617389895537 ], [ 121.982966170277493, 12.395823356955631 ] ] ] } },
     { "type": "Feature", "properties": { "id": 39, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.982966170277493, 12.395823356955631 ], [ 121.98314146273411, 12.395544385377089 ] ] ] } },
     { "type": "Feature", "properties": { "id": 40, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98314146273411, 12.395544385377089 ], [ 121.983221285466598, 12.395417350298434 ] ] ] } },
@@ -85,15 +85,6 @@
     { "type": "Feature", "properties": { "id": 80, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987148198186603, 12.395929943440928 ], [ 121.98734086078889, 12.396021400916588 ] ] ] } },
     { "type": "Feature", "properties": { "id": 81, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98734086078889, 12.396021400916588 ], [ 121.987377710155727, 12.396194925540966 ] ] ] } },
     { "type": "Feature", "properties": { "id": 82, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987377710155727, 12.396194925540966 ], [ 121.987425957143742, 12.396422121684616 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 83, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987425957143742, 12.396422121684616 ], [ 121.987522354821735, 12.397004268701155 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 84, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987522354821735, 12.397004268701155 ], [ 121.98756330615943, 12.397202089133428 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 85, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.98756330615943, 12.397202089133428 ], [ 121.987608306475622, 12.397419468477143 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 86, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987608306475622, 12.397419468477143 ], [ 121.987631709813556, 12.397509695899851 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 87, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987631709813556, 12.397509695899851 ], [ 121.987666948602438, 12.397645552747777 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 88, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987666948602438, 12.397645552747777 ], [ 121.987714799365136, 12.397830032691429 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 89, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987714799365136, 12.397830032691429 ], [ 121.987723794385786, 12.397864711348859 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 90, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987723794385786, 12.397864711348859 ], [ 121.987681246208368, 12.397989379216645 ] ] ] } },
-    { "type": "Feature", "properties": { "id": 91, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.987681246208368, 12.397989379216645 ], [ 121.987758431861806, 12.398045125016747 ] ] ] } },
     { "type": "Feature", "properties": { "id": 92, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984247346417945, 12.397187937688567 ], [ 121.984367296537798, 12.397239882979447 ] ] ] } },
     { "type": "Feature", "properties": { "id": 93, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984367296537798, 12.397239882979447 ], [ 121.984573969913242, 12.397329384396397 ] ] ] } },
     { "type": "Feature", "properties": { "id": 94, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.984573969913242, 12.397329384396397 ], [ 121.984773124939878, 12.397415629908327 ] ] ] } },
@@ -140,4 +131,3 @@
     { "type": "Feature", "properties": { "id": 135, "isOneWay": false }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 121.988713039511154, 12.396589830563943 ], [ 121.988849356924845, 12.396638248642017 ], [ 121.989020067488042, 12.396575006059249 ], [ 121.989284963189576, 12.396161054229518 ], [ 121.989527496242744, 12.395759759837134 ] ] ] } }
   ]
 }
-  

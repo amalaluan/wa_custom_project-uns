@@ -130,6 +130,8 @@ const useProfileHook = () => {
       });
 
       setAuthLoading(false);
+    } else {
+      setAuthLoading(false);
     }
   }, [userData]);
 
