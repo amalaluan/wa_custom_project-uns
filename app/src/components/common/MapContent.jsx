@@ -61,13 +61,13 @@ const MapContent = ({ state, handleBuildingClick, buildingJson }) => {
           style={{ color: "#50BFE6" }}
         />
       )}
-      {/* {state.routeFG3 && (
+      {state.routeFG3 && (
         <GeoJSON
           key={JSON.stringify(state.routeFG3)}
           data={state.routeFG3}
-          style={{ color: "#66FF66" }}
+          style={{ color: "#ff017e" }}
         />
-      )} */}
+      )}
     </MapContainer>
   );
 };

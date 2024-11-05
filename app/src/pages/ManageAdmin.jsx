@@ -39,6 +39,8 @@ const ManageAdmin = () => {
           id: doc.id,
           ...doc.data(),
         }));
+
+        console.log(adminList);
         setAdmin(adminList);
       } catch (error) {
         console.error("Error fetching admins: ", error);

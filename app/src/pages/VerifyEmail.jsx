@@ -1,8 +1,11 @@
 import Footer from "@/components/common/Footer";
 import Navigation from "@/components/common/Navigation";
+import { useAuth } from "@/context/AuthContext";
 import React from "react";
 
 const VerifyEmail = () => {
+  const { currentUser } = useAuth();
+
   return (
     <div>
       <Navigation />
@@ -18,8 +21,9 @@ const VerifyEmail = () => {
             Account Status:{" "}
             <span className="font-medium">Email not verified</span>
           </p>
-          <p className="mb-1 text-sm text-gray-500">
-            Please <strong>verify your email first</strong>. You will not be
+          <p className="mb-1 mb-2 text-sm text-gray-500">
+            Your email, <b>{currentUser?.email}</b> , please{" "}
+            <strong>verify your email first</strong>.<br /> You will not be
             allowed to access any system features until verification is
             complete.
           </p>

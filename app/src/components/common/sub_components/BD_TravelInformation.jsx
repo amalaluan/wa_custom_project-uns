@@ -18,7 +18,11 @@ const BD_TravelInformation = ({ distances, mode }) => (
             <p className="text-sm font-semibold">From Gate {index + 1}</p>
             <hr
               className={`my-2 border-t-2 ${
-                index ? "border-t-[#50BFE6]" : "border-t-[#66FF66]"
+                index == 0
+                  ? "border-t-[#50BFE6]"
+                  : index == 1
+                  ? "border-t-[#66FF66]"
+                  : "border-t-[#ff017e]"
               }`}
             />
             <p className="text-xs">

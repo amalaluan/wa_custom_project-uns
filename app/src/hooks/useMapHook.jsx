@@ -79,11 +79,11 @@ const reducer = (state, action) => {
             distance: action.data[1].distance,
             walk: action.data[1].walk,
           },
-          // {
-          //   bike: action.data[2].bike,
-          //   distance: action.data[2].distance,
-          //   walk: action.data[2].walk,
-          // },
+          {
+            bike: action.data[2].bike,
+            distance: action.data[2].distance,
+            walk: action.data[2].walk,
+          },
         ],
       };
     }
@@ -120,7 +120,7 @@ const useMapHook = () => {
     path: null,
     gate_one: [12.3981503, 121.9829883],
     gate_two: [12.39640848, 121.98238727],
-    gate_three: [12.3980493, 121.9877596],
+    gate_three: [12.395741, 121.989565],
     startLoc: null,
     endLoc: null,
     details: null,

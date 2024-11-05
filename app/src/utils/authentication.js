@@ -61,6 +61,7 @@ export const signUp = async (email, password, fullname) => {
         email: user.email,
         name: fullname,
         status: "pending",
+        role: "admin",
       });
     } catch (docError) {
       await deleteUser(user);
