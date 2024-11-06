@@ -101,6 +101,10 @@ const useAuthHook = () => {
           response = await signIn(payload.email, payload.password);
         }
 
+        if (!response?.status) {
+          showToast("destructive", "Login failed", response?.message, 3000);
+        }
+
         setAuthLoading(false);
       } catch (e) {
         console.log(e);

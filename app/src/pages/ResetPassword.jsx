@@ -61,7 +61,7 @@ const ResetPassword = () => {
             className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]"
             disabled={!email}
           >
-            Create an account
+            Send Reset Link
           </Button>
         </form>
 

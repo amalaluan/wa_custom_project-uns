@@ -255,7 +255,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
           <div className="mb-4">
             <Label htmlFor="name">Building Name</Label>
             <Input
-              placeholder="Building Name"
+              placeholder="Enter building name"
               id="name"
               type="text"
               value={state?.name}
@@ -285,7 +285,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   </div>
                   <Input
                     className="mt-1"
-                    placeholder="Building Name"
+                    placeholder="Enter title of the service"
                     id="services_title"
                     type="text"
                     value={state?.services_title[index]}
@@ -299,7 +299,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   <Label htmlFor="services">Offered Services</Label>
                   <Textarea
                     className="mt-1 resize-none"
-                    placeholder="Building Name"
+                    placeholder="Enter services offered"
                     id="services"
                     type="text"
                     value={services_off}
@@ -319,7 +319,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   <Label htmlFor="head">Head</Label>
                   <Input
                     className="mt-1"
-                    placeholder="Building Name"
+                    placeholder="Enter the name of the head"
                     id="head"
                     type="text"
                     value={state?.head[index]}
@@ -333,7 +333,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     className="mt-1"
-                    placeholder="Building Name"
+                    placeholder="Enter head's email"
                     id="email"
                     type="text"
                     value={state?.email[index]}
@@ -347,7 +347,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   <Label htmlFor="contact">Contact Number</Label>
                   <Input
                     className="mt-1"
-                    placeholder="Building Name"
+                    placeholder="Enter head's contact number"
                     id="contact"
                     type="text"
                     value={state?.contact[index]}

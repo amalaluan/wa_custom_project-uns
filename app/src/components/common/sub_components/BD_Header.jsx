@@ -8,10 +8,19 @@ const BD_Header = ({ handleGoBack, selectedData, setBuildingJson, udf }) => {
 
   return (
     <div className="flex items-center justify-between pb-2">
-      <Button onClick={handleGoBack}>Go back</Button>
+      <Button
+        className="bg-[#375F1B] hover:bg-[#1B3409]"
+        onClick={handleGoBack}
+      >
+        Go back
+      </Button>
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerTrigger asChild>
-          <Button size="sm" variant="ghost">
+          <Button
+            size="sm"
+            className="border rounded-sm bg-[#EBF7E3] hover:bg-[#9BD770]"
+            variant="ghost"
+          >
             Edit
           </Button>
         </DrawerTrigger>

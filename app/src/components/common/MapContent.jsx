@@ -51,14 +51,14 @@ const MapContent = ({ state, handleBuildingClick, buildingJson }) => {
         <GeoJSON
           key={JSON.stringify(state.routeFG1)}
           data={state.routeFG1}
-          style={{ color: "#66FF66" }}
+          style={{ color: "#50BFE6" }}
         />
       )}
       {state.routeFG2 && (
         <GeoJSON
           key={JSON.stringify(state.routeFG2)}
           data={state.routeFG2}
-          style={{ color: "#50BFE6" }}
+          style={{ color: "#66FF66" }}
         />
       )}
       {state.routeFG3 && (

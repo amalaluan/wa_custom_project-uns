@@ -160,7 +160,10 @@ const BuildingDetails = ({
       <div className="my-12">
         <div className="flex items-center justify-between">
           <BD_BuildingInfo name={"Gallery"} />
-          <label htmlFor="fileInput" className="text-xs font-medium">
+          <label
+            htmlFor="fileInput"
+            className="px-4 py-2 text-xs font-medium border rounded-sm bg-[#EBF7E3] hover:bg-[#9BD770] cursor-pointer"
+          >
             Add Image
           </label>
           <input

@@ -285,7 +285,7 @@ const Operations = ({ len_id }) => {
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center gap-2 text-xs font-normal"
+              className="flex items-center gap-2 text-xs font-normal bg-[#375F1B] hover:bg-[#1B3409] text-white hover:text-white"
             >
               <PlusIcon className="w-4 h-4" />
               <span>Add building</span>
@@ -322,7 +322,10 @@ const Operations = ({ len_id }) => {
               <div className="w-full mb-4">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button size="sm" className="text-xs">
+                    <Button
+                      size="sm"
+                      className="text-xs bg-[#375F1B] hover:bg-[#1B3409]"
+                    >
                       {state?.building_coords?.geometry?.coordinates
                         ? "Update Location"
                         : "Set Location"}
@@ -349,7 +352,9 @@ const Operations = ({ len_id }) => {
                       </div>
                     </div>
                     <AlertDialogFooter className="">
-                      <AlertDialogCancel>Close and save</AlertDialogCancel>
+                      <AlertDialogCancel className="bg-[#375F1B] hover:bg-[#1B3409] text-white hover:text-white">
+                        Close and save
+                      </AlertDialogCancel>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -366,7 +371,7 @@ const Operations = ({ len_id }) => {
                 </Label>
                 <Input
                   className="mt-1"
-                  placeholder="Building Name"
+                  placeholder="Enter building name"
                   id="name"
                   type="text"
                   value={state?.building_coords?.properties?.name}
@@ -401,7 +406,7 @@ const Operations = ({ len_id }) => {
                         </div>
                         <Input
                           className="mt-1"
-                          placeholder="Building Name"
+                          placeholder="Enter title of the service"
                           id="services_title"
                           type="text"
                           value={state?.details?.services_title[index]}
@@ -419,7 +424,7 @@ const Operations = ({ len_id }) => {
                         </Label>
                         <Textarea
                           className="mt-1 resize-none"
-                          placeholder="Building Name"
+                          placeholder="Enter services offered"
                           id="services"
                           type="text"
                           value={state?.details?.services[index]}
@@ -440,7 +445,7 @@ const Operations = ({ len_id }) => {
                         </Label>
                         <Input
                           className="mt-1"
-                          placeholder="Building Name"
+                          placeholder="Enter the name of the head"
                           id="head"
                           type="text"
                           value={state?.details?.head[index]}
@@ -458,7 +463,7 @@ const Operations = ({ len_id }) => {
                         </Label>
                         <Input
                           className="mt-1"
-                          placeholder="Building Name"
+                          placeholder="Enter head's email"
                           id="email"
                           type="text"
                           value={state?.details?.email[index]}
@@ -476,7 +481,7 @@ const Operations = ({ len_id }) => {
                         </Label>
                         <Input
                           className="mt-1"
-                          placeholder="Building Name"
+                          placeholder="Enter head's contact number"
                           id="contact"
                           type="text"
                           value={state?.details?.contact[index]}
@@ -500,7 +505,12 @@ const Operations = ({ len_id }) => {
             </div>
             <AlertDialogFooter className="sticky bottom-0 w-full pt-2 bg-white border-t">
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <Button onClick={handleSubmit}>Create Record</Button>
+              <Button
+                className="bg-[#375F1B] hover:bg-[#1B3409]"
+                onClick={handleSubmit}
+              >
+                Create Record
+              </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
