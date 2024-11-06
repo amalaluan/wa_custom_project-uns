@@ -1,5 +1,4 @@
 PENDING
-none
 
 DONE
 if clicked ang forgotten password, SUBMIT instead of create account button, yong login na text is palitan nalang ng sign in para same sa pinaka sign in page

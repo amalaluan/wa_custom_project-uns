@@ -133,9 +133,9 @@ const useMapHook = () => {
   const [temporaryHolder, setTemporaryHolder] = useState(null);
   const [travelMode, setTravelMode] = useState(false);
 
-  const retriggerCalculateRoute = () => {
-    calculateRoute(temporaryHolder);
-  };
+  // const retriggerCalculateRoute = () => {
+  //   calculateRoute(temporaryHolder);
+  // };
 
   const handleTravelModeChange = () => {
     setTravelMode((prev) => !prev);
@@ -332,8 +332,13 @@ const useMapHook = () => {
   };
 
   const handleBuildingClick = (feature, layer) => {
-    layer.bindPopup(feature.properties.name);
-    if (feature.properties) {
+    layer.bindTooltip(feature.properties.name, {
+      permanent: true,
+      direction: "top",
+      className: "building-tooltip", // Optional: use this to style it
+    });
+
+    if (feature?.properties) {
       layer.on("click", async () => {
         // Make the click handler async
         const data_id = String(feature.properties.id);
