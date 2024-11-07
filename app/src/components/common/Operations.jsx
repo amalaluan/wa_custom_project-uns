@@ -285,7 +285,7 @@ const Operations = ({ len_id }) => {
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center gap-2 text-xs font-normal bg-[#375F1B] hover:bg-[#1B3409] text-white hover:text-white"
+              className="flex items-center gap-2 text-xs font-normal bg-[#00413d] hover:bg-[#1B3409] text-white hover:text-white"
             >
               <PlusIcon className="w-4 h-4" />
               <span>Add building</span>
@@ -506,7 +506,7 @@ const Operations = ({ len_id }) => {
             <AlertDialogFooter className="sticky bottom-0 w-full pt-2 bg-white border-t">
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <Button
-                className="bg-[#375F1B] hover:bg-[#1B3409]"
+                className="bg-[#00413d] hover:bg-[#1B3409]"
                 onClick={handleSubmit}
               >
                 Create Record

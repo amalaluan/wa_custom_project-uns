@@ -12,11 +12,13 @@ import {
   listAll,
   ref,
   uploadBytes,
+  getMetadata,
 } from "firebase/storage";
 import { storage } from "@/utils/firebase.config";
 import { handleSearchToPush } from "@/utils/f.realtime.helper";
 import { TrashIcon } from "@radix-ui/react-icons";
 import ToggleButton from "./ToggleButton";
+import useToastHook from "@/hooks/useToastHook";
 
 const BuildingDetails = ({
   state,
@@ -27,9 +29,11 @@ const BuildingDetails = ({
   handleTravelModeChange,
 }) => {
   const { pathname } = useLocation();
+  const { showToast } = useToastHook();
 
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [prevUpdated, setPrevUpdated] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const path = state?.selectedData?.id;
 
@@ -39,35 +43,58 @@ const BuildingDetails = ({
       URL.createObjectURL(file)
     );
 
-    // Update previews and images state
-    setPreviews((prev) => [...prev, ...imagePreviews]);
-    setImages((prev) => [...prev, ...selectedFiles]);
-
-    const uploadPromises = selectedFiles.map(async (file, index) => {
-      const timestamp = new Date().valueOf();
-      const fileRef = ref(
-        storage,
-        `building_images/${path}/${timestamp}_${file.name}`
+    if (imagePreviews.length > 5) {
+      showToast(
+        "destructive",
+        "Upload failed.",
+        `Message: Too many images, upload cannot exceed 5.`,
+        3000
       );
+    } else {
+      console.log("going here");
+      // Update previews and images state
 
-      try {
-        await uploadBytes(fileRef, file);
-        const photoURL = await getDownloadURL(fileRef);
+      let arrayOfImages = [...prevUpdated];
+      let tempHolder = [];
 
-        if (selectedFiles.length - 1 == index) {
-          handleSearchToPush(state?.selectedData?.name, photoURL);
+      const uploadPromises = selectedFiles.map(async (file, index) => {
+        const timestamp = new Date().valueOf();
+        const fileRef = ref(
+          storage,
+          `building_images/${path}/${timestamp}_${file.name}`
+        );
+
+        try {
+          await uploadBytes(fileRef, file);
+          const photoURL = await getDownloadURL(fileRef);
+          arrayOfImages.push(photoURL);
+          tempHolder.push(photoURL);
+        } catch (error) {
+          console.error("Upload error:", error);
         }
-      } catch (error) {
-        console.error("Upload error:", error);
-      }
-    });
+      });
 
-    // Wait for all uploads to finish
-    try {
-      await Promise.all(uploadPromises);
-      console.log("All files uploaded successfully");
-    } catch (error) {
-      console.error("Error uploading some files:", error);
+      // Wait for all uploads to finish
+      try {
+        await Promise.all(uploadPromises);
+        console.log("All files uploaded successfully", arrayOfImages);
+        e.target.value = "";
+        setPreviews((prev) => [...tempHolder, ...prev]);
+        setImages((prev) => [...arrayOfImages, ...prev]);
+        handleSearchToPush(state?.selectedData?.id, [
+          ...tempHolder,
+          ...previews,
+        ]);
+        showToast(
+          "success",
+          "Upload successfully.",
+          `Message: Image is successfully uploaded.`,
+          3000
+        );
+      } catch (error) {
+        console.error("Error uploading some files:", error);
+        e.target.value = "";
+      }
     }
   };
 
@@ -77,18 +104,34 @@ const BuildingDetails = ({
 
     const fetchFilesFromBucket = async () => {
       const storage = getStorage();
-      const storageRef = ref(storage, `building_images/${path}`); // Path in your Firebase Storage bucket
+      const storageRef = ref(storage, `building_images/${path}`);
 
       try {
-        // List all files in the specified path
         const result = await listAll(storageRef);
 
-        // Fetch download URLs for all the files
-        const urls = await Promise.all(
-          result.items.map((itemRef) => getDownloadURL(itemRef))
+        // Get metadata for each item and store it with reference
+        const itemsWithMetadata = await Promise.all(
+          result.items.map(async (itemRef) => {
+            const metadata = await getMetadata(itemRef);
+            return {
+              itemRef,
+              uploadedAt: metadata.customMetadata?.uploadedAt || 0,
+            };
+          })
         );
 
-        setPreviews(urls); // Store the URLs in state
+        // Sort by 'uploadedAt' metadata in descending order and take the latest 5
+        const latestItems = itemsWithMetadata
+          .sort((a, b) => b.uploadedAt - a.uploadedAt)
+          .slice(0, 5);
+
+        // Fetch download URLs for these latest items
+        const urls = await Promise.all(
+          latestItems.map(({ itemRef }) => getDownloadURL(itemRef))
+        );
+
+        setPreviews(urls);
+        setPrevUpdated(urls);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching files from bucket:", error);
@@ -111,10 +154,15 @@ const BuildingDetails = ({
       setPreviews((prevPreviews) => {
         const newPrev = prevPreviews.filter((url) => url !== imageURL);
         const newValu =
-          newPrev.length > 0 ? newPrev[newPrev.length - 1] : "null";
+          newPrev.length > 0
+            ? newPrev[newPrev.length - 1]
+            : [
+                "https://firebasestorage.googleapis.com/v0/b/schoolgo-9e730.appspot.com/o/building_images%2F19%2F1730990675238_rsu_logo.png?alt=media&token=44b5ce54-d881-4d97-b857-9229032498b9",
+              ];
 
         // Call handleSearchToPush with the updated previews
-        handleSearchToPush(state?.selectedData?.name, newValu);
+        newPrev.length > 0 &&
+          handleSearchToPush(state?.selectedData?.id, newValu);
 
         return newPrev;
       });
@@ -192,12 +240,14 @@ const BuildingDetails = ({
                 className="object-cover w-auto h-full"
                 alt="Image Preview"
               />
-              <button
-                onClick={() => handleDeleteImage(preview)}
-                className="absolute hidden px-2 py-2 text-sm text-white bg-red-500 rounded top-2 right-2 group-hover:block"
-              >
-                <TrashIcon />
-              </button>
+              {!preview.includes("localhost") && (
+                <button
+                  onClick={() => handleDeleteImage(preview)}
+                  className="absolute hidden px-2 py-2 text-sm text-white bg-red-500 rounded top-2 right-2 group-hover:block"
+                >
+                  <TrashIcon />
+                </button>
+              )}
             </div>
           ))}
         </div>

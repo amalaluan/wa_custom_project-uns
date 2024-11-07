@@ -28,28 +28,25 @@ export const deleteData = async (dataPath) => {
   }
 };
 
-export const handleSearchToPush = async (searchTerm, filePath) => {
-  const db = getDatabase();
-
-  if (!searchTerm) return;
-
-  const recordsRef = ref(db, "buildings/info/"); // Replace with your database path
-  const q = query(recordsRef, orderByChild("name"), equalTo(searchTerm));
-
+export const handleSearchToPush = async (path_id, filePath) => {
   try {
-    const snapshot = await get(q);
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      // Extract the keys from the data object
-      const keys = Object.keys(data);
-      const firstKey = keys[0]; // Get the first key
+    const histodb = getDatabase();
+    let data = [...filePath];
 
-      const infoRef = ref(db, `buildings/info/${firstKey}`);
-      await update(infoRef, { photo: filePath });
+    if (data.length > 5) {
+      data.slice(0, 5);
     } else {
-      console.log([]); // No records found
+      if (data.length < 2) {
+        data.push("https://www.testo.com/images/not-available.jpg");
+      }
     }
+
+    const d_dbref = ref(histodb, `buildings/info/${path_id - 1}`);
+    const drecord = {
+      photo: data,
+    };
+    await update(d_dbref, drecord);
   } catch (error) {
-    console.error("Error searching records:", error);
+    console.log(error);
   }
 };
