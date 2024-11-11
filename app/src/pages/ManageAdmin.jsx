@@ -93,8 +93,8 @@ const ManageAdmin = () => {
 
       showToast(
         "success",
-        "Successfully deleted.",
-        `Message: User's request to be admin was removed successfully.`,
+        "Successful.",
+        `Message: User's request to change admin's status to ${value} was successful.`,
         3000
       );
       setIsOpen(false);
