@@ -15,21 +15,6 @@ const Footer = () => {
               &copy; 2024 Romblon State University. All Rights Reserved.
             </p>
           </div>
-
-          <div className="flex space-x-4">
-            <a href="#" className="text-sm hover:text-gray-400">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-sm hover:text-gray-400">
-              Terms of Service
-            </a>
-            <a href="#" className="text-sm hover:text-gray-400">
-              Contact Us
-            </a>
-          </div>
-        </div>
-        <div className="mt-4 text-sm text-center text-gray-400">
-          Built with ❤️ by the University IT Team
         </div>
       </div>
     </footer>

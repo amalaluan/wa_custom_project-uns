@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import useAuthHook from "@/hooks/useAuthHook";
 
 const Signin = () => {
-  const { handleChange, handleSubmit, signinFields } = useAuthHook();
+  const { handleChange, handleSubmit, signinFields, payload } = useAuthHook();
 
   return (
     <BaseLayout>
@@ -41,7 +41,10 @@ const Signin = () => {
             Forgotten password?
           </Link>
 
-          <Button className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]">
+          <Button
+            disabled={!payload?.email || !payload?.password}
+            className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]"
+          >
             Sign in
           </Button>
         </form>

@@ -116,7 +116,7 @@ const ManageAdmin = () => {
     <div>
       <Navigation />
 
-      <main className="max-w-[1140px] px-4 py-8 min-h-[65dvh] mx-auto">
+      <main className="max-w-[1140px] px-4 py-8 min-h-[70dvh] mx-auto">
         <p className="text-3xl font-medium">Manage Admins</p>
 
         <table className="w-full mt-4">

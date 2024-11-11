@@ -38,32 +38,6 @@ const Signup = () => {
             );
           })}
 
-          <div className="flex items-center mt-4 mb-4 space-x-2 text-left">
-            <Checkbox
-              id="terms"
-              className=""
-              onClick={() => {
-                setPayload((prev) => ({
-                  ...prev,
-                  agree: !prev["agree"],
-                }));
-              }}
-            />
-            <label
-              htmlFor="terms"
-              className="text-xs leading-none text-gray-500 select-none"
-            >
-              I agree to the{" "}
-              <a href="" className="text-[#3d9f7f] font-medium hover:underline">
-                Terms and conditions
-              </a>{" "}
-              and{" "}
-              <a href="" className="text-[#3d9f7f] font-medium hover:underline">
-                Privacy policy.
-              </a>
-            </label>
-          </div>
-
           <Button
             className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]"
             disabled={!payload.agree}
