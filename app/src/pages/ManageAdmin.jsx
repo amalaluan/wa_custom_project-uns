@@ -44,6 +44,8 @@ const ManageAdmin = () => {
   const [admin, setAdmin] = useState([]);
   const { showToast } = useToastHook();
 
+  console.log(admin);
+
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
@@ -68,11 +70,19 @@ const ManageAdmin = () => {
   }, []);
 
   const handleValueChange = async (value, index, idval) => {
-    setAdmin((prevItems) => {
-      const updatedItems = [...prevItems];
-      updatedItems.splice(index, 1);
-      return updatedItems;
-    });
+    if (value == "delete") {
+      setAdmin((prevItems) => {
+        const updatedItems = [...prevItems];
+        updatedItems.splice(index, 1);
+        return updatedItems;
+      });
+    } else {
+      setAdmin((prevItems) => {
+        const updatedItems = [...prevItems];
+        updatedItems[index]["status"] = value;
+        return updatedItems;
+      });
+    }
 
     try {
       await updateDoc(doc(db, "users", idval), {
@@ -80,7 +90,6 @@ const ManageAdmin = () => {
       });
       console.log(`User status updated to: ${value}`);
       setIndex(null);
-      setIsOpen(false);
 
       showToast(
         "success",
@@ -88,6 +97,7 @@ const ManageAdmin = () => {
         `Message: User's request to be admin was removed successfully.`,
         3000
       );
+      setIsOpen(false);
     } catch (error) {
       console.error("Error updating user status: ", error);
       setIndex(null);
