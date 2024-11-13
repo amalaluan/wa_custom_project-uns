@@ -44,8 +44,6 @@ const ManageAdmin = () => {
   const [admin, setAdmin] = useState([]);
   const { showToast } = useToastHook();
 
-  console.log(admin);
-
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
@@ -88,7 +86,6 @@ const ManageAdmin = () => {
       await updateDoc(doc(db, "users", idval), {
         status: value,
       });
-      console.log(`User status updated to: ${value}`);
       setIndex(null);
 
       showToast(

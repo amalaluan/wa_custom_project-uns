@@ -5,6 +5,7 @@ import {
   uploadFile,
 } from "@/utils/firebase.helper";
 import React, { useEffect, useReducer } from "react";
+import useToastHook from "./useToastHook";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,7 +23,8 @@ const reducer = (state, action) => {
 };
 
 const useProfileHook = () => {
-  const { userData, currentUser, setAuthLoading } = useAuth();
+  const { userData, setUserData, currentUser, setAuthLoading } = useAuth();
+  const { showToast } = useToastHook();
 
   const [state, dispatch] = useReducer(reducer, {
     email: "",
@@ -156,7 +158,7 @@ const useProfileHook = () => {
     uploadFile(currentUser, state.profile, "display_photo", setAuthLoading);
   };
 
-  const handleUpdateInfo = () => {
+  const handleUpdateInfo = async () => {
     const payload = {
       address: state.address,
       contact_number: state.contact_number,
@@ -164,7 +166,39 @@ const useProfileHook = () => {
       username: state.username,
     };
 
-    updateData("users", currentUser.uid, payload, setAuthLoading);
+    const updateUserData = {
+      address: state.address,
+      contact_number: state.contact_number,
+      email: state.email,
+      name: state.name,
+      role: state.role,
+      username: state.username,
+    };
+
+    const response = await updateData(
+      "users",
+      currentUser.uid,
+      payload,
+      setAuthLoading
+    );
+
+    if (response.response) {
+      showToast(
+        "success",
+        "Successful.",
+        `Message: User's profile was updated successfully.`,
+        3000
+      );
+    } else {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Error updating the record. Please try again.`,
+        3000
+      );
+    }
+
+    setUserData(updateUserData);
   };
 
   const handleUpdatePass = () => {

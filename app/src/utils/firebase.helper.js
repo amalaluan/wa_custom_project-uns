@@ -39,9 +39,11 @@ export const updateData = async (col_name, uid, payload, setAuthLoading) => {
   try {
     await updateDoc(docRef, { ...payload });
     setAuthLoading(false);
+    return { response: 1 };
   } catch (error) {
     console.error("Error updating document:", error);
     setAuthLoading(false);
+    return { response: 0 };
   }
 };
 

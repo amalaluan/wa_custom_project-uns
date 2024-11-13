@@ -38,9 +38,16 @@ const Signup = () => {
             );
           })}
 
+          {console.log()}
+
           <Button
             className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]"
-            disabled={!payload.agree}
+            disabled={
+              !payload?.confpass ||
+              !payload?.email ||
+              !payload?.fullname ||
+              !payload?.password
+            }
           >
             Create an account
           </Button>
