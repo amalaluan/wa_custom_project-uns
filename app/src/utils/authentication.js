@@ -40,6 +40,7 @@ export const signIn = async (email, password) => {
       }
     }
   } catch (error) {
+    console.log(error);
     return {
       status: 0,
       message: "Please check your sign in credentials",

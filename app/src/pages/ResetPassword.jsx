@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseLayout from "../layout/BaseLayout";
 import logo from "@/assets/rsu-logo.png";
 import { Input } from "@/components/ui/input";
@@ -6,10 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { resetPassword } from "@/utils/authentication";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { useAuth } from "@/context/AuthContext";
+import { db } from "@/utils/firebase.config";
 
 const ResetPassword = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState(null);
+  const [admin, setAdmin] = useState([]);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -19,12 +30,49 @@ const ResetPassword = () => {
     toast({ variant, title, description, duration: parseInt(duration) });
   };
 
+  console.log(admin);
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      try {
+        // Fetch all documents from the "users" collection
+        const q = collection(db, "users");
+        const querySnapshot = await getDocs(q);
+
+        // Map over query results to get data for each document
+        const userList = querySnapshot.docs
+          .map((doc) => doc.data().email) // Extract only the email field
+          .filter((email) => email !== undefined);
+
+        setAdmin(userList);
+      } catch (error) {
+        console.error("Error fetching users: ", error);
+      }
+    };
+
+    fetchAdmins();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await resetPassword(email);
 
     if (result?.status) {
-      showToast("success", "Password reset email sent.", result?.message, 3000);
+      if (admin.includes(email)) {
+        showToast(
+          "success",
+          "Password reset email sent.",
+          result?.message,
+          3000
+        );
+      } else {
+        showToast(
+          "destructive",
+          "Email not registered",
+          "Please check if the email provided is correct.",
+          3000
+        );
+      }
     } else {
       showToast(
         "destructive",
