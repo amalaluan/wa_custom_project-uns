@@ -483,7 +483,7 @@ const Operations = ({ len_id }) => {
                           className="mt-1"
                           placeholder="Enter head's contact number"
                           id="contact"
-                          type="text"
+                          type="number"
                           value={state?.details?.contact[index]}
                           onChange={(e) => handleInputChange(e, index)}
                           autoComplete="off"

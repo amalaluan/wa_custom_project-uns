@@ -15,6 +15,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import useToastHook from "@/hooks/useToastHook";
 import { getDatabase, push, ref, set, update } from "firebase/database";
 import useProfileHook from "@/hooks/useProfileHook";
+import { useAuth } from "@/context/AuthContext";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -95,6 +96,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const [state, dispatch] = useReducer(reducer, {});
   const { showToast } = useToastHook();
   const { state: stateProfile } = useProfileHook();
+  const { setAuthLoading } = useAuth();
 
   useEffect(() => {
     dispatch({ type: "reset", payload: { ...initstate } });
@@ -146,6 +148,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   };
 
   const handleSubmit = async () => {
+    setAuthLoading(true);
     try {
       const histodb = getDatabase();
 
@@ -187,6 +190,15 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
       };
       await update(d_dbref, drecord);
 
+      const nameRef = ref(
+        histodb,
+        `json_files/building/features/${path_id - 1}/properties`
+      );
+      const nameRefRecord = {
+        name: fd_payload?.name,
+      };
+      await update(nameRef, nameRefRecord);
+
       // Save data to Firestore with custom ID
       await updateDoc(doc(db, "buildings_data", path_id), { ...fd_payload });
       await udf(path_id);
@@ -199,12 +211,10 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         }</b></u> has updated the <b><u>${
           initstate?.name
         } </b></u>building record.`,
-        targetOfChange: "Updation of ${initstate?.name} building record.",
+        targetOfChange: `Updation of ${initstate?.name} building record.`,
         time: new Date().valueOf(),
       };
       await push(h_dbref, hrecord);
-
-      isOpen(false);
 
       showToast(
         "success",
@@ -212,6 +222,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         `Changes were saved successfully.`,
         3000
       );
+      // isOpen(false);
     } catch (error) {
       console.log(error);
       showToast(
@@ -221,6 +232,9 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         3000
       );
     }
+
+    setAuthLoading(false);
+    isOpen(false);
   };
 
   const handleDiscard = () => {
@@ -246,8 +260,15 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
       <h3 className="mt-4 text-4xl font-semibold text-center">{state?.name}</h3>
       <div className="flex justify-center gap-2 pt-4 pb-4">
-        <Button onClick={handleDiscard}>Discard Changes</Button>
-        <Button onClick={handleSubmit}>Save Changes</Button>
+        <Button variant="Ghost" className="border" onClick={handleDiscard}>
+          Discard Changes
+        </Button>
+        <Button
+          className="bg-[#00413d] hover:bg-[#1B3409]"
+          onClick={handleSubmit}
+        >
+          Save Changes
+        </Button>
       </div>
       <hr />
       <div className="px-8 pt-4 pb-8 h-[70dvh] overflow-y-scroll">
@@ -276,12 +297,14 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                 <div className="mt-4 mb-2">
                   <div className="flex justify-between">
                     <Label htmlFor="services_title">Service Title</Label>
-                    <button
-                      className="text-xs text-red-500 underline"
-                      onClick={(e) => deleteService(index)}
-                    >
-                      - delete this service
-                    </button>
+                    {state?.services_title > 0 && (
+                      <button
+                        className="text-xs text-red-500 underline"
+                        onClick={(e) => deleteService(index)}
+                      >
+                        - delete this service
+                      </button>
+                    )}
                   </div>
                   <Input
                     className="mt-1"

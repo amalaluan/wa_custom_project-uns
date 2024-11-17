@@ -7,8 +7,6 @@ import VerifyEmail from "@/pages/VerifyEmail";
 const PrivateRoute = ({ children }) => {
   const { currentUser, userData } = useAuth();
 
-  console.log(currentUser);
-
   return currentUser ? (
     !currentUser.emailVerified ? (
       <VerifyEmail />

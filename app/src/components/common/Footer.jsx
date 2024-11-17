@@ -1,19 +1,17 @@
 import React from "react";
-import logo from "@/assets/rsu-logo.png";
+import iso_standard_ms from "@/assets/iso_standard_ms.jpg";
 
 const Footer = () => {
   return (
     <footer className="bg-[#00413d] text-white py-4">
       <div className="max-w-[1140px] px-4 mx-auto">
         <div className="flex flex-col items-end justify-between md:flex-row">
-          <div className="mb-4 md:mb-0">
-            <img src={logo} className="h-[70px] w-[70px] mb-2" alt="" />
-            <h4 className="text-lg font-bold">
-              Romblon State University Admin Portal
-            </h4>
+          <div className="flex items-center justify-between w-full mb-4 md:mb-0">
             <p className="text-sm">
-              &copy; 2024 Romblon State University. All Rights Reserved.
+              &copy; Romblon State University: Serving with honor and
+              excellence.
             </p>
+            <img src={iso_standard_ms} className="h-12" alt="" />
           </div>
         </div>
       </div>

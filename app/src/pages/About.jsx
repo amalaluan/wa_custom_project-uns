@@ -1,8 +1,34 @@
 import Footer from "@/components/common/Footer";
 import Navigation from "@/components/common/Navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const About = () => {
+  const [value, setValue] = useState(null);
+  const [active, setActive] = useState(null);
+
+  const updateValue = (index) => {
+    const template = [
+      "Stewardship: Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again.",
+      "Competence: An academic institution run by competent people will never go astray. Competence is knowing our job and doing it beyond what is expected of us.",
+      "Resilience: We must be strong in trying times, never surrender nor believe in defeat. Let failure be our defining moments.",
+      "Integrity: To be persuasive, we must be believable. To be believable, we must be credible; and to be credible, we must be truthful. This is integrity",
+      "Balance: Life is best lived in harmony. Balance then is crucial to a good life. RSU embraces the concept of understanding life and how to keep it best in balance. When there is balance, there is order. This is our holistic approach to the total development of man.",
+      "Excellence: There is still no substitute for excellence. It is hard to achieve, but it can start as a habit.",
+      "Service: Community service and development is what makes a University, otherwise, we become an academic institution for nothing",
+    ];
+
+    setValue(template[index]);
+    setActive(index);
+  };
+
+  useEffect(() => {
+    if (!value) {
+      setValue(
+        "Stewardship: Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again."
+      );
+    }
+  }, []);
+
   return (
     <div>
       <Navigation />
@@ -17,27 +43,65 @@ const About = () => {
                 GUIDED BY 7 CORE VALUES
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 0 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(0)}
+                >
                   stewardship
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 1 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(1)}
+                >
                   competence
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 2 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(2)}
+                >
                   resilience
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 3 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(3)}
+                >
                   integrity
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 4 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(4)}
+                >
                   balance
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 5 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(5)}
+                >
                   excellence
                 </span>
-                <span className="p-1 text-xs bg-gray-200 rounded-lg">
+                <span
+                  className={`p-1 text-xs  rounded-lg ${
+                    active == 6 ? "bg-[#00413d] text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => updateValue(6)}
+                >
                   service
                 </span>
+              </div>
+              <div className="p-4 mt-4 mr-8 border border-black rounded">
+                <p className="text-2xl">{value}</p>
               </div>
             </div>
             <div>

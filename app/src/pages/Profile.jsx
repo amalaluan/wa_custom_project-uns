@@ -97,7 +97,7 @@ const Profile = () => {
                 {infoFields.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Label htmlFor="email">{item.placeholder}</Label>
+                      <Label htmlFor="email">{item.label}</Label>
                       <Input
                         className={`${
                           item.disabled && "bg-gray-200"
@@ -133,7 +133,7 @@ const Profile = () => {
                 {passFields.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Label htmlFor="email">{item.placeholder}</Label>
+                      <Label htmlFor="email">{item.label}</Label>
                       <Input
                         className={`${
                           item.disabled && "bg-gray-200"

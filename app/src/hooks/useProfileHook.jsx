@@ -6,6 +6,7 @@ import {
 } from "@/utils/firebase.helper";
 import React, { useEffect, useReducer } from "react";
 import useToastHook from "./useToastHook";
+import { useNavigate } from "react-router-dom";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -17,7 +18,15 @@ const reducer = (state, action) => {
     }
 
     case "change-value": {
-      return { ...state, ...action.data };
+      if (action?.key == "contact_number") {
+        if (action.data[action.key].length <= 11) {
+          return { ...state, ...action.data };
+        } else {
+          return { ...state };
+        }
+      } else {
+        return { ...state, ...action.data };
+      }
     }
   }
 };
@@ -25,6 +34,7 @@ const reducer = (state, action) => {
 const useProfileHook = () => {
   const { userData, setUserData, currentUser, setAuthLoading } = useAuth();
   const { showToast } = useToastHook();
+  const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(reducer, {
     email: "",
@@ -42,7 +52,8 @@ const useProfileHook = () => {
 
   const infoFields = [
     {
-      placeholder: "Email",
+      label: "Email",
+      placeholder: "aedrian.ben@gmail.com",
       type: "text",
       name: "email",
       id: "email",
@@ -51,7 +62,8 @@ const useProfileHook = () => {
       disabled: true,
     },
     {
-      placeholder: "Username",
+      label: "Username",
+      placeholder: "e.g. abr_",
       type: "text",
       name: "username",
       id: "username",
@@ -60,7 +72,8 @@ const useProfileHook = () => {
       disabled: false,
     },
     {
-      placeholder: "Full name",
+      label: "Full name",
+      placeholder: "e.g. Aedrian Benito Romulo",
       type: "text",
       name: "name",
       id: "name",
@@ -69,7 +82,8 @@ const useProfileHook = () => {
       disabled: false,
     },
     {
-      placeholder: "Address",
+      label: "Address",
+      placeholder: "e.g. Romblon",
       type: "text",
       name: "address",
       id: "address",
@@ -78,8 +92,9 @@ const useProfileHook = () => {
       disabled: false,
     },
     {
-      placeholder: "Contact Number",
-      type: "text",
+      label: "Contact Number",
+      placeholder: "e.g. 09xx xxx xxxx",
+      type: "number",
       name: "contact_number",
       id: "contact_number",
       autoComplete: "off",
@@ -90,7 +105,8 @@ const useProfileHook = () => {
 
   const passFields = [
     {
-      placeholder: "Old Password",
+      label: "Old Password",
+      placeholder: "Type here your old password",
       type: "password",
       name: "old_password",
       id: "old_password",
@@ -99,7 +115,8 @@ const useProfileHook = () => {
       disabled: false,
     },
     {
-      placeholder: "New Password",
+      label: "New Password",
+      placeholder: "Type here your new password",
       type: "password",
       name: "new_password",
       id: "new_password",
@@ -108,7 +125,8 @@ const useProfileHook = () => {
       disabled: false,
     },
     {
-      placeholder: "Repeat your new password",
+      label: "Repeat your new password",
+      placeholder: "Retype here your new password",
       type: "password",
       name: "confirm_pass",
       id: "confirm_pass",
@@ -151,11 +169,25 @@ const useProfileHook = () => {
 
   const handleChange = (e, name) => {
     const { value } = e.target;
-    dispatch({ type: "change-value", data: { [name]: value } });
+    dispatch({ type: "change-value", data: { [name]: value }, key: name });
   };
 
-  const handleUpdateProfile = () => {
-    uploadFile(currentUser, state.profile, "display_photo", setAuthLoading);
+  const handleUpdateProfile = async () => {
+    const stamp = new Date().valueOf();
+
+    try {
+      const res = await uploadFile(
+        currentUser,
+        state.profile,
+        "display_photo",
+        setAuthLoading
+      );
+
+      navigate(`?uploaded=${stamp}`, { replace: false });
+      sessionStorage.setItem("profile", res);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleUpdateInfo = async () => {
@@ -201,11 +233,65 @@ const useProfileHook = () => {
     setUserData(updateUserData);
   };
 
-  const handleUpdatePass = () => {
-    if (state.new_password != state.confirm_pass) return;
-    if (!state.new_password || !state.confirm_pass) return;
+  const handleUpdatePass = async () => {
+    if (state.new_password != state.confirm_pass) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Your new password must matched. Please check what you typed.`,
+        3000
+      );
+      return;
+    }
+    if (!state.new_password || !state.confirm_pass || !state.old_password) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Old, New, and Repeat is required. Please fill it up.`,
+        3000
+      );
+      return;
+    }
 
-    changePassword(state.old_password, state.new_password, setAuthLoading);
+    try {
+      const response = await changePassword(
+        state.old_password,
+        state.new_password,
+        setAuthLoading
+      );
+
+      if (response?.success) {
+        dispatch({
+          type: "change-value",
+          data: {
+            old_password: "",
+            new_password: "",
+            confirm_pass: "",
+          },
+        });
+
+        showToast(
+          "success",
+          "Successful.",
+          `Message: Password was changed successfully.`,
+          3000
+        );
+      } else {
+        showToast(
+          "destructive",
+          "Attempt Unsuccessful",
+          `Message: Error updating password. Please check what you typed.`,
+          3000
+        );
+      }
+    } catch (e) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Error encountered. Try refreshing and try again.`,
+        3000
+      );
+    }
   };
 
   return {

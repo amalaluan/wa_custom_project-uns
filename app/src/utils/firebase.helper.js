@@ -19,15 +19,13 @@ export const uploadFile = async (currentUser, file, path, setAuthLoading) => {
     const snapshot = await uploadBytes(fileRef, file);
     const photoURL = await getDownloadURL(fileRef);
 
-    updateProfile(currentUser, { photoURL })
-      .then(() => {
-        setAuthLoading(false);
-      })
-      .catch((error) => {
-        setAuthLoading(false);
-        console.log(error);
-      });
+    // Use async/await for updateProfile
+    await updateProfile(currentUser, { photoURL });
+
+    setAuthLoading(false);
+    return photoURL; // Return photoURL after successful update
   } catch (e) {
+    setAuthLoading(false);
     console.log(e);
   }
 };
@@ -62,18 +60,27 @@ export const changePassword = async (
       // Reauthenticate the user
       await reauthenticateWithCredential(user, credential);
       console.log("Reauthentication successful!");
-      setAuthLoading(false);
 
       // Now update the password
       await updatePassword(user, newPassword);
       console.log("Password updated successfully!");
+      setAuthLoading(false);
+
+      // Return success message
+      return { success: 1, message: "success" };
     } catch (error) {
       console.error("Error updating password:", error);
       setAuthLoading(false);
+
+      // Return failure message
+      return { success: 0, message: "failed" };
     }
   } else {
     console.log("No user is signed in.");
     setAuthLoading(false);
+
+    // Return failure message if no user is signed in
+    return { success: 0, message: "failed" };
   }
 };
 

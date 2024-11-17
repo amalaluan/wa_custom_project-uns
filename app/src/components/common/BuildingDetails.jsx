@@ -240,7 +240,7 @@ const BuildingDetails = ({
                 className="object-cover w-auto h-full"
                 alt="Image Preview"
               />
-              {!preview.includes("localhost") && (
+              {!preview.includes("localhost") && previews.length > 2 && (
                 <button
                   onClick={() => handleDeleteImage(preview)}
                   className="absolute hidden px-2 py-2 text-sm text-white bg-red-500 rounded top-2 right-2 group-hover:block"
