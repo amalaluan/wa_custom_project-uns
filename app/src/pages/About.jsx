@@ -4,17 +4,17 @@ import React, { useEffect, useState } from "react";
 
 const About = () => {
   const [value, setValue] = useState(null);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState([0]);
 
   const updateValue = (index) => {
     const template = [
-      "Stewardship: Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again.",
-      "Competence: An academic institution run by competent people will never go astray. Competence is knowing our job and doing it beyond what is expected of us.",
-      "Resilience: We must be strong in trying times, never surrender nor believe in defeat. Let failure be our defining moments.",
-      "Integrity: To be persuasive, we must be believable. To be believable, we must be credible; and to be credible, we must be truthful. This is integrity",
-      "Balance: Life is best lived in harmony. Balance then is crucial to a good life. RSU embraces the concept of understanding life and how to keep it best in balance. When there is balance, there is order. This is our holistic approach to the total development of man.",
-      "Excellence: There is still no substitute for excellence. It is hard to achieve, but it can start as a habit.",
-      "Service: Community service and development is what makes a University, otherwise, we become an academic institution for nothing",
+      "Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again.",
+      "An academic institution run by competent people will never go astray. Competence is knowing our job and doing it beyond what is expected of us.",
+      "We must be strong in trying times, never surrender nor believe in defeat. Let failure be our defining moments.",
+      "To be persuasive, we must be believable. To be believable, we must be credible; and to be credible, we must be truthful. This is integrity",
+      "Life is best lived in harmony. Balance then is crucial to a good life. RSU embraces the concept of understanding life and how to keep it best in balance. When there is balance, there is order. This is our holistic approach to the total development of man.",
+      "There is still no substitute for excellence. It is hard to achieve, but it can start as a habit.",
+      "Community service and development is what makes a University, otherwise, we become an academic institution for nothing",
     ];
 
     setValue(template[index]);
@@ -24,7 +24,7 @@ const About = () => {
   useEffect(() => {
     if (!value) {
       setValue(
-        "Stewardship: Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again."
+        "Everything that we have today is borrowed. Our influence, our power, our environment, and our lives. Let us make use of them responsibly and conscientiously because we will never pass this world again."
       );
     }
   }, []);
@@ -44,7 +44,7 @@ const About = () => {
               </p>
               <div className="flex flex-wrap gap-2">
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 0 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(0)}
@@ -52,7 +52,7 @@ const About = () => {
                   stewardship
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 1 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(1)}
@@ -60,7 +60,7 @@ const About = () => {
                   competence
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 2 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(2)}
@@ -68,7 +68,7 @@ const About = () => {
                   resilience
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 3 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(3)}
@@ -76,7 +76,7 @@ const About = () => {
                   integrity
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 4 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(4)}
@@ -84,7 +84,7 @@ const About = () => {
                   balance
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 5 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(5)}
@@ -92,7 +92,7 @@ const About = () => {
                   excellence
                 </span>
                 <span
-                  className={`p-1 text-xs  rounded-lg ${
+                  className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 6 ? "bg-[#00413d] text-white" : "bg-gray-200"
                   }`}
                   onClick={() => updateValue(6)}
@@ -101,7 +101,7 @@ const About = () => {
                 </span>
               </div>
               <div className="p-4 mt-4 mr-8 border border-black rounded">
-                <p className="text-2xl">{value}</p>
+                <p className="text-xl text-justify">{value}</p>
               </div>
             </div>
             <div>
@@ -128,6 +128,13 @@ const About = () => {
                 here to assist you.
               </p>
 
+              <p className="mb-2 font-semibold">VISION</p>
+              <p className="mb-8 text-sm text-justify">
+                A research-based academic institution committed to excellence
+                and service nurturing globally competitive workforce towards
+                sustainable development.
+              </p>
+
               <p className="mb-2 font-semibold">MISSION</p>
               <p className="mb-8 text-sm text-justify">
                 RSU shall nurture an academic environment that provides advanced
@@ -137,13 +144,6 @@ const About = () => {
                 other relevant fields of study and collaborate with other
                 institutions and communities through responsive, relevant, and
                 research-based extension services.
-              </p>
-
-              <p className="mb-2 font-semibold">VISION</p>
-              <p className="mb-8 text-sm text-justify">
-                A research-based academic institution committed to excellence
-                and service nurturing globally competitive workforce towards
-                sustainable development.
               </p>
             </div>
           </section>

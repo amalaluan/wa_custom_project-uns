@@ -15,7 +15,9 @@ const BD_TravelInformation = ({ distances, mode }) => (
       <AccordionContent>
         {distances?.map((item, index) => (
           <div key={index} className="mb-2">
-            <p className="text-sm font-semibold">From Gate {index + 1}</p>
+            <p className="text-sm font-semibold">
+              {index != 2 ? `From Gate ${index + 1}` : "From KiwKiw Gate"}
+            </p>
             <hr
               className={`my-2 border-t-2 ${
                 index == 0

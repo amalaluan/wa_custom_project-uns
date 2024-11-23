@@ -1,13 +1,16 @@
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { signIn, signOutUser, signUp } from "@/utils/authentication";
-import { useState } from "react";
+import { get, getDatabase, ref } from "firebase/database";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const useAuthHook = () => {
   const { toast } = useToast();
   const { pathname } = useLocation();
   const { authLoading, setAuthLoading } = useAuth();
+  const [deniedEmails, setDeniedEmails] = useState([]);
+  const [deletedEmails, setDeletedEmails] = useState([]);
 
   const signupFields = [
     { placeholder: "Email", type: "email", name: "email", autoComplete: "off" },
@@ -92,12 +95,40 @@ const useAuthHook = () => {
         let response;
 
         if (pathname == "/signup") {
+          if (
+            deniedEmails.includes(payload.email) ||
+            deletedEmails.includes(payload.email)
+          ) {
+            showToast(
+              "destructive",
+              "Login failed",
+              "Account is already taken. Please use another email.",
+              3000
+            );
+            setAuthLoading(false);
+            return;
+          }
+
           response = await signUp(
             payload.email,
             payload.password,
             payload.fullname
           );
         } else {
+          if (
+            deniedEmails.includes(payload.email) ||
+            deletedEmails.includes(payload.email)
+          ) {
+            showToast(
+              "destructive",
+              "Login failed",
+              "Account login credentials is denied.",
+              3000
+            );
+            setAuthLoading(false);
+            return;
+          }
+
           response = await signIn(payload.email, payload.password);
         }
 
@@ -125,6 +156,35 @@ const useAuthHook = () => {
       }
     }, 3000);
   };
+
+  useEffect(() => {
+    const fetchEmails = async () => {
+      const rd_db = getDatabase();
+
+      // Fetch both deleted and denied emails simultaneously
+      const [snapshot_del, snapshot_den] = await Promise.all([
+        get(ref(rd_db, "deleted_emails")),
+        get(ref(rd_db, "denied_emails")),
+      ]);
+
+      // Check and log deleted emails
+      if (snapshot_del.exists()) {
+        const emails_del = Object.values(snapshot_del.val()).map(
+          (item) => item.email
+        );
+        setDeletedEmails(emails_del);
+      }
+
+      if (snapshot_den.exists()) {
+        const emails_den = Object.values(snapshot_den.val()).map(
+          (item) => item.email
+        );
+        setDeniedEmails(emails_den);
+      }
+    };
+
+    fetchEmails();
+  }, []);
 
   return {
     handleChange,

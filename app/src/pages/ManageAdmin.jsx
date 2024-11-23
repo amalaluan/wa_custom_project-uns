@@ -35,6 +35,17 @@ import { Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import useToastHook from "@/hooks/useToastHook";
+import {
+  set,
+  ref,
+  getDatabase,
+  push,
+  get,
+  query as rdQuery,
+  orderByChild,
+  equalTo,
+  remove,
+} from "firebase/database";
 
 const ManageAdmin = () => {
   const { userData } = useAuth();
@@ -67,7 +78,7 @@ const ManageAdmin = () => {
     fetchAdmins();
   }, []);
 
-  const handleValueChange = async (value, index, idval) => {
+  const handleValueChange = async (value, index, idval, email) => {
     if (value == "delete") {
       setAdmin((prevItems) => {
         const updatedItems = [...prevItems];
@@ -88,10 +99,48 @@ const ManageAdmin = () => {
       });
       setIndex(null);
 
+      const rd_db = getDatabase();
+
+      const deleted_ref = ref(rd_db, "deleted_emails");
+      const denied_ref = ref(rd_db, "denied_emails");
+
+      if (value == "delete") {
+        await push(deleted_ref, {
+          email: email,
+        });
+        console.log("Data inserted successfully!");
+      }
+      if (value == "denied") {
+        await push(denied_ref, {
+          email: email,
+        });
+        console.log("Data inserted successfully!");
+      }
+      if (value != "denied" && value != "deleted") {
+        const snapshot = await get(
+          rdQuery(
+            ref(rd_db, "denied_emails"),
+            orderByChild("email"),
+            equalTo(email)
+          )
+        );
+        if (snapshot.val()) {
+          const userKey = Object.keys(snapshot.val())[0];
+          await remove(ref(rd_db, `denied_emails/${userKey}`));
+          console.log("User deleted successfully.");
+        } else {
+          console.log("No user found");
+        }
+      }
+
       showToast(
         "success",
         "Successful.",
-        `Message: User's request to change admin's status to ${value} was successful.`,
+        `Message: ${
+          value == "delete"
+            ? `Admin's account was deleted successfully`
+            : `User's request to change admin's status to ${value} was successful.`
+        }`,
         3000
       );
       setIsOpen(false);
@@ -140,7 +189,7 @@ const ManageAdmin = () => {
                     <Select
                       value={item?.status}
                       onValueChange={(value) =>
-                        handleValueChange(value, index, item.id)
+                        handleValueChange(value, index, item.id, item.email)
                       }
                     >
                       <SelectTrigger className="border-none shadow-none outline-none">
@@ -165,6 +214,7 @@ const ManageAdmin = () => {
                           status: "delete",
                           index: index,
                           id: item.id,
+                          email: item.email,
                         });
                       }}
                     >
@@ -191,7 +241,12 @@ const ManageAdmin = () => {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <Button
               onClick={() => {
-                handleValueChange(index.status, index.index, index.id);
+                handleValueChange(
+                  index.status,
+                  index.index,
+                  index.id,
+                  index.email
+                );
               }}
             >
               Continue

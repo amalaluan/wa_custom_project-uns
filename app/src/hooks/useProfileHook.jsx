@@ -24,6 +24,12 @@ const reducer = (state, action) => {
         } else {
           return { ...state };
         }
+      } else if (action?.key == "landline_number") {
+        if (action.data[action.key].length <= 10) {
+          return { ...state, ...action.data };
+        } else {
+          return { ...state };
+        }
       } else {
         return { ...state, ...action.data };
       }
@@ -42,6 +48,7 @@ const useProfileHook = () => {
     name: "",
     address: "",
     contact_number: "",
+    landline_number: "",
     profile: null,
     old_password: "",
     new_password: "",
@@ -101,6 +108,16 @@ const useProfileHook = () => {
       value: state.contact_number,
       disabled: false,
     },
+    {
+      label: "Landline Number",
+      placeholder: "e.g. 042 xxx xxxx",
+      type: "number",
+      name: "landline_number",
+      id: "landline_number",
+      autoComplete: "off",
+      value: state.landline_number,
+      disabled: false,
+    },
   ];
 
   const passFields = [
@@ -140,7 +157,6 @@ const useProfileHook = () => {
     setAuthLoading(true);
 
     if (userData && currentUser) {
-      delete userData.status;
       dispatch({
         type: "init-values",
         payload: {
@@ -191,11 +207,38 @@ const useProfileHook = () => {
   };
 
   const handleUpdateInfo = async () => {
+    if (
+      state.contact_number.length != "" &&
+      state.contact_number.length != 11
+    ) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Contact Number is invalid. Please double check.`,
+        3000
+      );
+      return;
+    }
+
+    if (
+      state.landline_number.length != "" &&
+      state.landline_number.length != 10
+    ) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Message: Landline Number is invalid. Please double check.`,
+        3000
+      );
+      return;
+    }
+
     const payload = {
       address: state.address,
       contact_number: state.contact_number,
       name: state.name,
       username: state.username,
+      landline_number: state.landline_number,
     };
 
     const updateUserData = {
@@ -205,6 +248,7 @@ const useProfileHook = () => {
       name: state.name,
       role: state.role,
       username: state.username,
+      landline_number: state.landline_number,
     };
 
     const response = await updateData(
