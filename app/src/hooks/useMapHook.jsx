@@ -129,6 +129,15 @@ const useMapHook = () => {
     show: { building: true, boundary: true, path: true },
   });
 
+  const [selected, setSelected] = useState(null);
+
+  const buildingStyle = (feature) => {
+    if (feature.properties.id === selected) {
+      return { color: "blue", weight: 5, opacity: 0.7 }; // Highlighted style
+    }
+    return { color: "red", weight: 2, opacity: 0.5 }; // Default style
+  };
+
   const [buildingJson, setBuildingJson] = useState(null);
   const [temporaryHolder, setTemporaryHolder] = useState(null);
   const [travelMode, setTravelMode] = useState(false);
@@ -343,6 +352,8 @@ const useMapHook = () => {
         // Make the click handler async
         const data_id = String(feature.properties.id);
 
+        setSelected(data_id);
+
         try {
           const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
 
@@ -454,6 +465,8 @@ const useMapHook = () => {
     triggerDetailsUpdate,
     travelMode,
     handleTravelModeChange,
+    buildingStyle,
+    selected,
   };
 };
 

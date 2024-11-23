@@ -56,6 +56,7 @@ const Home = () => {
     triggerDetailsUpdate,
     travelMode,
     handleTravelModeChange,
+    selected,
   } = useMapHook();
 
   return (
@@ -69,6 +70,7 @@ const Home = () => {
               state={state}
               handleBuildingClick={handleBuildingClick}
               buildingJson={buildingJson}
+              selected={selected}
             />
           </div>
 

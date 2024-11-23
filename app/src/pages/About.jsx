@@ -37,12 +37,12 @@ const About = () => {
         <div className="font-sans">
           <section className="grid grid-cols-2 mt-8 mb-4">
             <div>
-              <p className="mb-8 text-8xl">about us</p>
+              <p className="mb-8 text-8xl">About Us</p>
 
               <p className="mb-1 text-sm font-medium">
                 GUIDED BY 7 CORE VALUES
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mt-2">
                 <span
                   className={`p-1 text-xs  rounded-lg cursor-pointer ${
                     active == 0 ? "bg-[#00413d] text-white" : "bg-gray-200"
@@ -100,8 +100,8 @@ const About = () => {
                   service
                 </span>
               </div>
-              <div className="p-4 mt-4 mr-8 border border-black rounded">
-                <p className="text-xl text-justify">{value}</p>
+              <div className="mt-4 mr-12 rounded">
+                <p className="text-justify ">{value}</p>
               </div>
             </div>
             <div>

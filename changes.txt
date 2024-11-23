@@ -1,0 +1,8 @@
+3rd Week of September
+- fixed about section
+- profile section created
+  - updating profile
+  - updating password
+  - updating profile photo
+- integrated path finding algo
+- estimated time of arrival
