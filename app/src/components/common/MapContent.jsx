@@ -36,7 +36,6 @@ const MapContent = ({ state, handleBuildingClick, buildingJson, selected }) => {
   const pointToLayer = useMemo(() => {
     return (feature, latlng) => {
       const isSelected = feature.properties.id == selected;
-      console.log(feature.properties.id, selected, isSelected);
       const color = isSelected ? "#FF0000" : "#ff9933";
       return L.marker(latlng, { icon: createColoredIcon(color) });
     };
@@ -61,7 +60,8 @@ const MapContent = ({ state, handleBuildingClick, buildingJson, selected }) => {
       )}
       {state.show.building && buildingJson && (
         <GeoJSON
-          key={selected}
+          // key={selected}
+          key={JSON.stringify(buildingJson)}
           data={buildingJson}
           onEachFeature={handleBuildingClick}
           pointToLayer={pointToLayer}

@@ -14,6 +14,12 @@ const BD_ServiceDetails = ({ services, selectedData, index }) => (
     </ul>
     <div className="ml-2">
       <p className="pt-4 text-xs">
+        <strong>Floor Located:</strong>{" "}
+        {selectedData?.floor_located
+          ? selectedData.floor_located[index] ?? "No data"
+          : "No Data"}
+      </p>
+      <p className="text-xs">
         <strong>Head/Director:</strong> {selectedData.head[index] ?? "No data"}
       </p>
       <p className="text-xs">

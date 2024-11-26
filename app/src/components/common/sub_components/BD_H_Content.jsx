@@ -27,6 +27,7 @@ function reducer(state, action) {
         head: [...state.head, ""],
         email: [...state.email, ""],
         contact: [...state.contact, ""],
+        floor_located: [...state.floor_located, ""],
       };
     }
 
@@ -38,6 +39,7 @@ function reducer(state, action) {
         head: [...state.head].slice(0, -1),
         email: [...state.email].slice(0, -1),
         contact: [...state.contact].slice(0, -1),
+        floor_located: [...state.floor_located].slice(0, -1),
       };
     }
 
@@ -63,6 +65,10 @@ function reducer(state, action) {
         contact: [
           ...state.contact.slice(0, action.index),
           ...state.contact.slice(action.index + 1),
+        ],
+        floor_located: [
+          ...state.floor_located.slice(0, action.index),
+          ...state.floor_located.slice(action.index + 1),
         ],
       };
     }
@@ -99,7 +105,18 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const { setAuthLoading } = useAuth();
 
   useEffect(() => {
-    dispatch({ type: "reset", payload: { ...initstate } });
+    let newpay;
+
+    if (!initstate?.floor_located) {
+      newpay = {
+        ...initstate,
+        floor_located: initstate.email.map((item, index) => {
+          return "";
+        }),
+      };
+    }
+
+    dispatch({ type: "reset", payload: { ...newpay } });
   }, [initstate]);
 
   const handleTextAreaChange = (e, index) => {
@@ -164,20 +181,24 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         const head = fd_payload?.head[index] || "No record";
         const cinfo = fd_payload?.contact[index] || "No record";
         const email = fd_payload?.email[index] || "No record";
+        const fl = fd_payload?.floor_located[index] || "No record";
 
         let newitem =
-          (`**${item}**` || "No service provided") +
+          (`**${fl}**` || "No Floor Provided") +
           "\n" +
-          services +
-          "\n\n**Head/Director:** " +
+          (`**${item}**` || "No service provided") +
+          "\n- " +
+          services.replace(/_/g, "\n- ") +
+          "\n\n**Head/Director**: " +
           head +
-          "\n\n**Contact Number:** " +
+          "\n\n**Contact Number**: " +
           cinfo +
-          "\n\n**Email Address:** " +
+          "\n\n**Email Address**: " +
           email;
 
         // Replace actual newline characters with literal \n
-        newitem = newitem.replace(/\n/g, "\\n").replace(/_/g, "\\n");
+        newitem = newitem.replace(/\n/g, "\\n");
+
         b_details.push(newitem);
       });
 
@@ -337,6 +358,22 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                     services.
                   </p>
                 </div>
+
+                {state?.floor_located && (
+                  <div className="mb-2">
+                    <Label htmlFor="floor_located">Floor Located</Label>
+                    <Input
+                      className="mt-1"
+                      placeholder="e.g. First floor - Left"
+                      id="floor_located"
+                      type="text"
+                      value={state?.floor_located[index]}
+                      onChange={(e) => handleInputChange(e, index)}
+                      disabled={false}
+                      autoComplete="off"
+                    />
+                  </div>
+                )}
 
                 <div className="mb-2">
                   <Label htmlFor="head">Head</Label>

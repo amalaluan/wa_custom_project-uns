@@ -55,9 +55,8 @@ export const AuthProvider = ({ children }) => {
         } else {
           setIsOpen(false);
         }
-        console.log(emails, currentUser?.email);
       } else {
-        console.log("No deleted emails found");
+        // console.log("No deleted emails found");
       }
     });
 
@@ -71,9 +70,8 @@ export const AuthProvider = ({ children }) => {
         } else {
           setIsOpen(false);
         }
-        console.log(emails, currentUser?.email);
       } else {
-        console.log("No denied emails found");
+        // console.log("No denied emails found");
       }
     });
 

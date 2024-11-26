@@ -31,6 +31,7 @@ function reducer(state, action) {
         details: {
           services_title: [...state.details.services_title, ""],
           services: [...state.details.services, ""],
+          floor_located: [...state.details.floor_located, ""],
           head: [...state.details.head, ""],
           email: [...state.details.email, ""],
           contact: [...state.details.contact, ""],
@@ -88,6 +89,7 @@ function reducer(state, action) {
           head: [""],
           email: [""],
           contact: [""],
+          floor_located: [""],
         },
         building_coords: {
           type: "Feature",
@@ -114,6 +116,7 @@ const Operations = ({ len_id }) => {
     details: {
       services_title: [""],
       services: [""],
+      floor_located: [""],
       head: [""],
       email: [""],
       contact: [""],
@@ -227,16 +230,19 @@ const Operations = ({ len_id }) => {
         const head = fd_payload?.head[index] || "No record";
         const cinfo = fd_payload?.contact[index] || "No record";
         const email = fd_payload?.email[index] || "No record";
+        const fl = fd_payload?.floor_located[index] || "No record";
 
         let newitem =
-          (item || "No service provided") +
+          (`**${fl}**` || "No Floor Provided") +
           "\n" +
-          services +
-          "\n\nHead/Director: " +
+          (`**${item}**` || "No service provided") +
+          "\n- " +
+          services.replace(/_/g, "\n- ") +
+          "\n\n**Head/Director**: " +
           head +
-          "\n\nContact Number: " +
+          "\n\n**Contact Number**: " +
           cinfo +
-          "\n\nEmail Address: " +
+          "\n\n**Email Address**: " +
           email;
 
         // Replace actual newline characters with literal \n
@@ -437,6 +443,24 @@ const Operations = ({ len_id }) => {
                           <strong>Note: </strong>Press enter to for separating
                           each services.
                         </p>
+                      </div>
+
+                      <div className="mb-2">
+                        <Label
+                          className="text-xs font-semibold"
+                          htmlFor="floor_located"
+                        >
+                          Floor Located
+                        </Label>
+                        <Input
+                          className="mt-1"
+                          placeholder="e.g. First Floor - Left"
+                          id="floor_located"
+                          type="text"
+                          value={state?.details?.floor_located[index]}
+                          onChange={(e) => handleInputChange(e, index)}
+                          autoComplete="off"
+                        />
                       </div>
 
                       <div className="mb-2">
