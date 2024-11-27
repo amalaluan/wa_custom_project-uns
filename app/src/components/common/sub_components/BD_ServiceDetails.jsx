@@ -7,7 +7,7 @@ const BD_ServiceDetails = ({ services, selectedData, index }) => (
         (service, si) =>
           service && (
             <li className="text-xs" key={si}>
-              - {service}
+              {!service.includes("-") && "-"} {service}
             </li>
           )
       )}

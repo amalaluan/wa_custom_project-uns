@@ -114,6 +114,8 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
           return "";
         }),
       };
+    } else {
+      newpay = { ...initstate };
     }
 
     dispatch({ type: "reset", payload: { ...newpay } });
@@ -308,7 +310,9 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
           </div>
 
           {state?.services_title?.map((item, index) => {
-            const services_off = state?.services[index].replace(/_/g, "\n");
+            const services_off = state?.services[index]
+              .replace(/_/g, "\n")
+              .replace(/- /g, "");
 
             return (
               <div key={index}>
