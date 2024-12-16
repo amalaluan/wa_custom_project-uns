@@ -26,17 +26,32 @@ import useProfileHook from "@/hooks/useProfileHook";
 function reducer(state, action) {
   switch (action.type) {
     case "add": {
-      return {
-        ...state,
-        details: {
-          services_title: [...state.details.services_title, ""],
-          services: [...state.details.services, ""],
-          floor_located: [...state.details.floor_located, ""],
-          head: [...state.details.head, ""],
-          email: [...state.details.email, ""],
-          contact: [...state.details.contact, ""],
-        },
-      };
+      if (action.classification == "Academic") {
+        return {
+          ...state,
+          details: {
+            ...state.details,
+            services_title: [...state.details.services_title, ""],
+            services: [...state.details.services, ""],
+            floor_located: [...state.details.floor_located, ""],
+          },
+        };
+      }
+
+      if (action.classification == "Academic Support") {
+        return {
+          ...state,
+          details: {
+            ...state.details,
+            services_title: [...state.details.services_title, ""],
+            services: [...state.details.services, ""],
+            head: [...state.details.head, ""],
+            email: [...state.details.email, ""],
+            contact: [...state.details.contact, ""],
+            floor_located: [...state.details.floor_located, ""],
+          },
+        };
+      }
     }
     case "delete": {
       const newDetails = Object.keys(state.details).reduce((acc, key) => {
@@ -111,6 +126,11 @@ const Operations = ({ len_id }) => {
   const { showToast } = useToastHook();
   const [isOpen, setIsOpen] = useState(false);
   const { state: stateProfile } = useProfileHook();
+  const [classification, setClassification] = useState(null);
+
+  const radioOnChange = (e) => {
+    setClassification(e.target.value);
+  };
 
   const [state, dispatch] = useReducer(reducer, {
     details: {
@@ -187,6 +207,7 @@ const Operations = ({ len_id }) => {
       let inc_id = (parseInt(len_id) + 1).toString();
       let rd_payload = { ...state.building_coords };
       let fd_payload = { ...state.details };
+      fd_payload["classification"] = classification;
 
       // Update payloads
       fd_payload["name"] = state.building_coords.properties.name;
@@ -283,7 +304,7 @@ const Operations = ({ len_id }) => {
   };
 
   return (
-    <div className="mb-12 text-sm">
+    <div className="mb-8 text-sm">
       <p className="mb-2 text-base font-semibold">Operations</p>
       <hr className="mb-4" />
       <div className="flex gap-2">
@@ -386,6 +407,34 @@ const Operations = ({ len_id }) => {
                 />
               </div>
 
+              <div className="mb-4 ml-2">
+                <Label className="text-xs font-semibold">Classification</Label>
+                <div>
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="classification"
+                      id="acad"
+                      value="Academic"
+                      className="w-3 h-3 mr-2"
+                      onChange={radioOnChange}
+                    />
+                    <label htmlFor="acad">Academic</label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="classification"
+                      id="acadsupp"
+                      value="Academic Support"
+                      className="w-3 h-3 mr-2"
+                      onChange={radioOnChange}
+                    />
+                    <label htmlFor="acadsupp">Academic Support</label>
+                  </div>
+                </div>
+              </div>
+
               {state?.details?.services_title?.map((item, index) => {
                 return (
                   <div key={index} className="relative">
@@ -397,7 +446,7 @@ const Operations = ({ len_id }) => {
                             className="text-xs font-semibold"
                             htmlFor="services_title"
                           >
-                            Service Title
+                            Room
                           </Label>
                           {index != 0 && (
                             <button
@@ -463,69 +512,142 @@ const Operations = ({ len_id }) => {
                         />
                       </div>
 
-                      <div className="mb-2">
-                        <Label className="text-xs font-semibold" htmlFor="head">
-                          Head
-                        </Label>
-                        <Input
-                          className="mt-1"
-                          placeholder="Enter the name of the head"
-                          id="head"
-                          type="text"
-                          value={state?.details?.head[index]}
-                          onChange={(e) => handleInputChange(e, index)}
-                          autoComplete="off"
-                        />
-                      </div>
+                      {classification == "Academic Support" && (
+                        <>
+                          <div className="mb-2">
+                            <Label
+                              className="text-xs font-semibold"
+                              htmlFor="head"
+                            >
+                              Head
+                            </Label>
+                            <Input
+                              className="mt-1"
+                              placeholder="Enter the name of the head"
+                              id="head"
+                              type="text"
+                              value={state?.details?.head[index]}
+                              onChange={(e) => handleInputChange(e, index)}
+                              autoComplete="off"
+                            />
+                          </div>
 
-                      <div className="mb-2">
-                        <Label
-                          className="text-xs font-semibold"
-                          htmlFor="email"
-                        >
-                          Email
-                        </Label>
-                        <Input
-                          className="mt-1"
-                          placeholder="Enter head's email"
-                          id="email"
-                          type="text"
-                          value={state?.details?.email[index]}
-                          onChange={(e) => handleInputChange(e, index)}
-                          autoComplete="off"
-                        />
-                      </div>
+                          <div className="mb-2">
+                            <Label
+                              className="text-xs font-semibold"
+                              htmlFor="email"
+                            >
+                              Email
+                            </Label>
+                            <Input
+                              className="mt-1"
+                              placeholder="Enter head's email"
+                              id="email"
+                              type="text"
+                              value={state?.details?.email[index]}
+                              onChange={(e) => handleInputChange(e, index)}
+                              autoComplete="off"
+                            />
+                          </div>
 
-                      <div className="mb-2">
-                        <Label
-                          className="text-xs font-semibold"
-                          htmlFor="contact"
-                        >
-                          Contact Number
-                        </Label>
-                        <Input
-                          className="mt-1"
-                          placeholder="Enter head's contact number"
-                          id="contact"
-                          type="number"
-                          value={state?.details?.contact[index]}
-                          onChange={(e) => handleInputChange(e, index)}
-                          autoComplete="off"
-                        />
-                      </div>
+                          <div className="mb-2">
+                            <Label
+                              className="text-xs font-semibold"
+                              htmlFor="contact"
+                            >
+                              Contact Number
+                            </Label>
+                            <Input
+                              className="mt-1"
+                              placeholder="Enter head's contact number"
+                              id="contact"
+                              type="number"
+                              value={state?.details?.contact[index]}
+                              onChange={(e) => handleInputChange(e, index)}
+                              autoComplete="off"
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {classification == "Academic" &&
+                        index == state?.details?.services_title.length - 1 && (
+                          <button
+                            className="mt-2 text-xs text-blue-500"
+                            onClick={() => {
+                              dispatch({
+                                type: "add",
+                                classification: classification,
+                              });
+                            }}
+                          >
+                            add new service +
+                          </button>
+                        )}
                     </div>
                   </div>
                 );
               })}
 
-              <button
-                className="mt-2 text-xs text-blue-500"
-                onClick={() => {
-                  dispatch({ type: "add" });
-                }}
-              >
-                add new service +
-              </button>
+              {classification == "Academic" && (
+                <>
+                  <div className="mb-2">
+                    <Label className="text-xs font-semibold" htmlFor="head">
+                      Head
+                    </Label>
+                    <Input
+                      className="mt-1"
+                      placeholder="Enter the name of the head"
+                      id="head"
+                      type="text"
+                      value={state?.details?.head[0]}
+                      onChange={(e) => handleInputChange(e, 0)}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  <div className="mb-2">
+                    <Label className="text-xs font-semibold" htmlFor="email">
+                      Email
+                    </Label>
+                    <Input
+                      className="mt-1"
+                      placeholder="Enter head's email"
+                      id="email"
+                      type="text"
+                      value={state?.details?.email[0]}
+                      onChange={(e) => handleInputChange(e, 0)}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  <div className="mb-2">
+                    <Label className="text-xs font-semibold" htmlFor="contact">
+                      Contact Number
+                    </Label>
+                    <Input
+                      className="mt-1"
+                      placeholder="Enter head's contact number"
+                      id="contact"
+                      type="number"
+                      value={state?.details?.contact[0]}
+                      onChange={(e) => handleInputChange(e, 0)}
+                      autoComplete="off"
+                    />
+                  </div>
+                </>
+              )}
+
+              {classification == "Academic Support" && (
+                <button
+                  className="mt-2 text-xs text-blue-500"
+                  onClick={() => {
+                    dispatch({ type: "add", classification: classification });
+                  }}
+                >
+                  add new service +
+                </button>
+              )}
             </div>
             <AlertDialogFooter className="sticky bottom-0 w-full pt-2 bg-white border-t">
               <AlertDialogCancel>Cancel</AlertDialogCancel>

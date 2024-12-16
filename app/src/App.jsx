@@ -35,14 +35,14 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/signup"
           element={
             <PublicRoute>
               <Signup />
             </PublicRoute>
           }
-        />
+        /> */}
         <Route
           path="/home"
           element={
@@ -83,14 +83,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/manage-admins"
           element={
             <PrivateRoute>
               <ManageAdmin />
             </PrivateRoute>
           }
-        />
+        /> */}
       </Routes>
     </AuthProvider>
   );

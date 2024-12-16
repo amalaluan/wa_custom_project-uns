@@ -341,7 +341,7 @@ const useMapHook = () => {
   };
 
   const handleBuildingClick = (feature, layer) => {
-    layer.bindTooltip(feature.properties.name, {
+    layer.bindTooltip(feature.properties.id.toString(), {
       permanent: true,
       direction: "top",
       className: "building-tooltip", // Optional: use this to style it

@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/utils/firebase.config";
 import { doc, updateDoc } from "firebase/firestore";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import useToastHook from "@/hooks/useToastHook";
 import { getDatabase, push, ref, set, update } from "firebase/database";
@@ -20,15 +20,29 @@ import { useAuth } from "@/context/AuthContext";
 function reducer(state, action) {
   switch (action.type) {
     case "add": {
-      return {
-        ...state,
-        services_title: [...state.services_title, ""],
-        services: [...state.services, ""],
-        head: [...state.head, ""],
-        email: [...state.email, ""],
-        contact: [...state.contact, ""],
-        floor_located: [...state.floor_located, ""],
-      };
+      if (action.classification == "Academic") {
+        return {
+          ...state,
+          services_title: [...state.services_title, ""],
+          services: [...state.services, ""],
+          floor_located: [...state.floor_located, ""],
+          // head: [...state.head, ""],
+          // email: [...state.email, ""],
+          // contact: [...state.contact, ""],
+        };
+      }
+
+      if (action.classification == "Academic Support") {
+        return {
+          ...state,
+          services_title: [...state.services_title, ""],
+          services: [...state.services, ""],
+          head: [...state.head, ""],
+          email: [...state.email, ""],
+          contact: [...state.contact, ""],
+          floor_located: [...state.floor_located, ""],
+        };
+      }
     }
 
     case "discard": {
@@ -104,6 +118,12 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const { state: stateProfile } = useProfileHook();
   const { setAuthLoading } = useAuth();
 
+  const [classification, setClassification] = useState("Academic Support");
+
+  const radioOnChange = (e) => {
+    setClassification(e.target.value);
+  };
+
   useEffect(() => {
     let newpay;
 
@@ -173,6 +193,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
       let path_id = initstate.id;
       let fd_payload = { ...state };
+      fd_payload["classification"] = classification;
       fd_payload.services = fd_payload.services.map((item) =>
         item.replace(/;\n/g, ";_")
       );
@@ -265,7 +286,17 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   };
 
   const addService = () => {
-    dispatch({ type: "add" });
+    if (!classification) {
+      showToast(
+        "destructive",
+        "Attempt Unsuccessful",
+        `Classification is not defined.`,
+        3000
+      );
+      return;
+    }
+
+    dispatch({ type: "add", classification: classification });
   };
 
   const deleteService = (index) => {
@@ -309,6 +340,34 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
             />
           </div>
 
+          <div className="mb-4">
+            <Label>Classification</Label>
+            <div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  name="classification"
+                  id="acad"
+                  value="Academic"
+                  className="w-3 h-3 mr-2"
+                  onChange={radioOnChange}
+                />
+                <label htmlFor="acad">Academic</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  name="classification"
+                  id="acadsupp"
+                  value="Academic Support"
+                  className="w-3 h-3 mr-2"
+                  onChange={radioOnChange}
+                />
+                <label htmlFor="acadsupp">Academic Support</label>
+              </div>
+            </div>
+          </div>
+
           {state?.services_title?.map((item, index) => {
             const services_off = state?.services[index]
               .replace(/_/g, "\n")
@@ -321,7 +380,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
                 <div className="mt-4 mb-2">
                   <div className="flex justify-between">
-                    <Label htmlFor="services_title">Service Title</Label>
+                    <Label htmlFor="services_title">Room</Label>
                     {state?.services_title > 0 && (
                       <button
                         className="text-xs text-red-500 underline"
@@ -379,57 +438,119 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   </div>
                 )}
 
-                <div className="mb-2">
-                  <Label htmlFor="head">Head</Label>
-                  <Input
-                    className="mt-1"
-                    placeholder="Enter the name of the head"
-                    id="head"
-                    type="text"
-                    value={state?.head[index]}
-                    onChange={(e) => handleInputChange(e, index)}
-                    disabled={false}
-                    autoComplete="off"
-                  />
-                </div>
+                {classification == "Academic" &&
+                  index == state?.floor_located.length - 1 && (
+                    <button
+                      className="mb-2 text-xs text-blue-500 underline"
+                      onClick={addService}
+                    >
+                      + add new service
+                    </button>
+                  )}
 
-                <div className="mb-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    className="mt-1"
-                    placeholder="Enter head's email"
-                    id="email"
-                    type="text"
-                    value={state?.email[index]}
-                    onChange={(e) => handleInputChange(e, index)}
-                    disabled={false}
-                    autoComplete="off"
-                  />
-                </div>
+                {classification == "Academic Support" && (
+                  <>
+                    <div className="mb-2">
+                      <Label htmlFor="head">Head</Label>
+                      <Input
+                        className="mt-1"
+                        placeholder="Enter the name of the head"
+                        id="head"
+                        type="text"
+                        value={state?.head[index]}
+                        onChange={(e) => handleInputChange(e, index)}
+                        disabled={false}
+                        autoComplete="off"
+                      />
+                    </div>
 
-                <div className="mb-2">
-                  <Label htmlFor="contact">Contact Number</Label>
-                  <Input
-                    className="mt-1"
-                    placeholder="Enter head's contact number"
-                    id="contact"
-                    type="text"
-                    value={state?.contact[index]}
-                    onChange={(e) => handleInputChange(e, index)}
-                    disabled={false}
-                    autoComplete="off"
-                  />
-                </div>
+                    <div className="mb-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        className="mt-1"
+                        placeholder="Enter head's email"
+                        id="email"
+                        type="text"
+                        value={state?.email[index]}
+                        onChange={(e) => handleInputChange(e, index)}
+                        disabled={false}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-2">
+                      <Label htmlFor="contact">Contact Number</Label>
+                      <Input
+                        className="mt-1"
+                        placeholder="Enter head's contact number"
+                        id="contact"
+                        type="text"
+                        value={state?.contact[index]}
+                        onChange={(e) => handleInputChange(e, index)}
+                        disabled={false}
+                        autoComplete="off"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
 
-          <button
-            className="mt-4 text-xs text-blue-500 underline"
-            onClick={addService}
-          >
-            + add new service
-          </button>
+          {classification == "Academic Support" && (
+            <button
+              className="mt-4 text-xs text-blue-500 underline"
+              onClick={addService}
+            >
+              + add new service
+            </button>
+          )}
+
+          {classification == "Academic" && (
+            <>
+              <div className="mb-2">
+                <Label htmlFor="head">Head</Label>
+                <Input
+                  className="mt-1"
+                  placeholder="Enter the name of the head"
+                  id="head"
+                  type="text"
+                  value={state?.head[0]}
+                  onChange={(e) => handleInputChange(e, 0)}
+                  disabled={false}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="mb-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  className="mt-1"
+                  placeholder="Enter head's email"
+                  id="email"
+                  type="text"
+                  value={state?.email[0]}
+                  onChange={(e) => handleInputChange(e, 0)}
+                  disabled={false}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="mb-2">
+                <Label htmlFor="contact">Contact Number</Label>
+                <Input
+                  className="mt-1"
+                  placeholder="Enter head's contact number"
+                  id="contact"
+                  type="text"
+                  value={state?.contact[0]}
+                  onChange={(e) => handleInputChange(e, 0)}
+                  disabled={false}
+                  autoComplete="off"
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </DrawerContent>

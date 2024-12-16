@@ -41,15 +41,12 @@ const Signin = () => {
             Forgotten password?
           </Link>
 
-          <Button
-            disabled={!payload?.email || !payload?.password}
-            className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]"
-          >
+          <Button className="mt-6 hover:bg-[#2c745c] bg-[#3d9f7f]">
             Sign in
           </Button>
         </form>
 
-        <p className="text-sm text-center text-gray-500">
+        {/* <p className="text-sm text-center text-gray-500">
           Not yet a member?{" "}
           <Link
             to="/signup"
@@ -57,7 +54,7 @@ const Signin = () => {
           >
             Create Account
           </Link>
-        </p>
+        </p> */}
       </div>
     </BaseLayout>
   );

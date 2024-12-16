@@ -40,12 +40,10 @@ const Navigation = () => {
             <div className="flex items-center gap-2 mb-4 md:mb-0">
               <img src={logo} className="h-[40px] w-[40px]" alt="" />
 
-              <h4 className="text-lg font-bold">
-                Romblon State University Admin Portal
-              </h4>
+              <h4 className="text-lg font-bold">RSU-SchoolGo</h4>
             </div>
             <div className="flex items-center space-x-4">
-              {userData?.role == "superadmin" ? (
+              {/* {userData?.role == "superadmin" ? (
                 <Link
                   to="/manage-admins"
                   className={`text-sm hover:text-gray-400 ${
@@ -56,7 +54,7 @@ const Navigation = () => {
                 </Link>
               ) : (
                 ""
-              )}
+              )} */}
               <Link
                 to="/home"
                 className={`text-sm hover:text-gray-400 ${

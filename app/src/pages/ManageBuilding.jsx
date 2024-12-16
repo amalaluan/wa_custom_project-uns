@@ -7,7 +7,7 @@ import Preferences from "@/components/common/Preferences";
 import RecentChanges from "@/components/common/RecentChanges";
 import ToggleButton from "@/components/common/ToggleButton";
 import useMapHook from "@/hooks/useMapHook";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ManageBuilding = () => {
   const {
@@ -21,6 +21,27 @@ const ManageBuilding = () => {
     handleTravelModeChange,
     travelMode,
   } = useMapHook();
+
+  const [arrayOfLegend, setArrayOfLegend] = useState([]);
+
+  useEffect(() => {
+    if (buildingJson) {
+      const temp_holder = buildingJson.features;
+      let temp_array = [];
+
+      temp_holder.map((item, index) => {
+        temp_array.push(
+          (item.properties.id > 9
+            ? `${item.properties.id}.`
+            : `0${item.properties.id}.`) +
+            " " +
+            item.properties.name
+        );
+      });
+
+      setArrayOfLegend(temp_array);
+    }
+  }, [buildingJson]);
 
   return (
     <div>
@@ -54,6 +75,20 @@ const ManageBuilding = () => {
                   len_id={buildingJson?.features?.length}
                   setBuildingJson={setBuildingJson}
                 />
+
+                <div>
+                  <p className="mb-2 text-base font-semibold">Legend</p>
+                  <hr className="mb-4" />
+                  <div className="flex flex-col gap-2">
+                    {arrayOfLegend?.map((item, index) => {
+                      return (
+                        <p key={index} className="text-xs">
+                          {item}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
 
                 <Preferences
                   show={state.show}
