@@ -468,7 +468,7 @@ const Operations = ({ len_id }) => {
                             className="text-xs font-semibold"
                             htmlFor="services_title"
                           >
-                            Room
+                            Core Categorization
                           </Label>
                           {index != 0 && (
                             <button
@@ -497,7 +497,7 @@ const Operations = ({ len_id }) => {
                           className="text-xs font-semibold"
                           htmlFor="services"
                         >
-                          Offered Services
+                          List/s of Room/s
                         </Label>
                         <Textarea
                           className="mt-1 resize-none"

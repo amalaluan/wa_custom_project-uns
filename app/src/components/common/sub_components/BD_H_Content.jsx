@@ -413,7 +413,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
                   <div className="mt-4 mb-2">
                     <div className="flex justify-between">
-                      <Label htmlFor="services_title">Room</Label>
+                      <Label htmlFor="services_title">Core Categorization</Label>
                       {state?.services_title > 0 && (
                         <button
                           className="text-xs text-red-500 underline"
@@ -436,7 +436,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                   </div>
 
                   <div className="mb-2">
-                    <Label htmlFor="services">Offered Services</Label>
+                    <Label htmlFor="services">List/s of Room/s</Label>
                     <Textarea
                       className="mt-1 resize-none"
                       placeholder="Enter services offered"
