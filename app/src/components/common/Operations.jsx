@@ -22,6 +22,7 @@ import { doc, setDoc } from "firebase/firestore";
 import useToastHook from "@/hooks/useToastHook";
 import useMapHook from "@/hooks/useMapHook";
 import useProfileHook from "@/hooks/useProfileHook";
+import ModalInstance from "./ModalInstance";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -127,6 +128,8 @@ const Operations = ({ len_id }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { state: stateProfile } = useProfileHook();
   const [classification, setClassification] = useState(null);
+  const [isOpenNew, setIsOpenNew] = useState(false);
+  const [details, setDetails] = useState();
 
   const radioOnChange = (e) => {
     setClassification(e.target.value);
@@ -189,12 +192,18 @@ const Operations = ({ len_id }) => {
   };
 
   const throwUserError = (message) => {
-    showToast(
-      "destructive",
-      "Attempt Unsuccessful",
-      `Message: ${message}`,
-      3000
-    );
+    // showToast(
+    //   "destructive",
+    //   "Attempt Unsuccessful",
+    //   `Message: ${message}`,
+    //   3000
+    // );
+    setIsOpenNew(true);
+    setDetails({
+      isError: true,
+      title: "Attempt Unsuccessful",
+      description: `${message}`,
+    });
   };
 
   const handleSubmit = async () => {
@@ -282,12 +291,18 @@ const Operations = ({ len_id }) => {
       await set(d_dbref, drecord);
       dispatch({ type: "reset" });
 
-      showToast(
-        "success",
-        "Updated Successfully",
-        `Changes were saved successfully.`,
-        3000
-      );
+      // showToast(
+      //   "success",
+      //   "Updated Successfully",
+      //   `Changes were saved successfully.`,
+      //   3000
+      // );
+      setIsOpenNew(true);
+      setDetails({
+        isError: true,
+        title: "Created Successfully",
+        description: `New record were saved successfully.`,
+      });
       setIsOpen(false);
     } catch (error) {
       throwUserError("Error occured. Please try again.");
@@ -305,6 +320,11 @@ const Operations = ({ len_id }) => {
 
   return (
     <div className="mb-8 text-sm">
+      <ModalInstance
+        isOpen={isOpenNew}
+        details={details}
+        setIsOpen={setIsOpenNew}
+      />
       <p className="mb-2 text-base font-semibold">Operations</p>
       <hr className="mb-4" />
       <div className="flex gap-2">

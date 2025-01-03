@@ -5,9 +5,18 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/rsu-logo.png";
 import { Button } from "@/components/ui/button";
 import useAuthHook from "@/hooks/useAuthHook";
+import ModalInstance from "@/components/common/ModalInstance";
 
 const Signin = () => {
-  const { handleChange, handleSubmit, signinFields, payload } = useAuthHook();
+  const {
+    handleChange,
+    handleSubmit,
+    signinFields,
+    payload,
+    isOpen,
+    setIsOpen,
+    details,
+  } = useAuthHook();
 
   return (
     <BaseLayout>
@@ -56,6 +65,8 @@ const Signin = () => {
           </Link>
         </p> */}
       </div>
+
+      <ModalInstance isOpen={isOpen} details={details} setIsOpen={setIsOpen} />
     </BaseLayout>
   );
 };

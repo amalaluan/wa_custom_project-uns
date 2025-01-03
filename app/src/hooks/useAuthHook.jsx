@@ -11,6 +11,8 @@ const useAuthHook = () => {
   const { authLoading, setAuthLoading } = useAuth();
   const [deniedEmails, setDeniedEmails] = useState([]);
   const [deletedEmails, setDeletedEmails] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [details, setDetails] = useState(false);
 
   const signupFields = [
     { placeholder: "Email", type: "email", name: "email", autoComplete: "off" },
@@ -51,7 +53,8 @@ const useAuthHook = () => {
   );
 
   const showToast = (variant, title, description, duration) => {
-    toast({ variant, title, description, duration: parseInt(duration) });
+    // toast({ variant, title, description, duration: parseInt(duration) });
+    // setIsOpen(true);
   };
 
   const handleChange = (e, name) => {
@@ -84,12 +87,14 @@ const useAuthHook = () => {
 
     if (errors.length > 0) {
       setAuthLoading(false);
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `${errors.join(", ")} ${errors.length > 1 ? "are" : "is"} missing.`,
-        3000
-      );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `${errors.join(", ")} ${
+          errors.length > 1 ? "are" : "is"
+        } missing.`,
+      });
     } else {
       try {
         let response;
@@ -99,12 +104,14 @@ const useAuthHook = () => {
             deniedEmails.includes(payload.email) ||
             deletedEmails.includes(payload.email)
           ) {
-            showToast(
-              "destructive",
-              "Login failed",
-              "Account is already taken. Please use another email.",
-              3000
-            );
+            setIsOpen(true);
+            setDetails({
+              isError: true,
+              title: "Login failed",
+              description:
+                "Account is already taken. Please use another email.",
+            });
+
             setAuthLoading(false);
             return;
           }
@@ -119,12 +126,13 @@ const useAuthHook = () => {
             deniedEmails.includes(payload.email) ||
             deletedEmails.includes(payload.email)
           ) {
-            showToast(
-              "destructive",
-              "Login failed",
-              "Account login credentials is denied.",
-              3000
-            );
+            setIsOpen(true);
+            setDetails({
+              isError: true,
+              title: "Login failed",
+              description: "Account login credentials is denied.",
+            });
+
             setAuthLoading(false);
             return;
           }
@@ -133,7 +141,12 @@ const useAuthHook = () => {
         }
 
         if (!response?.status) {
-          showToast("destructive", "Login failed", response?.message, 3000);
+          setIsOpen(true);
+          setDetails({
+            isError: true,
+            title: "Login failed",
+            description: response?.message,
+          });
         }
 
         setAuthLoading(false);
@@ -194,6 +207,9 @@ const useAuthHook = () => {
     signupFields,
     signinFields,
     handleLogout,
+    isOpen,
+    setIsOpen,
+    details,
   };
 };
 

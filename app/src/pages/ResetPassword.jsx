@@ -30,8 +30,6 @@ const ResetPassword = () => {
     toast({ variant, title, description, duration: parseInt(duration) });
   };
 
-  console.log(admin);
-
   useEffect(() => {
     const fetchAdmins = async () => {
       try {

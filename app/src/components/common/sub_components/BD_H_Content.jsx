@@ -16,6 +16,7 @@ import useToastHook from "@/hooks/useToastHook";
 import { getDatabase, push, ref, set, update } from "firebase/database";
 import useProfileHook from "@/hooks/useProfileHook";
 import { useAuth } from "@/context/AuthContext";
+import ModalInstance from "../ModalInstance";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -117,6 +118,9 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const { showToast } = useToastHook();
   const { state: stateProfile } = useProfileHook();
   const { setAuthLoading } = useAuth();
+
+  const [isOpenNew, setIsOpenNew] = useState(false);
+  const [details, setDetails] = useState();
 
   const [classification, setClassification] = useState("Academic Support");
 
@@ -260,21 +264,34 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
       };
       await push(h_dbref, hrecord);
 
-      showToast(
-        "success",
-        "Updated Successfully",
-        `Changes were saved successfully.`,
-        3000
-      );
-      // isOpen(false);
+      setIsOpenNew(true);
+      setDetails({
+        isError: false,
+        title: "Success",
+        description: `Updated Successfully.`,
+      });
+
+      // showToast(
+      //   "success",
+      //   "Updated Successfully",
+      //   `Changes were saved successfully.`,
+      //   3000
+      // );
+      // // isOpen(false);
     } catch (error) {
       console.log(error);
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Please try again.`,
-        3000
-      );
+      setIsOpenNew(true);
+      setDetails({
+        isError: false,
+        title: "Attempt Unsuccessful",
+        description: `Please try again.`,
+      });
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Please try again.`,
+      //   3000
+      // );
     }
 
     setAuthLoading(false);
@@ -287,12 +304,18 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
   const addService = () => {
     if (!classification) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Classification is not defined.`,
-        3000
-      );
+      setIsOpenNew(true);
+      setDetails({
+        isError: false,
+        title: "Attempt Unsuccessful",
+        description: `Classification is not defined.`,
+      });
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Classification is not defined.`,
+      //   3000
+      // );
       return;
     }
 
@@ -304,256 +327,265 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   };
 
   return (
-    <DrawerContent>
-      <VisuallyHidden>
-        <DrawerHeader>
-          <DrawerTitle>Move Goal</DrawerTitle>
-          <DrawerDescription>Set your daily activity goal.</DrawerDescription>
-        </DrawerHeader>
-      </VisuallyHidden>
+    <>
+      <ModalInstance
+        isOpen={isOpenNew}
+        details={details}
+        setIsOpen={setIsOpenNew}
+      />
+      <DrawerContent>
+        <VisuallyHidden>
+          <DrawerHeader>
+            <DrawerTitle>Move Goal</DrawerTitle>
+            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+          </DrawerHeader>
+        </VisuallyHidden>
 
-      <h3 className="mt-4 text-4xl font-semibold text-center">{state?.name}</h3>
-      <div className="flex justify-center gap-2 pt-4 pb-4">
-        <Button variant="Ghost" className="border" onClick={handleDiscard}>
-          Discard Changes
-        </Button>
-        <Button
-          className="bg-[#00413d] hover:bg-[#1B3409]"
-          onClick={handleSubmit}
-        >
-          Save Changes
-        </Button>
-      </div>
-      <hr />
-      <div className="px-8 pt-4 pb-8 h-[70dvh] overflow-y-scroll">
-        <div className="w-1/3 m-auto">
-          <div className="mb-4">
-            <Label htmlFor="name">Building Name</Label>
-            <Input
-              placeholder="Enter building name"
-              id="name"
-              type="text"
-              value={state?.name}
-              onChange={handleSingleInputChange}
-              disabled={false}
-              autoComplete="off"
-            />
-          </div>
+        <h3 className="mt-4 text-4xl font-semibold text-center">
+          {state?.name}
+        </h3>
+        <div className="flex justify-center gap-2 pt-4 pb-4">
+          <Button variant="Ghost" className="border" onClick={handleDiscard}>
+            Discard Changes
+          </Button>
+          <Button
+            className="bg-[#00413d] hover:bg-[#1B3409]"
+            onClick={handleSubmit}
+          >
+            Save Changes
+          </Button>
+        </div>
+        <hr />
+        <div className="px-8 pt-4 pb-8 h-[70dvh] overflow-y-scroll">
+          <div className="w-1/3 m-auto">
+            <div className="mb-4">
+              <Label htmlFor="name">Building Name</Label>
+              <Input
+                placeholder="Enter building name"
+                id="name"
+                type="text"
+                value={state?.name}
+                onChange={handleSingleInputChange}
+                disabled={false}
+                autoComplete="off"
+              />
+            </div>
 
-          <div className="mb-4">
-            <Label>Classification</Label>
-            <div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="classification"
-                  id="acad"
-                  value="Academic"
-                  className="w-3 h-3 mr-2"
-                  onChange={radioOnChange}
-                />
-                <label htmlFor="acad">Academic</label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="classification"
-                  id="acadsupp"
-                  value="Academic Support"
-                  className="w-3 h-3 mr-2"
-                  onChange={radioOnChange}
-                />
-                <label htmlFor="acadsupp">Academic Support</label>
+            <div className="mb-4">
+              <Label>Classification</Label>
+              <div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    name="classification"
+                    id="acad"
+                    value="Academic"
+                    className="w-3 h-3 mr-2"
+                    onChange={radioOnChange}
+                  />
+                  <label htmlFor="acad">Academic</label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    name="classification"
+                    id="acadsupp"
+                    value="Academic Support"
+                    className="w-3 h-3 mr-2"
+                    onChange={radioOnChange}
+                  />
+                  <label htmlFor="acadsupp">Academic Support</label>
+                </div>
               </div>
             </div>
-          </div>
 
-          {state?.services_title?.map((item, index) => {
-            const services_off = state?.services[index]
-              .replace(/_/g, "\n")
-              .replace(/- /g, "");
+            {state?.services_title?.map((item, index) => {
+              const services_off = state?.services[index]
+                .replace(/_/g, "\n")
+                .replace(/- /g, "");
 
-            return (
-              <div key={index}>
-                <p className="mt-8 mb-2 font-medium text-center">{item}</p>
-                <hr />
+              return (
+                <div key={index}>
+                  <p className="mt-8 mb-2 font-medium text-center">{item}</p>
+                  <hr />
 
-                <div className="mt-4 mb-2">
-                  <div className="flex justify-between">
-                    <Label htmlFor="services_title">Room</Label>
-                    {state?.services_title > 0 && (
+                  <div className="mt-4 mb-2">
+                    <div className="flex justify-between">
+                      <Label htmlFor="services_title">Room</Label>
+                      {state?.services_title > 0 && (
+                        <button
+                          className="text-xs text-red-500 underline"
+                          onClick={(e) => deleteService(index)}
+                        >
+                          - delete this service
+                        </button>
+                      )}
+                    </div>
+                    <Input
+                      className="mt-1"
+                      placeholder="Enter title of the service"
+                      id="services_title"
+                      type="text"
+                      value={state?.services_title[index]}
+                      onChange={(e) => handleInputChange(e, index)}
+                      disabled={false}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  <div className="mb-2">
+                    <Label htmlFor="services">Offered Services</Label>
+                    <Textarea
+                      className="mt-1 resize-none"
+                      placeholder="Enter services offered"
+                      id="services"
+                      type="text"
+                      value={services_off}
+                      onKeyPress={(e) => handleTextAreaChange(e, index)}
+                      onChange={(e) => handleInputChange(e, index)}
+                      rows="5"
+                      disabled={false}
+                      autoComplete="off"
+                    />
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      <strong>Note: </strong>Press enter to for separating each
+                      services.
+                    </p>
+                  </div>
+
+                  {state?.floor_located && (
+                    <div className="mb-2">
+                      <Label htmlFor="floor_located">Floor Located</Label>
+                      <Input
+                        className="mt-1"
+                        placeholder="e.g. First floor - Left"
+                        id="floor_located"
+                        type="text"
+                        value={state?.floor_located[index]}
+                        onChange={(e) => handleInputChange(e, index)}
+                        disabled={false}
+                        autoComplete="off"
+                      />
+                    </div>
+                  )}
+
+                  {classification == "Academic" &&
+                    index == state?.floor_located.length - 1 && (
                       <button
-                        className="text-xs text-red-500 underline"
-                        onClick={(e) => deleteService(index)}
+                        className="mb-2 text-xs text-blue-500 underline"
+                        onClick={addService}
                       >
-                        - delete this service
+                        + add new service
                       </button>
                     )}
-                  </div>
+
+                  {classification == "Academic Support" && (
+                    <>
+                      <div className="mb-2">
+                        <Label htmlFor="head">Head</Label>
+                        <Input
+                          className="mt-1"
+                          placeholder="Enter the name of the head"
+                          id="head"
+                          type="text"
+                          value={state?.head[index]}
+                          onChange={(e) => handleInputChange(e, index)}
+                          disabled={false}
+                          autoComplete="off"
+                        />
+                      </div>
+
+                      <div className="mb-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          className="mt-1"
+                          placeholder="Enter head's email"
+                          id="email"
+                          type="text"
+                          value={state?.email[index]}
+                          onChange={(e) => handleInputChange(e, index)}
+                          disabled={false}
+                          autoComplete="off"
+                        />
+                      </div>
+
+                      <div className="mb-2">
+                        <Label htmlFor="contact">Contact Number</Label>
+                        <Input
+                          className="mt-1"
+                          placeholder="Enter head's contact number"
+                          id="contact"
+                          type="text"
+                          value={state?.contact[index]}
+                          onChange={(e) => handleInputChange(e, index)}
+                          disabled={false}
+                          autoComplete="off"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+
+            {classification == "Academic Support" && (
+              <button
+                className="mt-4 text-xs text-blue-500 underline"
+                onClick={addService}
+              >
+                + add new service
+              </button>
+            )}
+
+            {classification == "Academic" && (
+              <>
+                <div className="mb-2">
+                  <Label htmlFor="head">Head</Label>
                   <Input
                     className="mt-1"
-                    placeholder="Enter title of the service"
-                    id="services_title"
+                    placeholder="Enter the name of the head"
+                    id="head"
                     type="text"
-                    value={state?.services_title[index]}
-                    onChange={(e) => handleInputChange(e, index)}
+                    value={state?.head[0]}
+                    onChange={(e) => handleInputChange(e, 0)}
                     disabled={false}
                     autoComplete="off"
                   />
                 </div>
 
                 <div className="mb-2">
-                  <Label htmlFor="services">Offered Services</Label>
-                  <Textarea
-                    className="mt-1 resize-none"
-                    placeholder="Enter services offered"
-                    id="services"
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    className="mt-1"
+                    placeholder="Enter head's email"
+                    id="email"
                     type="text"
-                    value={services_off}
-                    onKeyPress={(e) => handleTextAreaChange(e, index)}
-                    onChange={(e) => handleInputChange(e, index)}
-                    rows="5"
+                    value={state?.email[0]}
+                    onChange={(e) => handleInputChange(e, 0)}
                     disabled={false}
                     autoComplete="off"
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    <strong>Note: </strong>Press enter to for separating each
-                    services.
-                  </p>
                 </div>
 
-                {state?.floor_located && (
-                  <div className="mb-2">
-                    <Label htmlFor="floor_located">Floor Located</Label>
-                    <Input
-                      className="mt-1"
-                      placeholder="e.g. First floor - Left"
-                      id="floor_located"
-                      type="text"
-                      value={state?.floor_located[index]}
-                      onChange={(e) => handleInputChange(e, index)}
-                      disabled={false}
-                      autoComplete="off"
-                    />
-                  </div>
-                )}
-
-                {classification == "Academic" &&
-                  index == state?.floor_located.length - 1 && (
-                    <button
-                      className="mb-2 text-xs text-blue-500 underline"
-                      onClick={addService}
-                    >
-                      + add new service
-                    </button>
-                  )}
-
-                {classification == "Academic Support" && (
-                  <>
-                    <div className="mb-2">
-                      <Label htmlFor="head">Head</Label>
-                      <Input
-                        className="mt-1"
-                        placeholder="Enter the name of the head"
-                        id="head"
-                        type="text"
-                        value={state?.head[index]}
-                        onChange={(e) => handleInputChange(e, index)}
-                        disabled={false}
-                        autoComplete="off"
-                      />
-                    </div>
-
-                    <div className="mb-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        className="mt-1"
-                        placeholder="Enter head's email"
-                        id="email"
-                        type="text"
-                        value={state?.email[index]}
-                        onChange={(e) => handleInputChange(e, index)}
-                        disabled={false}
-                        autoComplete="off"
-                      />
-                    </div>
-
-                    <div className="mb-2">
-                      <Label htmlFor="contact">Contact Number</Label>
-                      <Input
-                        className="mt-1"
-                        placeholder="Enter head's contact number"
-                        id="contact"
-                        type="text"
-                        value={state?.contact[index]}
-                        onChange={(e) => handleInputChange(e, index)}
-                        disabled={false}
-                        autoComplete="off"
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
-
-          {classification == "Academic Support" && (
-            <button
-              className="mt-4 text-xs text-blue-500 underline"
-              onClick={addService}
-            >
-              + add new service
-            </button>
-          )}
-
-          {classification == "Academic" && (
-            <>
-              <div className="mb-2">
-                <Label htmlFor="head">Head</Label>
-                <Input
-                  className="mt-1"
-                  placeholder="Enter the name of the head"
-                  id="head"
-                  type="text"
-                  value={state?.head[0]}
-                  onChange={(e) => handleInputChange(e, 0)}
-                  disabled={false}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="mb-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  className="mt-1"
-                  placeholder="Enter head's email"
-                  id="email"
-                  type="text"
-                  value={state?.email[0]}
-                  onChange={(e) => handleInputChange(e, 0)}
-                  disabled={false}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="mb-2">
-                <Label htmlFor="contact">Contact Number</Label>
-                <Input
-                  className="mt-1"
-                  placeholder="Enter head's contact number"
-                  id="contact"
-                  type="text"
-                  value={state?.contact[0]}
-                  onChange={(e) => handleInputChange(e, 0)}
-                  disabled={false}
-                  autoComplete="off"
-                />
-              </div>
-            </>
-          )}
+                <div className="mb-2">
+                  <Label htmlFor="contact">Contact Number</Label>
+                  <Input
+                    className="mt-1"
+                    placeholder="Enter head's contact number"
+                    id="contact"
+                    type="text"
+                    value={state?.contact[0]}
+                    onChange={(e) => handleInputChange(e, 0)}
+                    disabled={false}
+                    autoComplete="off"
+                  />
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </DrawerContent>
+      </DrawerContent>
+    </>
   );
 };
 
