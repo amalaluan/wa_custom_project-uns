@@ -450,8 +450,10 @@ const Operations = ({ len_id }) => {
                       className="w-3 h-3 mr-2"
                       onChange={radioOnChange}
                     />
-                    <label htmlFor="acadsupp">Academic Support</label>
+                    <label htmlFor="acadsupp">Other Core Facilities</label>
                   </div>
+
+                  <p className="text-xs mt-1 text-justify"><b>Note:</b> If the building consist of 1 head/director, choose <b>Academic</b> else <b>Other Core Facilities</b></p>
                 </div>
               </div>
 
