@@ -263,9 +263,9 @@ const Operations = ({ len_id }) => {
         const fl = fd_payload?.floor_located[index] || "No record";
 
         let newitem =
-          (`**${fl}**` || "No Floor Provided") +
-          "\n" +
           (`**${item}**` || "No service provided") +
+          "\n" +
+          (`**${fl}**` || "No Floor Provided") +
           "\n- " +
           services.replace(/_/g, "\n- ") +
           "\n\n**Head/Director**: " +
@@ -453,7 +453,10 @@ const Operations = ({ len_id }) => {
                     <label htmlFor="acadsupp">Other Core Facilities</label>
                   </div>
 
-                  <p className="text-xs mt-1 text-justify"><b>Note:</b> If the building consist of 1 head/director, choose <b>Academic</b> else <b>Other Core Facilities</b></p>
+                  <p className="mt-1 text-xs text-justify">
+                    <b>Note:</b> If the building consist of 1 head/director,
+                    choose <b>Academic</b> else <b>Other Core Facilities</b>
+                  </p>
                 </div>
               </div>
 
@@ -483,7 +486,7 @@ const Operations = ({ len_id }) => {
                         </div>
                         <Input
                           className="mt-1"
-                          placeholder="Enter title of the service"
+                          placeholder="Enter Building Categorization"
                           id="services_title"
                           type="text"
                           value={state?.details?.services_title[index]}
@@ -501,7 +504,7 @@ const Operations = ({ len_id }) => {
                         </Label>
                         <Textarea
                           className="mt-1 resize-none"
-                          placeholder="Enter services offered"
+                          placeholder="Enter list of rooms"
                           id="services"
                           type="text"
                           value={state?.details?.services[index]}

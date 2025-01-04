@@ -4,7 +4,7 @@ import {
   updateData,
   uploadFile,
 } from "@/utils/firebase.helper";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import useToastHook from "./useToastHook";
 import { useNavigate } from "react-router-dom";
 
@@ -41,6 +41,9 @@ const useProfileHook = () => {
   const { userData, setUserData, currentUser, setAuthLoading } = useAuth();
   const { showToast } = useToastHook();
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [details, setDetails] = useState();
 
   const [state, dispatch] = useReducer(reducer, {
     email: "",
@@ -211,12 +214,18 @@ const useProfileHook = () => {
       state.contact_number.length != "" &&
       state.contact_number.length != 11
     ) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Contact Number is invalid. Please double check.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Contact Number is invalid. Please double check.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Contact Number is invalid. Please double check.`,
+      });
       return;
     }
 
@@ -224,12 +233,18 @@ const useProfileHook = () => {
       state.landline_number.length != "" &&
       state.landline_number.length != 10
     ) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Landline Number is invalid. Please double check.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Landline Number is invalid. Please double check.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Landline Number is invalid. Please double check.`,
+      });
       return;
     }
 
@@ -259,19 +274,31 @@ const useProfileHook = () => {
     );
 
     if (response.response) {
-      showToast(
-        "success",
-        "Successful.",
-        `Message: User's profile was updated successfully.`,
-        3000
-      );
+      // showToast(
+      //   "success",
+      //   "Successful.",
+      //   `Message: User's profile was updated successfully.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: false,
+        title: "Successful",
+        description: `Message: User's profile was updated successfully.`,
+      });
     } else {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Error updating the record. Please try again.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Error updating the record. Please try again.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Error updating the record. Please try again.`,
+      });
     }
 
     setUserData(updateUserData);
@@ -279,21 +306,33 @@ const useProfileHook = () => {
 
   const handleUpdatePass = async () => {
     if (state.new_password != state.confirm_pass) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Your new password must matched. Please check what you typed.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Your new password must matched. Please check what you typed.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Your new password must matched. Please check what you typed.`,
+      });
       return;
     }
     if (!state.new_password || !state.confirm_pass || !state.old_password) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Old, New, and Repeat is required. Please fill it up.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Old, New, and Repeat is required. Please fill it up.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Old, New, and Repeat is required. Please fill it up.`,
+      });
       return;
     }
 
@@ -314,27 +353,45 @@ const useProfileHook = () => {
           },
         });
 
-        showToast(
-          "success",
-          "Successful.",
-          `Message: Password was changed successfully.`,
-          3000
-        );
+        // showToast(
+        //   "success",
+        //   "Successful.",
+        //   `Message: Password was changed successfully.`,
+        //   3000
+        // );
+        setIsOpen(true);
+        setDetails({
+          isError: false,
+          title: "Successful",
+          description: `Message: Password was changed successfully.`,
+        });
       } else {
-        showToast(
-          "destructive",
-          "Attempt Unsuccessful",
-          `Message: Error updating password. Please check what you typed.`,
-          3000
-        );
+        // showToast(
+        //   "destructive",
+        //   "Attempt Unsuccessful",
+        //   `Message: Error updating password. Please check what you typed.`,
+        //   3000
+        // );
+        setIsOpen(true);
+        setDetails({
+          isError: true,
+          title: "Attempt Unsuccessful",
+          description: `Message: Error updating password. Please check what you typed.`,
+        });
       }
     } catch (e) {
-      showToast(
-        "destructive",
-        "Attempt Unsuccessful",
-        `Message: Error encountered. Try refreshing and try again.`,
-        3000
-      );
+      // showToast(
+      //   "destructive",
+      //   "Attempt Unsuccessful",
+      //   `Message: Error encountered. Try refreshing and try again.`,
+      //   3000
+      // );
+      setIsOpen(true);
+      setDetails({
+        isError: true,
+        title: "Attempt Unsuccessful",
+        description: `Message: Error encountered. Try refreshing and try again.`,
+      });
     }
   };
 
@@ -347,6 +404,9 @@ const useProfileHook = () => {
     passFields,
     handleUpdateInfo,
     handleUpdatePass,
+    isOpen,
+    setIsOpen,
+    details,
   };
 };
 

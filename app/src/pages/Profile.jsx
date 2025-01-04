@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import useProfileHook from "@/hooks/useProfileHook";
 import React from "react";
 import cameraIcon from "@/assets/icons/camera.svg";
+import ModalInstance from "@/components/common/ModalInstance";
 
 const Profile = () => {
   const {
@@ -17,6 +18,9 @@ const Profile = () => {
     passFields,
     handleUpdateInfo,
     handleUpdatePass,
+    isOpen,
+    setIsOpen,
+    details,
   } = useProfileHook();
 
   return (
@@ -165,6 +169,8 @@ const Profile = () => {
       </main>
 
       <Footer />
+
+      <ModalInstance isOpen={isOpen} details={details} setIsOpen={setIsOpen} />
     </div>
   );
 };
