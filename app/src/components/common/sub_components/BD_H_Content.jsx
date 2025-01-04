@@ -121,6 +121,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
   const [isOpenNew, setIsOpenNew] = useState(false);
   const [details, setDetails] = useState();
+  const [defaultValues, setDefaultValues] = useState();
 
   const [classification, setClassification] = useState("Academic Support");
 
@@ -143,6 +144,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
     }
 
     dispatch({ type: "reset", payload: { ...newpay } });
+    setDefaultValues(newpay);
   }, [initstate]);
 
   const handleTextAreaChange = (e, index) => {
@@ -300,6 +302,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
   const handleDiscard = () => {
     isOpen(false);
+    dispatch({ type: "reset", payload: { ...defaultValues } });
   };
 
   const addService = () => {
@@ -324,6 +327,10 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
 
   const deleteService = (index) => {
     dispatch({ type: "delete", index: index });
+  };
+
+  const discardChanges = (index) => {
+    dispatch({ type: "reset", payload: { ...defaultValues } });
   };
 
   return (
@@ -419,7 +426,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                       <Label htmlFor="services_title">
                         Core Categorization
                       </Label>
-                      {state?.services_title > 0 && (
+                      {index != 0 && (
                         <button
                           className="text-xs text-red-500 underline"
                           onClick={(e) => deleteService(index)}
