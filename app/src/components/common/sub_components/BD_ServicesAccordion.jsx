@@ -12,6 +12,9 @@ const BD_ServicesAccordion = ({ selectedData }) => (
     {selectedData.services_title.map((item, index) => {
       const services = selectedData?.services[index]?.split("_") || [];
 
+      {
+        console.log(selectedData);
+      }
       return (
         <AccordionItem key={index} value={`item-${index}`}>
           <AccordionTrigger>

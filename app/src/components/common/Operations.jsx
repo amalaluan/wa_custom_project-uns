@@ -299,7 +299,7 @@ const Operations = ({ len_id }) => {
       // );
       setIsOpenNew(true);
       setDetails({
-        isError: true,
+        isError: false,
         title: "Created Successfully",
         description: `New record were saved successfully.`,
       });

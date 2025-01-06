@@ -144,6 +144,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
     }
 
     dispatch({ type: "reset", payload: { ...newpay } });
+    setClassification(newpay?.classification);
     setDefaultValues(newpay);
   }, [initstate]);
 
@@ -217,6 +218,8 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
           "\n" +
           (`**${fl}**` || "No Floor Provided") +
           "\n- " +
+          "\n\n**Classification**: " +
+          (classification || "Not set") +
           services.replace(/_/g, "\n- ") +
           "\n\n**Head/Director**: " +
           head +
@@ -297,7 +300,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
     }
 
     setAuthLoading(false);
-    isOpen(false);
+    // isOpen(false);
   };
 
   const handleDiscard = () => {
@@ -332,6 +335,8 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const discardChanges = (index) => {
     dispatch({ type: "reset", payload: { ...defaultValues } });
   };
+
+  console.log(state);
 
   return (
     <>
@@ -389,6 +394,7 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                     value="Academic"
                     className="w-3 h-3 mr-2"
                     onChange={radioOnChange}
+                    checked={classification == "Academic"}
                   />
                   <label htmlFor="acad">Academic</label>
                 </div>
@@ -400,6 +406,10 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
                     value="Academic Support"
                     className="w-3 h-3 mr-2"
                     onChange={radioOnChange}
+                    checked={
+                      classification == "Academic Support" ||
+                      classification == "Other Core Facilities"
+                    }
                   />
                   <label htmlFor="acadsupp">Other Core Facilities</label>
                 </div>
