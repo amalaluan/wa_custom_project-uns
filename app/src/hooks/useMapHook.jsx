@@ -384,6 +384,39 @@ const useMapHook = () => {
     }
   };
 
+  const legendClicked = async (f_id) => {
+    const data_id = String(f_id.id);
+    const local_coords = f_id.coords;
+
+    setSelected(data_id);
+
+    try {
+      const docRef = doc(db, "buildings_data", data_id); // Fetching document by ID (hardcoded as '1' for now)
+
+      // Await the getDoc call to fetch the document
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // Log the document data if it exists
+        dispatch({
+          type: "select-building",
+          data: { ...docSnap.data(), id: docSnap.id },
+          building: convertCoords(local_coords),
+        });
+      } else {
+        dispatch({
+          type: "select-building",
+          data: null,
+          building: convertCoords(local_coords),
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching document: ", error);
+    }
+
+    setTemporaryHolder(convertCoords(local_coords));
+  };
+
   useEffect(() => {
     setAuthLoading(true);
 
@@ -468,6 +501,7 @@ const useMapHook = () => {
     handleTravelModeChange,
     buildingStyle,
     selected,
+    legendClicked,
   };
 };
 

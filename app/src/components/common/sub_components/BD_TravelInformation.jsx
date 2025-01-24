@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const colors = ["#FF9933", "#50BFE6", "#66FF66"];
+const colors = ["#FF9933", "#FFEB00", "#66FF66"];
 
 const BD_TravelInformation = ({ distances, mode }) => (
   <Accordion type="single" collapsible className="w-full">
@@ -21,7 +21,7 @@ const BD_TravelInformation = ({ distances, mode }) => (
             <hr
               className={`my-2 border-t-2 ${
                 index == 0
-                  ? "border-t-[#50BFE6]"
+                  ? "border-t-[#FFEB00]"
                   : index == 1
                   ? "border-t-[#66FF66]"
                   : "border-t-[#ff017e]"

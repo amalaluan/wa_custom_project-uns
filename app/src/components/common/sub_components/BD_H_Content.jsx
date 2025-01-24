@@ -300,7 +300,6 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
     }
 
     setAuthLoading(false);
-    // isOpen(false);
   };
 
   const handleDiscard = () => {

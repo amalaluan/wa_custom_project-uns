@@ -6,6 +6,8 @@ import BD_H_Content from "./BD_H_Content";
 const BD_Header = ({ handleGoBack, selectedData, setBuildingJson, udf }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(selectedData);
+
   return (
     <div className="flex items-center justify-between pb-2">
       <Button

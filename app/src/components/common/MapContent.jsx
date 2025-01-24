@@ -53,10 +53,13 @@ const MapContent = ({ state, handleBuildingClick, buildingJson, selected }) => {
         attribution='&copy; <a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">Google</a>'
       />
       {state.selectedData == null && state.show.path && pathJson && (
-        <GeoJSON data={pathJson} style={{ color: "magenta" }} />
+        <GeoJSON
+          data={pathJson}
+          style={{ color: "red", dashArray: "10, 10" }}
+        />
       )}
       {state.show.boundary && boundaryJson && (
-        <GeoJSON data={boundaryJson} style={{ color: "red", fill: false }} />
+        <GeoJSON data={boundaryJson} style={{ color: "blue", fill: true }} />
       )}
       {state.show.building && buildingJson && (
         <GeoJSON
@@ -73,21 +76,21 @@ const MapContent = ({ state, handleBuildingClick, buildingJson, selected }) => {
         <GeoJSON
           key={JSON.stringify(state.routeFG1)}
           data={state.routeFG1}
-          style={{ color: "#50BFE6" }}
+          style={{ color: "#FFEB00", dashArray: "10, 10" }}
         />
       )}
       {state.routeFG2 && (
         <GeoJSON
           key={JSON.stringify(state.routeFG2)}
           data={state.routeFG2}
-          style={{ color: "#66FF66" }}
+          style={{ color: "#66FF66", dashArray: "10, 10" }}
         />
       )}
       {state.routeFG3 && (
         <GeoJSON
           key={JSON.stringify(state.routeFG3)}
           data={state.routeFG3}
-          style={{ color: "#ff017e" }}
+          style={{ color: "#ff017e", dashArray: "10, 10" }}
         />
       )}
     </MapContainer>

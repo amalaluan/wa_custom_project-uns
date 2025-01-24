@@ -57,6 +57,7 @@ const Home = () => {
     travelMode,
     handleTravelModeChange,
     selected,
+    legendClicked,
   } = useMapHook();
 
   const [arrayOfLegend, setArrayOfLegend] = useState([]);
@@ -66,19 +67,26 @@ const Home = () => {
       const temp_holder = buildingJson.features;
       let temp_array = [];
 
+      console.log(temp_holder);
+
       temp_holder.map((item, index) => {
-        temp_array.push(
-          (item.properties.id > 9
-            ? `${item.properties.id}.`
-            : `0${item.properties.id}.`) +
+        temp_array.push({
+          label:
+            (item.properties.id > 9
+              ? `${item.properties.id}.`
+              : `0${item.properties.id}.`) +
             " " +
-            item.properties.name
-        );
+            item.properties.name,
+          id: item.properties.id,
+          coords: item.geometry.coordinates,
+        });
       });
 
       setArrayOfLegend(temp_array);
     }
   }, [buildingJson]);
+
+  console.log(arrayOfLegend);
 
   return (
     <div>
@@ -112,11 +120,29 @@ const Home = () => {
                 <div>
                   <p className="mb-2 text-base font-semibold">Legend</p>
                   <hr className="mb-4" />
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 rounded-full h-3 bg-[#0000FF]"></div>
+                    <p className="text-sm">Boundary</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 rounded-full h-3 bg-[#FF0000]"></div>
+                    <p className="text-sm">Roads</p>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-3 rounded-full h-3 bg-[#FD9833]"></div>
+                    <p className="text-sm">Buildings</p>
+                  </div>
+                  <hr className="mb-4" />
                   <div className="flex flex-col gap-2">
                     {arrayOfLegend?.map((item, index) => {
                       return (
-                        <p key={index} className="text-xs">
-                          {item}
+                        <p
+                          key={index}
+                          className="text-xs cursor-pointer hover:underline hover:text-blue-600"
+                          onClick={() => legendClicked(item)}
+                        >
+                          {item.label}
                         </p>
                       );
                     })}
