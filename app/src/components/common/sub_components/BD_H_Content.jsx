@@ -214,12 +214,14 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
         const fl = fd_payload?.floor_located[index] || "No record";
 
         let newitem =
-          (`**${item}**` || "No service provided") +
+          (`**${item} ${
+            classification.toLowerCase() == item.toLowerCase()
+              ? ""
+              : `- ${classification}`
+          }**` || "No service provided") +
           "\n" +
-          (`**${fl}**` || "No Floor Provided") +
-          "\n- " +
-          "\n\n**Classification**: " +
-          (classification || "Not set") +
+          (`**Floor Number**: ${fl}` || "No Floor Provided") +
+          "\n\n**List of Rooms**: \n- " +
           services.replace(/_/g, "\n- ") +
           "\n\n**Head/Director**: " +
           head +
@@ -302,6 +304,111 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
     setAuthLoading(false);
   };
 
+  // const handleSubmit = async () => {
+  //   setAuthLoading(true);
+  //   try {
+  //     const histodb = getDatabase();
+
+  //     let path_id = initstate.id;
+  //     let fd_payload = { ...state };
+  //     fd_payload["classification"] = classification;
+  //     fd_payload.services = fd_payload.services.map((item) =>
+  //       item.replace(/;\n/g, ";_")
+  //     );
+
+  //     let b_details = [];
+  //     fd_payload?.services_title?.map((item, index) => {
+  //       const services = fd_payload?.services[index] || "No record";
+  //       const head = fd_payload?.head[index] || "No record";
+  //       const cinfo = fd_payload?.contact[index] || "No record";
+  //       const email = fd_payload?.email[index] || "No record";
+  //       const fl = fd_payload?.floor_located[index] || "No record";
+
+  //       let newitem =
+  //         (`**${item} ${
+  //           classification.toLowerCase() == item.toLowerCase()
+  //             ? ""
+  //             : `- ${classification}`
+  //         }**` || "No service provided") +
+  //         "\n" +
+  //         (`**Floor Number**: ${fl}` || "No Floor Provided") +
+  //         "\n " +
+  //         "\n\n**List of Rooms**: \n- " +
+  //         services.replace(/_/g, "\n- ") +
+  //         "\n\n**Head/Director**: " +
+  //         head +
+  //         "\n\n**Contact Number**: " +
+  //         cinfo +
+  //         "\n\n**Email Address**: " +
+  //         email;
+
+  //       // Replace actual newline characters with literal \n
+  //       newitem = newitem.replace(/\n/g, "\\n");
+
+  //       b_details.push(newitem);
+  //     });
+
+  //     const newpayload = b_details.join("\\n\\n\\n");
+  //     const d_dbref = ref(histodb, `buildings/info/${path_id - 1}`);
+  //     const drecord = {
+  //       id: fd_payload?.id,
+  //       name: fd_payload?.name,
+  //       service: newpayload,
+  //     };
+
+  //     const nameRef = ref(
+  //       histodb,
+  //       `json_files/building/features/${path_id - 1}/properties`
+  //     );
+  //     const nameRefRecord = {
+  //       name: fd_payload?.name,
+  //     };
+
+  //     const h_dbref = ref(histodb, "history");
+  //     const hrecord = {
+  //       user: stateProfile?.name ?? stateProfile?.email,
+  //       message: `User: <b><u>${
+  //         stateProfile?.name ?? stateProfile?.email
+  //       }</b></u> has updated the <b><u>${
+  //         initstate?.name
+  //       } </b></u>building record.`,
+  //       targetOfChange: `Updation of ${initstate?.name} building record.`,
+  //       time: new Date().valueOf(),
+  //     };
+
+  //     setIsOpenNew(true);
+  //     setDetails({
+  //       isError: false,
+  //       title: "Success",
+  //       description: `Updated Successfully.`,
+  //     });
+
+  //     // showToast(
+  //     //   "success",
+  //     //   "Updated Successfully",
+  //     //   `Changes were saved successfully.`,
+  //     //   3000
+  //     // );
+  //     // // isOpen(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsOpenNew(true);
+  //     setDetails({
+  //       isError: false,
+  //       title: "Attempt Unsuccessful",
+  //       description: `Please try again.`,
+  //     });
+  //     // showToast(
+  //     //   "destructive",
+  //     //   "Attempt Unsuccessful",
+  //     //   `Please try again.`,
+  //     //   3000
+  //     // );
+  //   }
+
+  //   setAuthLoading(false);
+  // };
+
   const handleDiscard = () => {
     isOpen(false);
     dispatch({ type: "reset", payload: { ...defaultValues } });
@@ -334,8 +441,6 @@ const BD_H_Content = ({ initstate, isOpen, udf }) => {
   const discardChanges = (index) => {
     dispatch({ type: "reset", payload: { ...defaultValues } });
   };
-
-  console.log(state);
 
   return (
     <>

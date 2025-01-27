@@ -67,8 +67,6 @@ const Home = () => {
       const temp_holder = buildingJson.features;
       let temp_array = [];
 
-      console.log(temp_holder);
-
       temp_holder.map((item, index) => {
         temp_array.push({
           label:
@@ -85,8 +83,6 @@ const Home = () => {
       setArrayOfLegend(temp_array);
     }
   }, [buildingJson]);
-
-  console.log(arrayOfLegend);
 
   return (
     <div>
@@ -122,11 +118,11 @@ const Home = () => {
                   <hr className="mb-4" />
 
                   <div className="flex items-center gap-2">
-                    <div className="w-3 rounded-full h-3 bg-[#0000FF]"></div>
+                    <div className="w-3 rounded-full h-3 bg-[#fff] border"></div>
                     <p className="text-sm">Boundary</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 rounded-full h-3 bg-[#FF0000]"></div>
+                    <div className="w-3 rounded-full h-3 bg-[yellow]"></div>
                     <p className="text-sm">Roads</p>
                   </div>
                   <div className="flex items-center gap-2 mb-2">

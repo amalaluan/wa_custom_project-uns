@@ -55,11 +55,11 @@ const MapContent = ({ state, handleBuildingClick, buildingJson, selected }) => {
       {state.selectedData == null && state.show.path && pathJson && (
         <GeoJSON
           data={pathJson}
-          style={{ color: "red", dashArray: "10, 10" }}
+          style={{ color: "yellow", dashArray: "10, 10" }}
         />
       )}
       {state.show.boundary && boundaryJson && (
-        <GeoJSON data={boundaryJson} style={{ color: "blue", fill: true }} />
+        <GeoJSON data={boundaryJson} style={{ color: "#0d98ba", fill: true }} />
       )}
       {state.show.building && buildingJson && (
         <GeoJSON

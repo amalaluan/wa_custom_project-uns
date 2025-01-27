@@ -20,6 +20,7 @@ const ManageBuilding = () => {
     triggerDetailsUpdate,
     handleTravelModeChange,
     travelMode,
+    legendClicked,
   } = useMapHook();
 
   const [arrayOfLegend, setArrayOfLegend] = useState([]);
@@ -30,13 +31,16 @@ const ManageBuilding = () => {
       let temp_array = [];
 
       temp_holder.map((item, index) => {
-        temp_array.push(
-          (item.properties.id > 9
-            ? `${item.properties.id}.`
-            : `0${item.properties.id}.`) +
+        temp_array.push({
+          label:
+            (item.properties.id > 9
+              ? `${item.properties.id}.`
+              : `0${item.properties.id}.`) +
             " " +
-            item.properties.name
-        );
+            item.properties.name,
+          id: item.properties.id,
+          coords: item.geometry.coordinates,
+        });
       });
 
       setArrayOfLegend(temp_array);
@@ -82,8 +86,12 @@ const ManageBuilding = () => {
                   <div className="flex flex-col gap-2">
                     {arrayOfLegend?.map((item, index) => {
                       return (
-                        <p key={index} className="text-xs">
-                          {item}
+                        <p
+                          key={index}
+                          className="text-xs cursor-pointer hover:underline hover:text-blue-600"
+                          onClick={() => legendClicked(item)}
+                        >
+                          {item.label}
                         </p>
                       );
                     })}

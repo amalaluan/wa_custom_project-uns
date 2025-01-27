@@ -263,10 +263,14 @@ const Operations = ({ len_id }) => {
         const fl = fd_payload?.floor_located[index] || "No record";
 
         let newitem =
-          (`**${item}**` || "No service provided") +
+          (`**${item} ${
+            classification.toLowerCase() == item.toLowerCase()
+              ? ""
+              : `- ${classification}`
+          }**` || "No service provided") +
           "\n" +
-          (`**${fl}**` || "No Floor Provided") +
-          "\n- " +
+          (`**Floor Number**: ${fl}` || "No Floor Provided") +
+          "\n\n**List of Rooms**: \n- " +
           services.replace(/_/g, "\n- ") +
           "\n\n**Head/Director**: " +
           head +
