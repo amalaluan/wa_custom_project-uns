@@ -118,7 +118,7 @@ const Home = () => {
                   <hr className="mb-4" />
 
                   <div className="flex items-center gap-2">
-                    <div className="w-3 rounded-full h-3 bg-[#fff] border"></div>
+                    <div className="w-3 rounded-full h-3 bg-[#0d98ba]"></div>
                     <p className="text-sm">Boundary</p>
                   </div>
                   <div className="flex items-center gap-2">
